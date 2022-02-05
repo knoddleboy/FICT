@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# Other
+.vscode
+.reportdata
+.gitattributes
+__pycache__/
+*_extended*
+desktop.ini
+OKSM/
+_*
