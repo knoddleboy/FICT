@@ -19,7 +19,6 @@
 using std::string;
 using std::vector;
 
-/**  */
 vector<vector<string>> parse_csv_data(std::ifstream &);
 vector<string> workers_list_conditionally(vector<vector<string>> &, size_t);
 size_t date_to_years(vector<vector<string>> &, size_t, size_t);
