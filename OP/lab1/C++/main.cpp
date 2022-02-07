@@ -7,6 +7,7 @@
  * @date 08.02.2022
  */
 
+#include <algorithm>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -23,16 +24,19 @@ vector<vector<string>> parse_csv_data(std::ifstream &);
 vector<string> workers_list_conditionally(vector<vector<string>> &, size_t);
 size_t date_to_years(vector<vector<string>> &, size_t, size_t);
 void print_results(vector<string> &, size_t);
-void remove_less_than_year(std::ifstream &, vector<vector<string>> &);
+void remove_less_than_year(std::ifstream &, const char *, const char *, vector<vector<string>> &);
 
 int main()
 {
+    const char *filepath = "../assets/companyData.csv";
+    const char *output_tempfile_path = "../assets/output.csv";
+
     /** Original file read-only stream */
-    std::ifstream company_data("../assets/companyData.csv");
+    std::ifstream company_data(filepath);
     if (!company_data.is_open())
     {
-        std::cerr << "Exception opening/reading file" << std::endl;
-        return 1;
+        std::cerr << "Could not open/read file" << std::endl;
+        exit(1);
     }
 
     /** Extract words from each line to 2D vector */
@@ -47,7 +51,7 @@ int main()
     print_results(workers_working_20_years, 2);
 
     /** Remove info about workers working less than a year */
-    remove_less_than_year(company_data, csv_file_content);
+    remove_less_than_year(company_data, filepath, output_tempfile_path, csv_file_content);
 
     if (company_data.is_open())
         company_data.close();
@@ -67,25 +71,23 @@ int main()
 vector<vector<string>> parse_csv_data(std::ifstream &FILE)
 {
     string line, block;
-    vector<string> row_words;
     vector<vector<string>> content;
 
     /**
      * 1) Read every line in the file.
-     * 2) Extract words, separated in the line by a comma using stringstream and getline.
-     * 3) Store each word in a vector `row_words` and each such vector is stored in
-     * a 2D vector `content`
+     * 2) Extract words, separated in the line by a comma using stringstream and getline with separator.
+     * 3) Store each word in a vector `row` and each this vector is stored in a 2D vector `content`
      */
     while (std::getline(FILE, line))
     {
-        row_words.clear();
+        vector<string> row;
 
         std::stringstream str(line);
 
         while (std::getline(str, block, ','))
-            row_words.push_back(block);
+            row.push_back(block);
 
-        content.push_back(row_words);
+        content.push_back(row);
     }
 
     return content;
@@ -130,30 +132,24 @@ vector<string> workers_list_conditionally(vector<vector<string>> &csv_content, s
  */
 size_t date_to_years(vector<vector<string>> &csv_content, size_t file_line_idx, size_t date_idx)
 {
-    struct tm date = {0}; // Declaring `ctime` date
+    struct tm date = {0}; // Declaring `ctime` date struct
 
-    /**
-     * Since input vector is of type `string`, form days, months and years of the date
-     * converting every number to the type of `number`.
-     *
-     * Third indices represent current number in date: 00.00.0000
-     */
-    size_t days = (csv_content[file_line_idx][date_idx][0] - '0') * 10 + (csv_content[file_line_idx][date_idx][1] - '0') * 1;
+    size_t days, months, years;
+
+    /** Take string date of the format `DD.MM.YYYY` and remove periods to get `DD MM YYYY` */
+    string string_date = csv_content[file_line_idx][date_idx];
+    replace(string_date.begin(), string_date.end(), '.', ' ');
+
+    /** Extract each number using stringstream into corresponding variables */
+    std::istringstream(string_date) >> days >> months >> years;
+
     date.tm_mday = days;
-
-    size_t months = (csv_content[file_line_idx][date_idx][3] - '0') * 10 + (csv_content[file_line_idx][date_idx][4] - '0') * 1;
-    date.tm_mon = months - 1; // month correction
-
-    size_t years = 0;
-    for (size_t k = 0; k < 4; k++)
-        years += (csv_content[file_line_idx][date_idx][k + 6] - '0') * pow(10, 3 - k);
+    date.tm_mon = months - 1;    // month correction
     date.tm_year = years - 1900; // year correction
 
     time_t formated_birthday_date = mktime(&date); // Interpret date struct to a `date` format
 
-    /**
-     * time(NULL) returns today's date, represented in seconds.
-     */
+    /** time(NULL) returns today's date, represented in seconds. */
     return (difftime(time(NULL), formated_birthday_date) + 86400L / 2) / 86400L / 365;
 }
 
@@ -204,9 +200,13 @@ void print_results(vector<string> &chosen_workers, size_t condition)
  * @param FILE reference to the original file
  * @param csv_content file line captured into array of strings: {name, birthday, workSince}
  */
-void remove_less_than_year(std::ifstream &FILE, vector<vector<string>> &csv_content)
+void remove_less_than_year(
+    std::ifstream &FILE,
+    const char *orig_file_path,
+    const char *output_path,
+    vector<vector<string>> &csv_content)
 {
-    std::ofstream OUTPUT_FILE("../assets/output.csv");
+    std::ofstream OUTPUT_FILE(output_path);
 
     /** Write to output file lines of only those workers, who work more than a year */
     for (size_t i = 0; i < csv_content.size(); i++)
@@ -218,8 +218,8 @@ void remove_less_than_year(std::ifstream &FILE, vector<vector<string>> &csv_cont
     FILE.close();
     OUTPUT_FILE.close();
 
-    remove("../assets/companyData.csv");
-    rename("../assets/output.csv", "../assets/companyData.csv");
+    remove(orig_file_path);
+    rename(output_path, orig_file_path);
 
-    std::cout << "\n[ companyData.csv ] is successfully overwritted!" << std::endl;
+    std::cout << "\n[ " << orig_file_path << " ] is successfully overwritted!" << std::endl;
 }
