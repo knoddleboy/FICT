@@ -1,11 +1,6 @@
 #pragma once
 
-#include <string>
-#include <vector>
 #include <fstream>
-
-using std::string;
-using std::vector;
 
 std::fstream create_file(const char *);
 void fill_original_file(std::fstream &);

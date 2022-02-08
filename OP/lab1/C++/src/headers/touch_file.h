@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 
 /**
  * @brief Opens file in mode, provided in template.

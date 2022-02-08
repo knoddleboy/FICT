@@ -1,7 +1,7 @@
 #pragma once
 
 #include <fstream>
-#include "./dependencies.h"
+#include <string>
 
 /**
  * @brief Copies all the data from the original file and line by line pastes into output file
@@ -11,7 +11,7 @@
  */
 void copy_original_file_data(std::fstream &original_file, std::fstream &output_file)
 {
-    string line; // represents line in the original file
+    std::string line; // represents line in the original file
 
     original_file.seekg(0, std::ios::beg); // Set position to the beginning
 

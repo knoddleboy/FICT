@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <fstream>
 #include <string>
 
@@ -10,7 +11,7 @@
  */
 void fill_original_file(std::fstream &original_file)
 {
-    string line; // represents line in the original file
+    std::string line; // represents line in the original file
 
     std::cout << "Enter text:" << std::endl;
     while (std::getline(std::cin, line))
