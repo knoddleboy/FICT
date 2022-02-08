@@ -9,16 +9,18 @@
  * @param filepath path to the file to be touched
  * @return filestream object
  */
-template <typename stream_T>
-stream_T touch_file(const char *filepath)
+
+std::fstream touch_file(const char *filepath)
 {
-    stream_T file(filepath);
+    std::fstream file(filepath, std::fstream::in | std::fstream::out | std::fstream::trunc);
 
     if (!file.is_open())
     {
         std::cerr << "Could not open/read file " << filepath << std::endl;
         exit(1);
     }
+
+    file.clear();
 
     return file;
 }
