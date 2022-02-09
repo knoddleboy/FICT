@@ -2,9 +2,9 @@
  * @file main.cpp
  * @author Knysh Dmytro, IP-11
  *
- * @brief Fundamentals of Programming - Lab #1, var 15
+ * @brief Fundamentals of Programming - Lab #2, var 15
  *
- * @date 08.02.2022
+ * @date 15.02.2022
  */
 
 #include <algorithm>
@@ -20,27 +20,25 @@
 using std::string;
 using std::vector;
 
-vector<vector<string>> parse_csv_data(std::ifstream &);
+std::fstream touch_file(const char *);
+void insert_data_into_csv(std::fstream &);
+vector<vector<string>> parse_csv_data(std::fstream &);
 vector<string> workers_list_conditionally(vector<vector<string>> &, size_t);
 size_t date_to_years(vector<vector<string>> &, size_t, size_t);
 void print_results(vector<string> &, size_t);
-void remove_less_than_year(std::ifstream &, const char *, const char *, vector<vector<string>> &);
+void remove_less_than_year(const char *, const char *, vector<vector<string>> &);
 
 int main()
 {
-    const char *filepath = "../../assets/companyData.csv";
-    const char *output_tempfile_path = "../../assets/output.csv";
+    const char *input_file_path = "../../assets/company_data.csv";
+    const char *tempfile_path = "../../assets/output.csv";
 
-    /** Original file read-only stream */
-    std::ifstream company_data(filepath, std::ios::binary);
-    if (!company_data.is_open())
-    {
-        std::cerr << "Could not open/read file" << std::endl;
-        exit(1);
-    }
+    std::fstream input_file = touch_file(input_file_path);
+
+    insert_data_into_csv(input_file);
 
     /** Extract words from each line to 2D vector */
-    vector<vector<string>> csv_file_content = parse_csv_data(company_data);
+    vector<vector<string>> csv_file_content = parse_csv_data(input_file);
 
     /** Get the number of workers over 40 years */
     vector<string> workers_over_40_years = workers_list_conditionally(csv_file_content, 1);
@@ -50,45 +48,99 @@ int main()
     vector<string> workers_working_20_years = workers_list_conditionally(csv_file_content, 2);
     print_results(workers_working_20_years, 2);
 
-    /** Remove info about workers working less than a year */
-    remove_less_than_year(company_data, filepath, output_tempfile_path, csv_file_content);
+    input_file.close(); // be sure to close stream before removing file data
 
-    if (company_data.is_open())
-        company_data.close();
+    /** Remove info about workers working less than a year */
+    remove_less_than_year(input_file_path, tempfile_path, csv_file_content);
 
     std::cin.get();
     return 0;
 }
 
 /**
+ * @brief Creates input file stream
+ *
+ * @param filepath path to the file to be touched
+ * @return input file stream object
+ */
+std::fstream touch_file(const char *filepath)
+{
+    std::fstream file(filepath, std::fstream::in | std::fstream::out | std::fstream::trunc | std::fstream::binary);
+
+    if (!file.is_open())
+    {
+        std::cerr << "Could not open/read file " << filepath << std::endl;
+        exit(1);
+    }
+
+    file.clear();
+
+    return file;
+}
+
+/**
+ * @brief Translates cin input into input file
+ *
+ * @param input_file reference to the input file stream
+ */
+void insert_data_into_csv(std::fstream &input_file)
+{
+    string line; // represents current line in the file stream
+
+    /** Take input from cin to the file until EOF */
+    std::cout << "Enter file data:" << std::endl;
+    while (std::getline(std::cin, line))
+        input_file << line << std::endl;
+
+    input_file.clear();
+}
+
+/**
  * @brief Parses the content of the csv file into a 2D vector:
  * {{name, birthday, workSince}, ...}, where each subarray is a
- * single line in the original file.
+ * single line in the original file (splitted).
  *
- * @param FILE reference to the original file
+ * @param input_file reference to the original file
  * @return 2D vector of strings
  */
-vector<vector<string>> parse_csv_data(std::ifstream &FILE)
+vector<vector<string>> parse_csv_data(std::fstream &input_file)
 {
     string line, block;
     vector<vector<string>> content;
 
+    input_file.seekg(0, std::ios::beg);
+
     /**
+     * Since input line is of the form "Full Name,DD.MM.YYYY,DD.MM.YYYY", we need to parse all the
+     * data from it i.e. full name and two dates. Thus we need a container such as std::vector to
+     * store the data but as we would probably have several lines of the data, we should
+     * store the info into 2D vector of the form: {{name, birthday, workSince}, ...}.
+     *
+     * TODO:
      * 1) Read every line in the file.
-     * 2) Extract words, separated in the line by a comma using stringstream and getline with separator.
-     * 3) Store each word in a vector `row` and each this vector is stored in a 2D vector `content`
+     * 2) Extract words, separated in the line by a comma:
+     *      - iterate through the line with find method with a comma delimiter;
+     *      - once a comma is found - push a substring-word into a `row` and erase it from string,
+     *        then push remaining word. The row on each iteration is {name, birthday, workSince};
+     *      - store each `row` in the `content` vector.
      */
-    while (std::getline(FILE, line))
+    while (std::getline(input_file, line))
     {
         vector<string> row;
+        size_t pos = 0; // current position in the line
 
-        std::stringstream str(line);
+        while ((pos = line.find(',')) != string::npos) // compare with npos to guarantee that
+        {                                              // find still seeking for the delimiter
+            row.push_back(line.substr(0, pos));
+            line.erase(0, pos + 1);
+        }
 
-        while (std::getline(str, block, ','))
-            row.push_back(block);
+        row.push_back(line); // push last substring
 
         content.push_back(row);
     }
+
+    input_file.clear();
 
     return content;
 }
@@ -195,31 +247,27 @@ void print_results(vector<string> &chosen_workers, size_t condition)
 }
 
 /**
- * @brief Removes from `FILE` information about workers working less than a year.
+ * @brief Removes from input file information about workers working less than a year.
  *
- * @param FILE reference to the original file
+ * @param input_file_path path to the original file
+ * @param temp_file_path path to the temp file to be replaced with original
  * @param csv_content file line captured into array of strings: {name, birthday, workSince}
  */
-void remove_less_than_year(
-    std::ifstream &FILE,
-    const char *orig_file_path,
-    const char *output_path,
-    vector<vector<string>> &csv_content)
+void remove_less_than_year(const char *input_file_path, const char *temp_file_path, vector<vector<string>> &csv_content)
 {
-    std::ofstream OUTPUT_FILE(output_path);
+    std::ofstream TEMP_OUTPUT_FILE(temp_file_path);
 
     /** Write to output file lines of only those workers, who work more than a year */
     for (size_t i = 0; i < csv_content.size(); i++)
     {
         if (date_to_years(csv_content, i, 2) >= 1)
-            OUTPUT_FILE << csv_content[i][0] << ',' << csv_content[i][1] << ',' << csv_content[i][2] << std::endl;
+            TEMP_OUTPUT_FILE << csv_content[i][0] << ',' << csv_content[i][1] << ',' << csv_content[i][2] << std::endl;
     }
 
-    FILE.close();
-    OUTPUT_FILE.close();
+    TEMP_OUTPUT_FILE.close();
 
-    remove(orig_file_path);
-    rename(output_path, orig_file_path);
+    remove(input_file_path);
+    rename(temp_file_path, input_file_path);
 
-    std::cout << "\n[ " << orig_file_path << " ] is successfully overwritted!" << std::endl;
+    std::cout << "\n[ " << input_file_path << " ] is successfully overwritted!" << std::endl;
 }
