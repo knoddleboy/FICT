@@ -23,9 +23,9 @@ void cin_input_into_file(const char *input_file_path)
     /** Open file stream */
     std::ofstream input_file = touch_file<std::ofstream>(input_file_path);
 
-    /* ========================================================================= */
-    /* ========== Parse strings from cin input into vector of structs ========== */
-    /* ========================================================================= */
+    /* ------------------------------------------------------------------------- */
+    /*            Parse strings from cin input into vector of structs            */
+    /* ------------------------------------------------------------------------- */
 
     string line; // line in the file stream
 
@@ -53,7 +53,7 @@ void cin_input_into_file(const char *input_file_path)
         vector<string> row;
         size_t pos = 0; // current position in the line
 
-        /** Compare with npos to guarantee that `find` still seeking for the delimiter */
+        /** Compare with npos to guarantee that `find` is still seeking for the delimiter */
         while ((pos = line.find(',')) != string::npos)
         {
             row.push_back(line.substr(0, pos));
@@ -63,9 +63,9 @@ void cin_input_into_file(const char *input_file_path)
         File_serialized.push_back({row[0], row[1], line});
     }
 
-    /* ========================================================================= */
-    /* ================= Write each vector's struct into file ================== */
-    /* ========================================================================= */
+    /* ------------------------------------------------------------------------- */
+    /*                   Write each vector's struct into file                    */
+    /* ------------------------------------------------------------------------- */
 
     for (const auto &data_unit : File_serialized)
         write<std::ofstream>(input_file, data_unit.full_name, data_unit.age, data_unit.works);

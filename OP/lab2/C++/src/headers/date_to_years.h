@@ -37,8 +37,8 @@ size_t date_to_years(vector<FileData> &file_content, size_t file_line_idx, size_
     date.tm_mon = months - 1;    // month correction
     date.tm_year = years - 1900; // year correction
 
-    time_t formated_birthday_date = mktime(&date); // Interpret date struct to a `date` format
+    time_t formated_birthday_date = mktime(&date); // Birthday in unix time
 
-    /** time(NULL) returns today's date, represented in seconds. */
+    /** Returns date, represented in years. */
     return (difftime(time(NULL), formated_birthday_date) + 86400L / 2) / 86400L / 365;
 }
