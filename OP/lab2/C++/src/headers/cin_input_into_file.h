@@ -20,7 +20,7 @@ using std::vector;
  */
 void cin_input_into_file(const char *input_file_path)
 {
-    /** Open file stream */
+    // Open file stream
     std::ofstream input_file = touch_file<std::ofstream>(input_file_path);
 
     /* ------------------------------------------------------------------------- */
@@ -29,7 +29,7 @@ void cin_input_into_file(const char *input_file_path)
 
     string line; // line in the file stream
 
-    /** Array of structs, each of which represents current line's data */
+    // Array of structs, each of which represents current line's data
     vector<FileData> File_serialized;
 
     /**
@@ -47,13 +47,13 @@ void cin_input_into_file(const char *input_file_path)
      *        The remaining word would be the line. The row on each iteration is [name, age];
      *      - then push each `row` into the `vector<FileData>`.
      */
-    std::cout << "Enter file data:" << std::endl;
+    std::cout << "Enter file data:\n";
     while (std::getline(std::cin, line))
     {
         vector<string> row;
         size_t pos = 0; // current position in the line
 
-        /** Compare with npos to guarantee that `find` is still seeking for the delimiter */
+        // Compare with npos to guarantee that `find` is still seeking for the delimiter
         while ((pos = line.find(',')) != string::npos)
         {
             row.push_back(line.substr(0, pos));

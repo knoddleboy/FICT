@@ -20,23 +20,24 @@ int main()
     const char *input_file_path = "../../assets/company_data.dat";
     const char *tempfile_path = "../../assets/output.dat";
 
-    /** Extract content from cin into the file */
+    // Extract content from cin into the file
     cin_input_into_file(input_file_path);
 
-    /** Extract words from each line of the file into the vector of structs */
+    // Extract words from each line of the file into the vector of structs
     vector<FileData> file_content = parse_file_data(input_file_path);
 
-    /** Get the number of workers over 40 years */
+    // Get the number of workers over 40 years
     vector<string> workers_over_40_years = workers_list_conditionally(file_content, 0);
     print_results(workers_over_40_years, 0);
 
-    /** Get the number of workers who work 20 and more years */
+    // Get the number of workers who work 20 and more years
     vector<string> workers_working_20_years = workers_list_conditionally(file_content, 1);
     print_results(workers_working_20_years, 1);
 
-    /** Remove info about workers working less than a year */
+    // Remove info about workers working less than a year
     remove_less_than_year(input_file_path, tempfile_path, file_content);
 
-    std::cin.get();
+    // std::cin.get();
+    system("pause");
     return 0;
 }

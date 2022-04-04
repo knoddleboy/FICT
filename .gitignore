@@ -36,8 +36,7 @@
 .reportdata
 .gitattributes
 __pycache__/
-*_extended*
 desktop.ini
-exec.sh
 ASD
 _*
+assets

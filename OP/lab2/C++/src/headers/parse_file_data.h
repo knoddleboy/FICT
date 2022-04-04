@@ -19,7 +19,7 @@ using std::vector;
  */
 vector<FileData> parse_file_data(const char *input_file_path)
 {
-    /** Open file stream */
+    // Open file stream
     std::ifstream input_file = touch_file<std::ifstream>(input_file_path);
 
     input_file.seekg(0, std::ios::beg);

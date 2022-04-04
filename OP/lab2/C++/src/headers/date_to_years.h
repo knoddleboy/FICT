@@ -25,12 +25,12 @@ size_t date_to_years(vector<FileData> &file_content, size_t file_line_idx, size_
 
     size_t days, months, years;
 
-    /** Take string date of the format `DD.MM.YYYY` and remove periods to get `DD MM YYYY` */
+    // Take string date of the format `DD.MM.YYYY` and remove periods to get `DD MM YYYY`
     string string_date = (date_idx == 0) ? file_content[file_line_idx].age : file_content[file_line_idx].works;
 
     replace(string_date.begin(), string_date.end(), '.', ' ');
 
-    /** Extract each number using stringstream into corresponding variables */
+    // Extract each number using stringstream into corresponding variables
     std::istringstream(string_date) >> days >> months >> years;
 
     date.tm_mday = days;
@@ -39,6 +39,6 @@ size_t date_to_years(vector<FileData> &file_content, size_t file_line_idx, size_
 
     time_t formated_birthday_date = mktime(&date); // Birthday in unix time
 
-    /** Returns date, represented in years. */
+    // Returns date, represented in years
     return (difftime(time(NULL), formated_birthday_date) + 86400L / 2) / 86400L / 365;
 }

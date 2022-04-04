@@ -22,7 +22,7 @@ void remove_less_than_year(const char *input_file_path, const char *temp_file_pa
 {
     std::ofstream temp_file = touch_file<std::ofstream>(temp_file_path);
 
-    /** Write to output file lines of only those workers, who work more than a year */
+    // Write to output file lines of only those workers, who work more than a year
     for (size_t i = 0; i < file_content.size(); i++)
     {
         if (date_to_years(file_content, i, 2) >= 1)
@@ -34,5 +34,5 @@ void remove_less_than_year(const char *input_file_path, const char *temp_file_pa
     remove(input_file_path);
     rename(temp_file_path, input_file_path);
 
-    std::cout << "\n[ " << input_file_path << " ] is successfully overwritted!" << std::endl;
+    std::cout << "\n[ " << input_file_path << " ] is successfully overwritted!\n";
 }

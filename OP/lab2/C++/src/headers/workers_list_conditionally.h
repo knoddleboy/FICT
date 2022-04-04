@@ -19,7 +19,7 @@ using std::vector;
  */
 vector<string> workers_list_conditionally(vector<FileData> &file_content, size_t condition)
 {
-    /** Will contain names of selected workers */
+    // Will contain names of selected workers
     vector<string> workers_list;
 
     for (size_t i = 0; i < file_content.size(); i++)
