@@ -53,7 +53,9 @@ void cin_input_into_file(const char *input_file_path)
         vector<string> row;
         size_t pos = 0; // current position in the line
 
-        // Compare with npos to guarantee that `find` is still seeking for the delimiter
+        // Compare with npos to guarantee that `find` is still seeking for the delimiter:
+        // This is a string, with a comma
+        //                 ^ (index - 16)
         while ((pos = line.find(',')) != string::npos)
         {
             row.push_back(line.substr(0, pos));

@@ -37,7 +37,6 @@ int main()
     // Remove info about workers working less than a year
     remove_less_than_year(input_file_path, tempfile_path, file_content);
 
-    // std::cin.get();
     system("pause");
     return 0;
 }
