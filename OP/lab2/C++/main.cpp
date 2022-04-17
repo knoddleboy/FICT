@@ -13,7 +13,7 @@
 #include "headers/generate_value.h"
 #include "headers/MaterialPoint.h"
 #include "headers/print_points_in_first_octant.h"
-#include "headers/show_coords_table.h" < / ctime>
+#include "headers/show_coords_table.h"
 
 int main()
 {
@@ -31,25 +31,26 @@ int main()
     {
         std::cout << "The number of points: ";
         std::cin >> number_of_points;
+        std::cin.get();
     } while (number_of_points < 0);
 
     // Create vector of points
-    std::vector<MaterialPoint> material_point;
+    std::vector<MaterialPoint> material_points;
     for (size_t i = 0; i < number_of_points; i++)
-        material_point.push_back(MaterialPoint());
+        material_points.push_back(MaterialPoint());
 
     // Print points after initialization
-    show_coords_table(material_point, "Points");
+    show_coords_table(material_points, "Points");
 
     // Change points position
-    for (auto &point : material_point)
+    for (auto &point : material_points)
         point.update_point_position(time);
 
     // Print points after updating their position
-    show_coords_table(material_point, "Points over time");
+    show_coords_table(material_points, "Points over time");
 
     // Print points that moved into the first octant
-    print_points_in_first_octant(material_point);
+    print_points_in_first_octant(material_points);
 
     std::cin.get();
     return 0;

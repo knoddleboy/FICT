@@ -12,6 +12,7 @@ private:
     double m_vectors[3];
 
 public:
+    MaterialPoint(double x, double y, double z, double vx, double vy, double vz) : m_coords{x, y, z}, m_vectors{vx, vy, vz} {};
     MaterialPoint()
     {
         for (size_t i = 0; i < 3; i++)

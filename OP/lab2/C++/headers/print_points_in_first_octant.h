@@ -18,7 +18,7 @@ void print_points_in_first_octant(std::vector<MaterialPoint> const &points)
 
     size_t in_first_octant = 0; // Total points in the first octant
 
-    for (size_t i = 0; i < points.size() - 1; i++)
+    for (size_t i = 0; i < points.size(); i++)
     {
         if (verify_first_octant(points[i]))
         {
