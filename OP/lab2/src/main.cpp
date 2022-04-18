@@ -10,10 +10,9 @@
 #include <iostream>
 #include <ctime>
 
-#include "headers/generate_value.h"
-#include "headers/MaterialPoint.h"
-#include "headers/print_points_in_first_octant.h"
-#include "headers/show_coords_table.h"
+#include "../headers/MaterialPoint.h"
+#include "../headers/show_coords_table.h"
+#include "../headers/print_points_in_first_octant.h"
 
 int main()
 {

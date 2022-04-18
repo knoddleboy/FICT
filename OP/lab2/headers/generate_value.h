@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdlib>
+
 /**
  * @brief Generate a number of type T
  *
@@ -8,8 +10,7 @@
  * @param max maximal value
  * @return Pseudorandom number
  */
-template <typename T = double>
-T generate_value(T min = -20.0, T max = 20.0)
+double generate_value(double min = -20.0, double max = 20.0)
 {
-    return (T)rand() / RAND_MAX * (max - min) + min;
+    return (double)rand() / RAND_MAX * (max - min) + min;
 }
