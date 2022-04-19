@@ -45,7 +45,7 @@ int main()
         point.update_point_position(time);
 
     // Print points after updating their position
-    show_coords_table(material_points, "Points over time");
+    show_coords_table(material_points, "Moved points");
 
     // Print points that moved into the first octant
     print_points_in_first_octant(material_points);
