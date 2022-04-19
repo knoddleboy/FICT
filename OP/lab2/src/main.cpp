@@ -11,8 +11,7 @@
 #include <ctime>
 
 #include "../headers/MaterialPoint.h"
-#include "../headers/show_coords_table.h"
-#include "../headers/print_points_in_first_octant.h"
+#include "../headers/utils.h"
 
 int main()
 {

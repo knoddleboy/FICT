@@ -1,5 +1,7 @@
+#define UTILS_H
+
 #include "../headers/MaterialPoint.h"
-#include "../headers/generate_value.h"
+#include "../headers/utils.h"
 
 MaterialPoint::MaterialPoint()
 {
