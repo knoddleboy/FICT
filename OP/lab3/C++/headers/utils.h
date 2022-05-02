@@ -2,4 +2,4 @@
 
 #include "./Circle.h"
 
-Circle &find_largest_circle(Circle &, Circle &, Circle &);
+Circle &find_longest_circle(Circle &, Circle &, Circle &);

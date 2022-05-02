@@ -32,9 +32,9 @@ int main()
 
     std::cout << "C1 x incremented: " << ++C1 << "\n";
     std::cout << "C2 y incremented: " << C2++ << " -> " << C2 << "\n";
-    std::cout << "C3 scaled: " << C1 * 3 << "\n";
+    std::cout << "C3 scaled: " << C3 * 3 << "\n";
 
-    std::cout << "\nCircle with longest circumference: " << find_largest_circle(C1, C2, C3) << "\n";
+    std::cout << "\nCircle with the longest circumference: " << find_longest_circle(C1, C2, C3) << "\n";
 
     return 0;
 }

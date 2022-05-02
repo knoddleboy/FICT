@@ -1,6 +1,6 @@
 #include "../headers/Circle.h"
 
-Circle &find_largest_circle(Circle &circle1, Circle &circle2, Circle &circle3)
+Circle &find_longest_circle(Circle &circle1, Circle &circle2, Circle &circle3)
 {
     const double c1_circ = circle1.get_circumference(),
                  c2_circ = circle2.get_circumference(),
