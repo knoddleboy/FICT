@@ -26,13 +26,13 @@ int main()
 
     size_t number_of_linear, number_of_quadratic;
 
-    std::cout << "Enter the number of linear fuctions (n): ";
+    std::cout << "Enter the number of linear functions (n): ";
     do
     {
         std::cin >> number_of_linear;
     } while (number_of_linear < 0);
 
-    std::cout << "Enter the number of quadratic fuctions (m): ";
+    std::cout << "Enter the number of quadratic functions (m): ";
     do
     {
         std::cin >> number_of_quadratic;
