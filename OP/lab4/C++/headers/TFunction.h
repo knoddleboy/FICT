@@ -16,12 +16,12 @@ public:
           m_linear_coeff(rand_range(-20.0, 20.0)),
           m_free_term(rand_range(-20.0, 20.0)) {}
 
-    virtual void increaseCoefficients(double scalar);
-    virtual void decreaseCoefficients(double scalar);
+    virtual void increase_coefficients(double scalar);
+    virtual void decrease_coefficients(double scalar);
 
-    void evaluatePoint(double x_value);
-    void showEvaluatedValue();
-    double getEvaluatedValue();
+    void evaluate_point(double x_value);
+    void show_evaluated_value();
+    double get_evaluated_value();
 
     friend std::ostream &operator<<(std::ostream &out, const TFunction &func);
 };

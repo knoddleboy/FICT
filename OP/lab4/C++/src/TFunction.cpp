@@ -6,7 +6,7 @@
 /**
  * @brief Increase all function coefficients by `scalar`.
  */
-void TFunction::increaseCoefficients(double scalar)
+void TFunction::increase_coefficients(double scalar)
 {
     m_quadratic_coeff += scalar;
     m_linear_coeff += scalar;
@@ -16,7 +16,7 @@ void TFunction::increaseCoefficients(double scalar)
 /**
  * @brief Decrease all function coefficients by `scalar`.
  */
-void TFunction::decreaseCoefficients(double scalar)
+void TFunction::decrease_coefficients(double scalar)
 {
     m_quadratic_coeff -= scalar;
     m_linear_coeff -= scalar;
@@ -26,7 +26,7 @@ void TFunction::decreaseCoefficients(double scalar)
 /**
  * @brief Evaluate function in `x_value` point.
  */
-void TFunction::evaluatePoint(double x_value)
+void TFunction::evaluate_point(double x_value)
 {
     double evaluated_value = m_quadratic_coeff * (x_value * x_value) + m_linear_coeff * x_value + m_free_term;
 
@@ -40,7 +40,7 @@ void TFunction::evaluatePoint(double x_value)
 /**
  * @brief Display evaluated value in form: f(x0) = a.
  */
-void TFunction::showEvaluatedValue()
+void TFunction::show_evaluated_value()
 {
     std::cout << "f(" << m_point << ") = " << m_point_evaluated << "\n";
 }
@@ -61,7 +61,7 @@ std::ostream &operator<<(std::ostream &out, const TFunction &func)
 /**
  * @brief Getter: gets evaluated value, number.
  */
-double TFunction::getEvaluatedValue()
+double TFunction::get_evaluated_value()
 {
     return m_point_evaluated;
 }

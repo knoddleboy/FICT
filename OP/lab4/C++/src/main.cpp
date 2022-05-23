@@ -53,27 +53,27 @@ int main()
     for (size_t i = 0; i < number_of_quadratic; i++)
         quadratic_function.push_back(QuadraticFunction());
 
-    double current_max_value = linear_function[0].getEvaluatedValue();
+    double current_max_value = linear_function[0].get_evaluated_value();
     TFunction max_value_fn;
 
     std::cout << "\nLinear functions:\n--------------------\n";
     for (auto &func : linear_function)
     {
         // Evaluate function at random point value
-        func.evaluatePoint(point);
+        func.evaluate_point(point);
 
         std::cout << func << ",\t";
-        func.showEvaluatedValue();
+        func.show_evaluated_value();
     }
 
     std::cout << "\nQuadratic functions:\n--------------------\n";
     for (auto &func : quadratic_function)
     {
         // Evaluate function at random point value
-        func.evaluatePoint(point);
+        func.evaluate_point(point);
 
         std::cout << func << ",\t";
-        func.showEvaluatedValue();
+        func.show_evaluated_value();
     }
 
     std::cout << "\n[Increasing linear coefficients & decreasing quadratic ones]\n";
@@ -82,38 +82,38 @@ int main()
     for (auto &func : linear_function)
     {
         // Increase linear function's coefficients by 3
-        func.increaseCoefficients(3);
+        func.increase_coefficients(3);
 
         // Evaluate function at random point value
-        func.evaluatePoint(point);
+        func.evaluate_point(point);
 
-        if (func.getEvaluatedValue() > current_max_value)
+        if (func.get_evaluated_value() > current_max_value)
         {
-            current_max_value = func.getEvaluatedValue();
+            current_max_value = func.get_evaluated_value();
             max_value_fn = func;
         }
 
         std::cout << func << ",\t";
-        func.showEvaluatedValue();
+        func.show_evaluated_value();
     }
 
     std::cout << "\nQuadratic functions:\n--------------------\n";
     for (auto &func : quadratic_function)
     {
         // Decrease quadratic function's coefficients by 2
-        func.decreaseCoefficients(2);
+        func.decrease_coefficients(2);
 
         // Evaluate function at random point value
-        func.evaluatePoint(point);
+        func.evaluate_point(point);
 
-        if (func.getEvaluatedValue() > current_max_value)
+        if (func.get_evaluated_value() > current_max_value)
         {
-            current_max_value = func.getEvaluatedValue();
+            current_max_value = func.get_evaluated_value();
             max_value_fn = func;
         }
 
         std::cout << func << ",\t";
-        func.showEvaluatedValue();
+        func.show_evaluated_value();
     }
 
     std::cout << "\nFunction " << max_value_fn << " has maximum value of " << current_max_value << "\n";
