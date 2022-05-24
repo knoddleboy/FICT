@@ -16,16 +16,16 @@ if __name__ == "__main__":
         # Evaluate function at random point value
         fn.evaluate_point(point)
 
-        print(f"{fn},\t{fn.show_evaluated_value}")
+        print(fn)
 
     print("\nQuadratic functions:\n--------------------")
     for fn in quadratic_function:
         # Evaluate function at random point value
         fn.evaluate_point(point)
 
-        print(f"{fn},\t{fn.show_evaluated_value}")
+        print(fn)
 
-    print("\n[Increasing linear coefficients & decreasing quadratic ones]")
+    print("\nIncreasing linear coefficients & decreasing quadratic ones:")
 
     print("\nLinear functions:\n--------------------")
     for fn in linear_function:
@@ -35,11 +35,12 @@ if __name__ == "__main__":
         # Evaluate function at random point value
         fn.evaluate_point(point)
 
-        if current_max_value and fn.get_evaluated_value > current_max_value:
+        if not current_max_value:
+            # If the current_max_value is unset for the moment
             current_max_value = fn.get_evaluated_value
             max_value_fn = fn
-        else:
-            # If the current_max_value is unset for the moment
+
+        elif fn.get_evaluated_value > current_max_value:
             current_max_value = fn.get_evaluated_value
             max_value_fn = fn
 
@@ -53,11 +54,12 @@ if __name__ == "__main__":
         # Evaluate function at random point value
         fn.evaluate_point(point)
 
-        if current_max_value and fn.get_evaluated_value > current_max_value:
+        if not current_max_value:
+            # If the current_max_value is unset for the moment
             current_max_value = fn.get_evaluated_value
             max_value_fn = fn
-        else:
-            # If the current_max_value is unset for the moment
+
+        elif fn.get_evaluated_value > current_max_value:
             current_max_value = fn.get_evaluated_value
             max_value_fn = fn
 
