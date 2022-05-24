@@ -5,20 +5,43 @@
  * @brief Fundamentals of Programming - Lab #4, var 15
 
  * @date 24.05.2022
- *
  */
 
 #include <iostream>
 #include <ctime>
 #include <vector>
-#include <string>
 
-using std::string;
 using std::vector;
 
 #include "../headers/TFunction.h"
 #include "../headers/LinearFunction.h"
 #include "../headers/QuadraticFunction.h"
+
+// union Variant_fn
+// {
+//     LinearFunction l;
+//     QuadraticFunction q;
+// };
+
+typedef enum
+{
+    LINEAR,
+    QUADRATIC
+} Flag;
+
+// Here we store the function, whose value in point is the highest
+typedef struct
+{
+    // Flag to indicate curent union's value
+    Flag flag;
+
+    union
+    {
+        LinearFunction l;
+        QuadraticFunction q;
+    } u_fn;
+
+} Variant_fn;
 
 int main()
 {
@@ -54,7 +77,7 @@ int main()
         quadratic_function.push_back(QuadraticFunction());
 
     double current_max_value = linear_function[0].get_evaluated_value();
-    TFunction max_value_fn;
+    Variant_fn max_value_fn = {};
 
     std::cout << "\nLinear functions:\n--------------------\n";
     for (auto &func : linear_function)
@@ -62,8 +85,7 @@ int main()
         // Evaluate function at random point value
         func.evaluate_point(point);
 
-        std::cout << func << ",\t";
-        func.show_evaluated_value();
+        std::cout << func << "\n";
     }
 
     std::cout << "\nQuadratic functions:\n--------------------\n";
@@ -72,11 +94,10 @@ int main()
         // Evaluate function at random point value
         func.evaluate_point(point);
 
-        std::cout << func << ",\t";
-        func.show_evaluated_value();
+        std::cout << func << "\n";
     }
 
-    std::cout << "\n[Increasing linear coefficients & decreasing quadratic ones]\n";
+    std::cout << "\nIncreasing linear coefficients & decreasing quadratic ones:\n";
 
     std::cout << "\nLinear functions:\n--------------------\n";
     for (auto &func : linear_function)
@@ -90,7 +111,8 @@ int main()
         if (func.get_evaluated_value() > current_max_value)
         {
             current_max_value = func.get_evaluated_value();
-            max_value_fn = func;
+            max_value_fn.u_fn.l = func;
+            max_value_fn.flag = LINEAR;
         }
 
         std::cout << func << ",\t";
@@ -109,14 +131,23 @@ int main()
         if (func.get_evaluated_value() > current_max_value)
         {
             current_max_value = func.get_evaluated_value();
-            max_value_fn = func;
+            max_value_fn.u_fn.q = func;
+            max_value_fn.flag = QUADRATIC;
         }
 
         std::cout << func << ",\t";
         func.show_evaluated_value();
     }
 
-    std::cout << "\nFunction " << max_value_fn << " has maximum value of " << current_max_value << "\n";
+    // std::cout << "\nFunction " << max_value_fn.l << max_value_fn.q << " has maximum value of " << current_max_value << "\n";
+    std::cout << "\nFunction ";
+
+    if (max_value_fn.flag == LINEAR)
+        std::cout << max_value_fn.u_fn.l;
+    else
+        std::cout << max_value_fn.u_fn.q;
+
+    std::cout << " has maximum value of " << current_max_value << "\n";
 
     return 0;
 }
