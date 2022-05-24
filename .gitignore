@@ -37,7 +37,7 @@ build
 .vscode
 .reportdata
 .gitattributes
-__pycache__/
+__pycache__
 desktop.ini
 ASD
 assets
