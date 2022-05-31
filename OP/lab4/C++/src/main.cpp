@@ -17,12 +17,6 @@ using std::vector;
 #include "../headers/LinearFunction.h"
 #include "../headers/QuadraticFunction.h"
 
-// union Variant_fn
-// {
-//     LinearFunction l;
-//     QuadraticFunction q;
-// };
-
 typedef enum
 {
     LINEAR,
