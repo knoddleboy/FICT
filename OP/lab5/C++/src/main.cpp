@@ -47,25 +47,6 @@ int main(int argc, char *argv[])
         {
             ++token_index;
 
-            if (tok == "const" || tok.find("(const") != string::npos)
-            {
-                //  const int a = 4;
-                //  ^^^^^     ^
-                string const_identifier = tokens[token_index + 2];
-                root_lexer.erase_identifier_prefix_postfix(const_identifier);
-
-                //  const char *const b = "123"
-                //              ^^^^^ ^
-                if (const_identifier == "const")
-                    const_identifier = tokens[token_index + 3];
-
-                root_lexer.erase_identifier_prefix_postfix(const_identifier);
-
-                // Store extracted identifier
-                extracted_const_identifiers.push_back(const_identifier);
-                ++total_identifiers_per_line;
-            }
-
             // Except when first token is data type since it is function return type
             if (root_lexer.is_data_type(tok))
             {
@@ -74,6 +55,8 @@ int main(int argc, char *argv[])
                 if (token_index == 0 && tokens[1].find("(") != string::npos)
                     continue;
 
+                // const int e = 5
+                // ^^^^^  ^
                 if (tokens[token_index - 1].find("const") != string::npos)
                     continue;
 
@@ -91,6 +74,25 @@ int main(int argc, char *argv[])
 
                 // Store extracted identifier
                 extracted_variable_identifiers.push_back(variable_identifier);
+                ++total_identifiers_per_line;
+            }
+
+            if (tok == "const" || tok.find("(const") != string::npos)
+            {
+                //  const int a = 4;
+                //  ^^^^^     ^
+                string const_identifier = tokens[token_index + 2];
+                root_lexer.erase_identifier_prefix_postfix(const_identifier);
+
+                //  const char *const b = "123"
+                //              ^^^^^ ^
+                if (const_identifier == "const")
+                    const_identifier = tokens[token_index + 3];
+
+                root_lexer.erase_identifier_prefix_postfix(const_identifier);
+
+                // Store extracted identifier
+                extracted_const_identifiers.push_back(const_identifier);
                 ++total_identifiers_per_line;
             }
         }

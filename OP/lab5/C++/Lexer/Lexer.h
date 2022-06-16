@@ -12,7 +12,7 @@ private:
     struct IdentifierNode
     {
         string identifier_name;
-        struct IdentifierNode *left, *right; /* Plain variable goes to left, constant - to right */
+        IdentifierNode *left, *right; /* Plain variable goes to left, constant - to right */
     };
 
     IdentifierNode *empty(IdentifierNode *node);
