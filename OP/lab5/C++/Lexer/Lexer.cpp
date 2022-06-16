@@ -54,7 +54,7 @@ Lexer::IdentifierNode *Lexer::create_new_node(string _value)
     return _new_node;
 }
 
-void Lexer::insert(string _identifier_name, bool _is_plain_var)
+void Lexer::insert(string &_identifier_name, bool &_is_plain_var)
 {
     m_root = insert(m_root, _identifier_name, _is_plain_var);
 }
@@ -74,18 +74,20 @@ vector<string> Lexer::split(string &_str, const char *_delimiter)
     return tokens;
 }
 
-bool Lexer::is_data_type(string _str)
+bool Lexer::is_data_type(string &_str)
 {
     vector<string> data_types = {
         "auto", "int", "short", "long", "size_t",
         "float", "double", "char", "bool"};
 
+    // Remove prefixes and postfixes
     if (_str.find("(") != string::npos)
         _str.erase(0, _str.find("(") + 1);
 
     if (_str.back() == '*' || _str.back() == '&')
         _str.pop_back();
 
+    // If provided string is one of data types, return true and false otherwise
     return std::find(data_types.begin(), data_types.end(), _str) != data_types.end();
 }
 

@@ -27,10 +27,10 @@ public:
     ~Lexer() { m_root = empty(m_root); };
 
     IdentifierNode *create_new_node(string _value);
-    void insert(string _identifier_name, bool _is_plain_var);
+    void insert(string &_identifier_name, bool &_is_plain_var);
 
     vector<string> split(string &_str, const char *_delimiter);
-    bool is_data_type(string _str);
+    bool is_data_type(string &_str);
     void erase_identifier_prefix_postfix(string &_str);
     void printBT();
 };
