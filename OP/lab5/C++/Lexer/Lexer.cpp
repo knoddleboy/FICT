@@ -54,7 +54,7 @@ Lexer::IdentifierNode *Lexer::create_new_node(string _value)
     return _new_node;
 }
 
-void Lexer::insert(string &_identifier_name, bool &_is_plain_var)
+void Lexer::insert(string _identifier_name, bool _is_plain_var)
 {
     m_root = insert(m_root, _identifier_name, _is_plain_var);
 }
