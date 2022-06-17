@@ -20,10 +20,10 @@ private:
 
     void printBT(const string &prefix, const IdentifierNode *node);
 
-    IdentifierNode *m_root = nullptr;
+    IdentifierNode *m_root;
 
 public:
-    Lexer() { m_root = create_new_node("[ROOT]"); };
+    Lexer() : m_root{nullptr} {};
     ~Lexer() { m_root = empty(m_root); };
 
     IdentifierNode *create_new_node(string _value);

@@ -15,8 +15,9 @@ double add(const double &_con, double _plain, const char *strstr)
 
 double arbitrary_func(char character, int some_integer, short small_int, const size_t __signal)
 {
-    char *_loc_string = "yeah";
-    return _con + _plain;
+    character = '1';
+    short another_small_int = small_int;
+    return another_small_int;
 }
 
 int main()
