@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+/* Reset default values */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global variables */
+:root {
+    --blockWidth: 20vw;
+    --mainMargin: calc(var(--blockWidth) / 3);
+
+    --red: rgb(235, 194, 182);
+    --green: rgb(178, 236, 185);
+    --blue: rgb(145, 197, 235);
+}
+
+html {
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+nav,
+aside,
+article,
+footer {
+    display: block;
+}
+
+/* Floats on the left side of the page */
+aside {
+    width: var(--blockWidth);
+    height: 100vh;
+    float: left;
+    position: relative;
+    background-color: var(--red);
+}
+
+/* Positioned at the bottom relatively to the aside */
+aside section {
+    width: 100%;
+    height: var(--blockWidth);
+    position: absolute;
+    bottom: 0;
+    background-color: var(--green);
+}
+
+/* Floats on the right side of a page */
+main {
+    width: calc(100vw - (var(--blockWidth) + var(--mainMargin)));
+    margin-left: var(--mainMargin);
+    float: right;
+}
+
+header {
+    height: var(--blockWidth);
+    padding: calc(var(--mainMargin) / 3);
+    position: relative;
+    background-color: var(--blue);
+}
+
+/* Centered using translate technique */
+.top-logo {
+    width: var(--blockWidth);
+    height: var(--mainMargin);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+    border: 1px solid #000;
+    display: table;
+    text-align: center;
+}
+
+/* Text centered using table-cell technique */
+.top-logo h3 {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+article {
+    height: calc(100vh - 2 * var(--blockWidth));
+    background-color: transparent;
+}
+
+footer {
+    height: var(--blockWidth);
+    padding: calc(var(--mainMargin) / 3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--blue);
+}
+
+/* Centered using flex box */
+.bottom-logo {
+    width: var(--blockWidth);
+    height: var(--mainMargin);
+    background-color: #fff;
+    border: 1px solid #000;
+
+    /* Centering inner text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
