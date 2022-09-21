@@ -6,92 +6,80 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LAB 1 | Var 15 | Web Technologies</title>
-    <link rel="stylesheet" href="../../src/style.css" />
+    <style>
+        .not-body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+
+        .not-body strong {
+            font-size: 100px;
+            font-weight: bold;
+            margin: 0 100px;
+        }
+
+        .not-body span {
+            font-weight: 500;
+            writing-mode: vertical-lr;
+        }
+
+        .not-body span:nth-child(n+8) {
+            transform: scaleX(-1);
+        }
+
+        .not-body span:nth-child(n) {
+            animation: not-found-anim 2s infinite cubic-bezier(.25, .75, .5, 1.25);
+        }
+
+        @keyframes not-found-anim {
+            0% {
+                margin: 0;
+            }
+
+            50% {
+                margin: 0 15px;
+            }
+
+            100% {
+                margin: 0;
+            }
+        }
+    </style>
 </head>
 
-<body>
-    <aside>
-        <section class="center--flex">
-            <div>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque,
-                    dolor!
-                </p>
-                <br />
-                <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione
-                    excepturi repellat eligendi fugit delectus explicabo iste voluptates
-                    voluptatum beatae ipsum.
-                </p>
-                <br>
-                <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-        </section>
-        <section class="side-comment center--flex">
-            <small>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et, provident?
-            </small>
-        </section>
-    </aside>
-    <main>
-        <header>
-            <nav>
-                <div class="top-logo">
-                    <h3 class="center--table">Macrosoft</h3>
-                </div>
-            </nav>
-        </header>
-        <article>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-                deleniti sunt, ratione officiis vitae magnam nihil accusamus esse
-                debitis exercitationem beatae dicta fuga quisquam quam ipsam magni
-                saepe. Soluta, ipsa:
-            </p>
-            <br />
-            <pre>
-for _ in 0..10
-    let handle = thread::spawn(move || {
-        let mut num = counter.lock().unwrap();
-
-        *num += 1;
-    });
-    handles.push(handle);
-}
-            </pre>
-            <br />
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia nemo
-                sint quod quae! Asperiores magni ut eveniet ullam corrupti mollitia
-                assumenda. Fuga voluptas dolor error illum facere eius similique
-                maiores exercitationem, maxime minus quam quae voluptates, molestias
-                architecto, nihil laboriosam a quis odio ducimus! Beatae architecto,
-                recusandae sit pariatur porro quia tenetur et id alias error eos ut
-                perferendis. Quo eveniet mollitia nihil repellat sed dolor velit ipsum
-                voluptate recusandae?
-            </p>
-            <br />
-            <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae rerum
-                magni, enim quos veniam quae ratione quam a ex nulla itaque illum
-                ipsam sequi, expedita possimus sed. Nisi totam aspernatur minus
-                facilis nesciunt error recusandae velit, neque possimus et accusantium
-                modi, voluptas odio vero iusto quae maiores iure, dicta natus expedita
-                vitae! Aspernatur totam hic non? Ipsum in adipisci ducimus provident
-                aperiam, impedit dolorem veritatis molestias nemo repellat beatae quos
-                dicta quod architecto qui vitae voluptates mollitia recusandae, sequi
-                dignissimos ipsa error. Aut consequatur animi quisquam architecto
-                pariatur enim, a voluptatibus facilis nemo nesciunt dicta aliquam
-                autem. Provident, similique asperiores?
-            </p>
-        </article>
-        <footer>
-            <p>© Macrosoft 2022</p>
-            <div class="bottom-logo center--flex">
-                <h4><em>— empowering us</em> 💪</h4>
-            </div>
-        </footer>
-    </main>
+<body class="not-body">
+    <span style="font-size: 5px;">Page Not Found. Go Back!</span>
+    <br>
+    <span style="font-size: 10px;">Page Not Found. Go Back!</span>
+    <br>
+    <span style="font-size: 20px;">Page Not Found. Go Back!</span>
+    <br>
+    <span style="font-size: 30px;">Page Not Found. Go Back!</span>
+    <br>
+    <span style="font-size: 40px;">Page Not Found. Go Back!</span>
+    <br>
+    <span style="font-size: 50px;">Page Not Found. Go Back!</span>
+    <br>
+    <span style="font-size: 60px;">Page Not Found. Go Back!</span>
+    <br>
+    <strong>404</strong>
+    <br>
+    <span style="font-size: 60px;">Page Not Found. Go Back!</span>
+    <br>
+    <span style="font-size: 50px;">Page Not Found. Go Back!</span>
+    <br>
+    <span style="font-size: 40px;">Page Not Found. Go Back!</span>
+    <br>
+    <span style="font-size: 30px;">Page Not Found. Go Back!</span>
+    <br>
+    <span style="font-size: 20px;">Page Not Found. Go Back!</span>
+    <br>
+    <span style="font-size: 10px;">Page Not Found. Go Back!</span>
+    <br>
+    <span style="font-size: 5px;">Page Not Found. Go Back!</span>
 </body>
 
 </html>

@@ -113,8 +113,6 @@ nav {
 article {
     height: calc(100vh - var(--blockWidth));
     padding: 36px;
-    display: table-cell;
-    vertical-align: middle;
     background-color: transparent;
     border-left: 1px solid black;
 }
@@ -145,6 +143,10 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.d-col {
+    flex-direction: column;
 }
 
 /* Table cell centering technique */
