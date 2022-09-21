@@ -9,8 +9,8 @@
 
 /* Global variables */
 :root {
-    --blockWidth: 20vw;
-    --mainMargin: calc(var(--blockWidth) / 3);
+    --blockWidth: 16vw;
+    --mainMargin: calc(var(--blockWidth) / 4);
 
     --red: rgb(235, 194, 182);
     --green: rgb(178, 236, 185);
@@ -33,22 +33,41 @@ footer {
     display: block;
 }
 
+ol,
+li {
+    list-style: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
 /* Floats on the left side of the page */
 aside {
     width: var(--blockWidth);
     height: 100vh;
     float: left;
-    position: relative;
+    display: flex;
+    flex-direction: column;
     background-color: var(--red);
+    border: 1px solid black;
+    text-align: center;
+}
+
+aside section {
+    padding: 8px;
+}
+
+aside section:first-of-type {
+    flex: 1;
 }
 
 /* Positioned at the bottom relatively to the aside */
-aside section {
-    width: 100%;
+.side-comment {
     height: var(--blockWidth);
-    position: absolute;
-    bottom: 0;
     background-color: var(--green);
+    border-top: 1px solid black;
 }
 
 /* Floats on the right side of a page */
@@ -59,43 +78,59 @@ main {
 }
 
 header {
-    height: var(--blockWidth);
+    height: calc(var(--blockWidth) / 2);
     padding: calc(var(--mainMargin) / 3);
-    position: relative;
     background-color: var(--blue);
+    border: 1px solid black;
+}
+
+nav {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* Centered using translate technique */
 .top-logo {
     width: var(--blockWidth);
     height: var(--mainMargin);
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     background-color: #fff;
-    border: 1px solid #000;
-    display: table;
-    text-align: center;
+    border: 1px solid black;
 }
 
-/* Text centered using table-cell technique */
-.top-logo h3 {
-    display: table-cell;
-    vertical-align: middle;
+.top-logo:hover {
+    opacity: 0.8;
+}
+
+.navbar {
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    float: right;
 }
 
 article {
-    height: calc(100vh - 2 * var(--blockWidth));
+    height: calc(100vh - var(--blockWidth));
+    padding: 36px;
+    display: table-cell;
+    vertical-align: middle;
     background-color: transparent;
+    border-left: 1px solid black;
+}
+
+article p {
+    text-align: justify;
 }
 
 footer {
-    height: var(--blockWidth);
+    height: calc(var(--blockWidth) / 2);
     padding: calc(var(--mainMargin) / 3);
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: var(--blue);
+    border: 1px solid black;
 }
 
 /* Centered using flex box */
@@ -103,10 +138,17 @@ footer {
     width: var(--blockWidth);
     height: var(--mainMargin);
     background-color: #fff;
-    border: 1px solid #000;
+    border: 1px solid black;
+}
 
-    /* Centering inner text */
+.center--flex {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Table cell centering technique */
+.center--table {
+    display: table-cell;
+    vertical-align: middle;
 }
