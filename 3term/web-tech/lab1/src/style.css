@@ -33,8 +33,7 @@ footer {
     display: block;
 }
 
-ol,
-li {
+li:not(ol>li) {
     list-style: none;
 }
 
@@ -143,6 +142,10 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.flex--down {
+    flex-direction: column;
 }
 
 .d-col {
