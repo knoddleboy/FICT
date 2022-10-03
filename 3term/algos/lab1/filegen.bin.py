@@ -13,10 +13,17 @@ def main():
     file_path, file_size = argv[1], eval(argv[2])
     n_min, n_max = list(map(int, argv[3].split('-')))
 
-    with open(file_path, "w", encoding='utf-8') as f:
+    with open(file_path, "wb") as f:
         start = time()
-        np.random.randint(n_min, n_max, size=int(file_size/int(log10(n_max)+1))
-                          ).tofile(f, sep='\n', format='%s')                        # 0.094(file_size)^0.987
+
+        # 0.094(file_size)^0.987
+        b = np.random.randint(
+            n_min,
+            n_max,
+            size=int(file_size/8)
+        ).tobytes()
+
+        f.write(b)
 
         print(f"--- {file_path} filled in {time() - start:.6f} seconds ---")
 
