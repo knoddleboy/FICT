@@ -1,7 +1,7 @@
 import numpy as np
 from sys import argv
-from math import log10
 from time import time
+from math import ceil, log2
 
 
 def main():

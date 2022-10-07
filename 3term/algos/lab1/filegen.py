@@ -16,7 +16,7 @@ def main():
     with open(file_path, "w", encoding='utf-8') as f:
         start = time()
         np.random.randint(n_min, n_max, size=int(file_size/int(log10(n_max)+1))
-                          ).tofile(f, sep='\n', format='%s')                        # 0.094(file_size)^0.987
+                          ).tofile(f, sep='\n', format='%s')                        # 0.094 * file_size^0.987
 
         print(f"--- {file_path} filled in {time() - start:.6f} seconds ---")
 
