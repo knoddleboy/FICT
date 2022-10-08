@@ -9,6 +9,7 @@
 #include <queue>
 #include <libgen.h> // for basename()
 #include <chrono>   // for time measure
+#include <cmath>
 
 using namespace std;
 
@@ -23,49 +24,58 @@ double smart_time_output(
     const high_resolution_clock::time_point time_end);
 string stl_basename(const string &filename);
 
-template <class T>
-class MERGE_RUN_UNIT
+class TempFile
 {
 public:
-    T data;
-    istream *stream;
-    bool (*compare_function)(const T &x, const T &y);
+    fstream *_addr;
+    string _name;
 
-    MERGE_RUN_UNIT(const T &data,
-                   istream *stream,
-                   bool (*compare_function)(const T &x, const T &y))
-        : data(data),
-          stream(stream),
-          compare_function(compare_function)
+    TempFile(fstream *addr,
+             string name)
+        : _addr(addr),
+          _name(name)
     {
     }
 
-    bool operator<(const MERGE_RUN_UNIT &m) const
+    int get()
     {
-        // Since priority queue sorts in descending order, we need to negate
-        return !(compare_function(data, m.data));
+        int _buf;
+        int pos = _addr->tellg();
+        *_addr >> _buf;
+        _addr->seekg(pos);
+        return _buf;
+    }
+
+    bool eof()
+    {
+        bool is_eof = false;
+        int pos = _addr->tellg();
+        int next_mv;
+        *_addr >> next_mv;
+        if (_addr->eof())
+            is_eof = true;
+        _addr->seekg(pos);
+        return is_eof;
     }
 };
 
 template <class T>
-class KwayMergeSort
+class KwayMergeSortNaive
 {
 
 public:
-    KwayMergeSort(
+    KwayMergeSortNaive(
         const string &input_file,
         ostream *out_stream,
         bool (*compare_function)(const T &x, const T &y) = nullptr,
-        size_t max_buffer_size = 1000000,
         string temp_file = "./temp");
 
-    KwayMergeSort(
+    KwayMergeSortNaive(
         const string &input_file,
         ostream *out_stream,
-        size_t max_buffer_size = 1000000,
         string temp_file = "./temp");
 
-    ~KwayMergeSort(void);
+    ~KwayMergeSortNaive(void);
 
     void Sort();
 
@@ -74,7 +84,6 @@ private:
     string _input_file;
     ostream *_out_stream;
     bool (*_compare_function)(const T &x, const T &y);
-    size_t _max_buffer_size;
     string _temp_file;
 
     bool _temp_file_used;
@@ -83,15 +92,20 @@ private:
     vector<string> _v_temp_file_names; // contains temp file names
     vector<ifstream *> _v_temp_files;  // contains pointers on opened temp files' streams
 
-    // Drives the creation of sorted sub-files stored on disk
-    void DivideAndSort();
+    // size_t _temps_beg = 0;
+    // size_t _temps_mid = 0;
+
+    // Drives the devision of the input file into sub-files stored on disk
+    void DistributeInitialRuns();
 
     // Drives the merging of the sorted temp files.
     // Eventually sorted and merged output is written to `out_stream`
     void Merge();
 
     // Writes sorted chunk of data to a temp file
-    void WriteTempFile(const vector<T> &lines);
+    void WriteTempFile(const T &line, const int &file, const string &name);
+
+    void ClearFile(TempFile &tf);
 
     // Open and close temp files
     void OpenTempFiles();
@@ -100,15 +114,13 @@ private:
 
 // Constructor
 template <class T>
-KwayMergeSort<T>::KwayMergeSort(const string &input_file,
-                                ostream *out_stream,
-                                bool (*compare_function)(const T &x, const T &y),
-                                size_t max_buffer_size,
-                                string temp_file)
+KwayMergeSortNaive<T>::KwayMergeSortNaive(const string &input_file,
+                                          ostream *out_stream,
+                                          bool (*compare_function)(const T &x, const T &y),
+                                          string temp_file)
     : _input_file(input_file),
       _out_stream(out_stream),
       _compare_function(compare_function),
-      _max_buffer_size(max_buffer_size),
       _temp_file(temp_file),
       _which_run(0)
 {
@@ -116,14 +128,12 @@ KwayMergeSort<T>::KwayMergeSort(const string &input_file,
 
 // Constructor without compare function
 template <class T>
-KwayMergeSort<T>::KwayMergeSort(const string &input_file,
-                                ostream *out_stream,
-                                size_t max_buffer_size,
-                                string temp_file)
+KwayMergeSortNaive<T>::KwayMergeSortNaive(const string &input_file,
+                                          ostream *out_stream,
+                                          string temp_file)
     : _input_file(input_file),
       _out_stream(out_stream),
       _compare_function(nullptr),
-      _max_buffer_size(max_buffer_size),
       _temp_file(temp_file),
       _which_run(0)
 {
@@ -131,189 +141,299 @@ KwayMergeSort<T>::KwayMergeSort(const string &input_file,
 
 // Destructor
 template <class T>
-KwayMergeSort<T>::~KwayMergeSort(void)
+KwayMergeSortNaive<T>::~KwayMergeSortNaive(void)
 {
 }
 
 // Sorting API
 template <class T>
-void KwayMergeSort<T>::Sort()
+void KwayMergeSortNaive<T>::Sort()
 {
-    double t_das, t_mrg;
-    auto t1 = high_resolution_clock::now();
-    DivideAndSort();
-    auto t2 = high_resolution_clock::now();
+    int gg;
+    const int n = 6, nh = n / 2;
+    int buf = -1, prev;
 
-    cout << "DivideAndSort() \t--- ";
-    t_das = smart_time_output(t1, t2);
-    cout << "    :- "
-         << _which_run
-         << " temp"
-         << ((_which_run % 10 == 1) ? " " : "s ")
-         << "created.\n\n";
+    vector<TempFile> f;
 
-    t1 = high_resolution_clock::now();
-    Merge();
-    t2 = high_resolution_clock::now();
+    int i, j, mx, tx, k1, k2, l, x, min, pos;
+    vector<int> t;  // map
+    vector<int> ta; // map
 
-    cout << "Merge() \t\t--- ";
-    t_mrg = smart_time_output(t1, t2);
-    cout << "    :- \n\n";
-
-    cout << "Total time \t\t--- " << t_das + t_mrg << " s" << endl;
-}
-
-template <class T>
-void KwayMergeSort<T>::DivideAndSort()
-{
-    istream *input = new ifstream(_input_file.c_str(), ios::in);
+    // open main file f0
+    istream *f0 = new ifstream(_input_file.c_str(), ios::in);
 
     // Exit if file opened with error (or did not open)
-    if (input->good() == false)
+    if (f0->good() == false)
     {
         cerr << "Error: Could not open input file (" << _input_file << "). Exiting." << endl;
         exit(1);
     }
 
-    vector<T> line_buffer;
-    line_buffer.reserve(100000);
-
-    size_t total_bytes = 0; // for tracking the number of consumed bytes
-
-    // Whether or not we used a temp file based on the allocated memory
-    _temp_file_used = false;
-
-    // Read from file line by line until there is no more data
-    T line;
-    while (*input >> line)
+    // distribute initial runs to t[1]...t[nh]
+    for (size_t i = 0; i < n; ++i)
     {
-        line_buffer.push_back(line);
-        total_bytes += sizeof(line);
+        string temp_name;
+        if (_temp_file.size() == 0)
+            temp_name = to_string(i);
+        else
+            temp_name = _temp_file + "/" + to_string(i);
 
-        // Sort the buffer and write to a temp file when we have filled up our quota
-        if (total_bytes > _max_buffer_size)
+        const char *temp_name_c = temp_name.c_str();
+
+        ofstream *temp = new ofstream(temp_name_c, ios::out);
+        temp->close();
+        delete temp;
+
+        fstream *f_temp = new fstream(temp_name_c, ios::in | ios::out | ios::app);
+        f.push_back(TempFile(f_temp, temp_name));
+    }
+
+    j = 0;
+    l = 0;
+    while (!f0->eof()) // distribute among first n/2 files
+    {
+        prev = buf;
+        *f0 >> buf;
+
+        if (buf > prev)
+            *f[j]._addr << buf << endl;
+        else
         {
-            if (_compare_function != nullptr)
-                sort(line_buffer.begin(), line_buffer.end(), *_compare_function);
-            else
-                sort(line_buffer.begin(), line_buffer.end());
+            ++l;
+            ++j;
+            if (j == nh)
+                j = 0;
 
-            // Write the sorted data to a temp file
-            WriteTempFile(line_buffer);
-
-            // and clear the buffer for the next run
-            line_buffer.clear();
-
-            _temp_file_used = true;
-            total_bytes = 0;
+            *f[j]._addr << buf << endl;
         }
     }
 
-    // Handle the run (if any) from the last chunk of the input data
-    if (line_buffer.empty() == false)
+    cout << "distributed!\n";
+    cin.get();
+
+    for (int i = 0; i < n; ++i)
+        t.push_back(i);
+
+    bool initial_pass = true;
+
+    // merge from t[0]...t[nh-1] to t[nh]...t[n-1]]
+    do
     {
-        // Write the last chunk to the temp file
-        // if one had to be used (i.e., we exceeded the memory)
-        if (_temp_file_used == true)
-        {
-            if (_compare_function != nullptr)
-                sort(line_buffer.begin(), line_buffer.end(), *_compare_function);
-            else
-                sort(line_buffer.begin(), line_buffer.end());
-
-            // Write the sorted data to a temp file
-            WriteTempFile(line_buffer);
-            WriteTempFile(line_buffer);
-        }
-
-        // otherwise, the entire file fit in the given memory,
-        // so we can just dump to the output
+        // In case if all runs fit in first n/2 files
+        if (l < nh)
+            k1 = l - 1; // k1 - number of input files in this phase
         else
-        {
-            if (_compare_function != nullptr)
-                sort(line_buffer.begin(), line_buffer.end(), *_compare_function);
-            else
-                sort(line_buffer.begin(), line_buffer.end());
+            k1 = nh - 1; // -1 since used for indexing
 
-            for (size_t i = 0; i < line_buffer.size(); ++i)
-                *_out_stream << line_buffer[i] << endl;
+        cout << "k1 = " << k1 << endl;
+
+        for (size_t i = 0; i <= k1; ++i)
+        {
+            f[t[i]]._addr->seekg(0, ios::beg); // reset(f[t[i]])
+            // list(f[t[i]], t[i])
+
+            if (initial_pass)
+                ta.push_back(t[i]);
+            else
+                ta[i] = t[i];
         }
+
+        if (initial_pass)
+            initial_pass = false;
+
+        cout << "ta: ";
+        for (size_t i = 0; i < ta.size(); ++i)
+            cout << ta[i] << " ";
+        cout << endl;
+
+        l = 0;  // number of runs merged
+        j = nh; // index of the first output tape
+
+        // merge a run from t[0]...t[k1] to t[j]
+        do
+        {
+            k2 = k1; // k2 - number of active input files
+            ++l;
+
+            cout << "k1 = " << k1 << endl;
+            cout << "k2 = " << k2 << endl;
+            cout << "j = " << j << endl;
+
+            // select minimal element among all first runs
+            do
+            {
+                i = 0;
+                mx = 0; // index of min element
+
+                min = f[ta[0]].get();
+
+                cout << "start min: " << min << endl;
+
+                while (i < k2)
+                {
+                    ++i;
+                    x = f[ta[i]].get();
+
+                    cout << "may be (x): " << x << endl;
+
+                    if (x < min)
+                    {
+                        min = x;
+                        mx = i;
+                    }
+
+                    cout << "res min: " << min << endl;
+                }
+
+                *f[ta[mx]]._addr >> buf;
+                cout << "extract " << buf << " from " << ta[mx] << " file\n";
+
+                *f[t[j]]._addr << buf << endl;
+                cout << "insert into " << t[j] << " file\n";
+
+                bool eot = f[ta[mx]].eof();
+                cout << "eof? " << eot << endl;
+
+                if (eot)
+                {
+                    ClearFile(f[ta[mx]]); // eliminate tape
+
+                    cout << "before ta: ";
+                    for (size_t i = 0; i < ta.size(); ++i)
+                        cout << ta[i] << " ";
+                    cout << endl;
+
+                    cout << "before: "
+                         << "k2 = " << k2 << ", k1 = " << k1 << endl;
+                    cout << ta[mx] << " = " << ta[k2] << endl;
+                    cout << ta[k2] << " = " << ta[k1] << endl;
+
+                    ta[mx] = ta[k2];
+                    ta[k2] = ta[k1];
+                    --k1;
+                    --k2;
+
+                    cout << "after: "
+                         << "k2 = " << k2 << ", k1 = " << k1 << endl;
+
+                    cout << "after ta: ";
+                    for (size_t i = 0; i < ta.size(); ++i)
+                        cout << ta[i] << " ";
+                    cout << endl;
+                }
+                else if (buf > f[ta[mx]].get())
+                {
+                    cout << buf << " > " << f[ta[mx]].get() << endl;
+
+                    cout << "before ta: ";
+                    for (size_t i = 0; i < ta.size(); ++i)
+                        cout << ta[i] << " ";
+                    cout << endl;
+
+                    tx = ta[mx];
+                    ta[mx] = ta[k2];
+                    ta[k2] = tx;
+                    --k2;
+
+                    cout << "after ta: ";
+                    for (size_t i = 0; i < ta.size(); ++i)
+                        cout << ta[i] << " ";
+                    cout << endl;
+
+                    cout << "k2 = " << k2 << endl;
+                }
+                // cin.get();
+            } while (k2 > 0);
+
+            if (j < n - 1)
+                ++j;
+            else
+                j = nh;
+
+            cout << "j now = " << j << endl;
+
+        } while (k1 > 0);
+
+        for (size_t i = 0; i < nh; ++i)
+        {
+            tx = t[i];
+            t[i] = t[nh + i];
+            t[nh + i] = tx;
+        }
+
+        cout << "t now: ";
+        for (size_t i = 0; i < t.size(); ++i)
+            cout << t[i] << " ";
+        cout << endl;
+
+    } while (l > 1);
+
+    cout << "finished!\n";
+
+    for (size_t i = 0; i < f.size(); ++i)
+    {
+        f[i]._addr->close();
+        cout << "closing " << f[i]._addr << endl;
+        delete f[i]._addr;
     }
 }
 
 template <class T>
-void KwayMergeSort<T>::WriteTempFile(const vector<T> &lines)
+void KwayMergeSortNaive<T>::ClearFile(TempFile &tf)
+{
+    cout << "clearing: " << tf._name << endl;
+    // close file
+    tf._addr->close();
+
+    // reopen truncating and close
+    ofstream *ofs = new ofstream(tf._name.c_str(), ios::out | ios::trunc);
+    ofs->close();
+    delete ofs;
+
+    // open in fstream
+    fstream *fs = new fstream(tf._name.c_str(), ios::in | ios::out | ios::app);
+    tf._addr = fs;
+    delete fs;
+}
+
+template <class T>
+void KwayMergeSortNaive<T>::WriteTempFile(const T &line, const int &file, const string &name)
 {
     string temp_file_name;
     if (_temp_file.size() == 0)
-        temp_file_name = _input_file + "." + to_string(_which_run);
+        temp_file_name = name + "." + to_string(file);
     else
-        temp_file_name = _temp_file + "/" + stl_basename(_input_file) + "." + to_string(_which_run);
+        temp_file_name = _temp_file + "/" + stl_basename(name) + "." + to_string(file);
 
-    ofstream *output = new ofstream(temp_file_name.c_str(), ios::out);
+    ofstream *output = new ofstream(temp_file_name.c_str(), ios::out | ios::app);
 
-    // Write the content of the current buffer to the temp file
-    for (size_t i = 0; i < lines.size(); ++i)
-        *output << lines[i] << endl;
+    // Write the line to a temp file
+    *output << line << endl;
 
-    // Update run counter and add the temp file name to the list
-    ++_which_run;
+    // Close temp file and add its name to the list
     output->close();
     delete output;
-    _v_temp_file_names.push_back(temp_file_name);
+
+    // Add temp file name to a list unless it's already there
+    if (find(
+            _v_temp_file_names.begin(),
+            _v_temp_file_names.end(),
+            temp_file_name) == _v_temp_file_names.end())
+        _v_temp_file_names.push_back(temp_file_name);
 }
 
 template <class T>
-void KwayMergeSort<T>::Merge()
-{
-    // The merge part can be skipped if previously the entire input file fit
-    // in memory and thus we just dumped to `out_stream` without temp files
-    if (_temp_file_used == false)
-        return;
-
-    // Open the sorted temp files up for merging
-    OpenTempFiles();
-
-    priority_queue<MERGE_RUN_UNIT<T>> out_queue;
-
-    T line;
-    for (size_t i = 0; i < _v_temp_files.size(); ++i)
-    {
-        *_v_temp_files[i] >> line;
-        out_queue.push(MERGE_RUN_UNIT<T>(line, _v_temp_files[i], _compare_function));
-    }
-
-    while (!out_queue.empty())
-    {
-        // Grab the lowest (first) element
-        MERGE_RUN_UNIT<T> lowest = out_queue.top();
-
-        // output it to the stream (output file)
-        *_out_stream << lowest.data << endl;
-
-        // and remove from queue
-        out_queue.pop();
-
-        // Push the next line from the lowest stream to the queue unless it's EOF
-        *(lowest.stream) >> line;
-        if (*(lowest.stream))
-            out_queue.push(MERGE_RUN_UNIT<T>(line, lowest.stream, _compare_function));
-    }
-
-    // Clean up the temp files
-    CloseTempFiles();
-}
-
-template <class T>
-void KwayMergeSort<T>::OpenTempFiles()
+void KwayMergeSortNaive<T>::OpenTempFiles()
 {
     // Go through each temp file name and open its stream
     for (size_t i = 0; i < _v_temp_file_names.size(); ++i)
     {
         ifstream *file = new ifstream(_v_temp_file_names[i].c_str(), ios::in);
 
-        // Save file stream if opened
-        if (file->good())
+        // Save file stream if opened successfully unless it's already there
+        if (file->good() &&
+            find(_v_temp_files.begin(),
+                 _v_temp_files.end(), file) == _v_temp_files.end())
             _v_temp_files.push_back(file);
 
         // Threw an error otherwise
@@ -329,7 +449,7 @@ void KwayMergeSort<T>::OpenTempFiles()
 }
 
 template <class T>
-void KwayMergeSort<T>::CloseTempFiles()
+void KwayMergeSortNaive<T>::CloseTempFiles()
 {
     // Close all temp files
     for (size_t i = 0; i < _v_temp_files.size(); ++i)
@@ -339,8 +459,8 @@ void KwayMergeSort<T>::CloseTempFiles()
     }
 
     // and delete them
-    for (size_t i = 0; i < _v_temp_file_names.size(); ++i)
-        remove(_v_temp_file_names[i].c_str());
+    // for (size_t i = 0; i < _v_temp_file_names.size(); ++i)
+    //     remove(_v_temp_file_names[i].c_str());
 }
 
 double smart_time_output(
