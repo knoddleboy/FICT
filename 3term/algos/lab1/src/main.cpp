@@ -4,29 +4,26 @@
 #include "./kwaymerge.h"
 
 // Comparison function for the merge sort
-bool alphaAsc(const int &a, const int &b) { return a < b; }
+bool numAsc(const uint64_t &a, const uint64_t &b) { return a < b; }
 
 int main(int argc, char *argv[])
 {
 	if (argc != 3)
 	{
-		cout << "Wrong number of arguments.\n\tUsage: " << argv[0] << " <in_file> <buffer_size>" << endl;
+		cout << "Wrong number of arguments.\n\tUsage: "
+			 << argv[0] << " <in_file> <buffer_size> <?out_file> <?temps_path>"
+			 << endl;
 		exit(1);
 	}
 
-	string inFile = argv[1];
-	int bufferSize = strtol(argv[2], nullptr, 10); // allow the sorter to use ? (base 10) of memory for sorting.
-												   // once full, it will dump to a temp file and grab another chunk.
-	bool compressOutput = false;				   // not yet supported
-	string tempPath = "./temp";					   // allows you to write the intermediate files anywhere you want.
+	string in_file = argv[1];
+	uint64_t buffer_size = strtol(argv[2], nullptr, 10);
+	string out_file = (argc == 4) ? argv[3] : stl_basename(argv[1]) + ".sorted";
+	string temps_path = (argc == 5) ? argv[4] : "./temp";
 
-	ofstream *output_file = new ofstream("output.txt", ios::out);
-
-	KwayMergeSort<int> *sorter = new KwayMergeSort<int>(inFile, output_file, alphaAsc, bufferSize, tempPath);
+	KwayMergeSort<uint64_t> *sorter = new KwayMergeSort<uint64_t>(in_file, out_file, buffer_size, numAsc, temps_path);
 
 	// Perform sorting
 	sorter->Sort();
-
-	output_file->close();
 	return 0;
 }
