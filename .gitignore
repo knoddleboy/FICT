@@ -31,6 +31,8 @@
 *.exe
 *.out
 *.app
+*.dat
+*.bin
 
 ### CMake ###
 CMakeLists.txt.user
@@ -214,6 +216,9 @@ Cargo.lock
 # Ignore code-workspaces
 *.code-workspace
 
-# Metadata
+# Other
 .metadata
 assets/
+.vscode
+*.dSYM/
+*.doc[x]
