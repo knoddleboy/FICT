@@ -52,13 +52,14 @@ public:
     }
 };
 
+template <class T>
 class Temp
 {
 public:
     string name;
     FILE *stream;
     off_t size;
-    uint64_t *map;
+    T *map;
 
     Temp(const string &__tf_name)
         : name(__tf_name)
@@ -74,14 +75,14 @@ public:
     KwayMergeSort(
         const string &input_file,
         const string &_output_file,
-        size_t max_buffer_size,
+        T max_buffer_size,
         bool (*compare_function)(const T &x, const T &y) = nullptr,
         string temp_file = "./temp");
 
     KwayMergeSort(
         const string &input_file,
         const string &_output_file,
-        size_t max_buffer_size,
+        T max_buffer_size,
         string temp_file = "./temp");
 
     ~KwayMergeSort(void);
@@ -93,16 +94,13 @@ private:
     string _input_file;
     string _output_file;
     bool (*_compare_function)(const T &x, const T &y);
-    size_t _max_buffer_size;
+    T _max_buffer_size;
     string _temp_file;
 
     bool _sorted_internally;
     size_t _which_run;
 
-    vector<string> _v_temp_file_names; // contains temp file names
-    vector<FILE *> _v_temp_files;      // contains pointers on opened temp files' streams
-
-    vector<Temp> _v_temps;
+    vector<Temp<T>> _v_temps;
 
     // Drives the creation of sorted sub-files stored on disk
     void DistributeAndSort();
@@ -112,7 +110,7 @@ private:
     void Merge();
 
     // Writes sorted chunk of data to a temp file
-    void WriteTempFile(const uint64_t *buffer_p, const uint64_t bytes);
+    void WriteTempFile(const T *buffer_p, const T bytes);
 
     // Open and close temp files
     void OpenTempFiles();
@@ -123,7 +121,7 @@ private:
 template <class T>
 KwayMergeSort<T>::KwayMergeSort(const string &input_file,
                                 const string &output_file,
-                                size_t max_buffer_size,
+                                T max_buffer_size,
                                 bool (*compare_function)(const T &x, const T &y),
                                 string temp_file)
     : _input_file(input_file),
@@ -140,7 +138,7 @@ KwayMergeSort<T>::KwayMergeSort(const string &input_file,
 template <class T>
 KwayMergeSort<T>::KwayMergeSort(const string &input_file,
                                 const string &output_file,
-                                size_t max_buffer_size,
+                                T max_buffer_size,
                                 string temp_file)
     : _input_file(input_file),
       _output_file(output_file),
@@ -200,11 +198,11 @@ void KwayMergeSort<T>::DistributeAndSort()
     auto f_in_size = ftell(f_in); // input file size
     fseek(f_in, 0L, SEEK_SET);
 
-    uint64_t buffer_size = _max_buffer_size / sizeof(uint64_t);
-    uint64_t *buffer = new (nothrow) uint64_t[buffer_size];
+    T buffer_size = _max_buffer_size / sizeof(T);
+    T *buffer = new (nothrow) T[buffer_size];
 
-    uint64_t bytes; // number of read bytes
-    while ((bytes = fread(buffer, sizeof(uint64_t), buffer_size, f_in)) > 0)
+    T bytes; // number of read bytes
+    while ((bytes = fread(buffer, sizeof(T), buffer_size, f_in)) > 0)
     {
         if (_compare_function != nullptr)
             sort(buffer, buffer + bytes, *_compare_function);
@@ -226,7 +224,7 @@ void KwayMergeSort<T>::DistributeAndSort()
                 exit(EXIT_FAILURE);
             }
 
-            fwrite(buffer, sizeof(uint64_t), bytes, f_out);
+            fwrite(buffer, sizeof(T), bytes, f_out);
             fclose(f_out);
 
             _sorted_internally = true;
@@ -240,9 +238,9 @@ void KwayMergeSort<T>::DistributeAndSort()
 }
 
 template <class T>
-void KwayMergeSort<T>::WriteTempFile(const uint64_t *__pbuffer, const uint64_t __bytes)
+void KwayMergeSort<T>::WriteTempFile(const T *__pbuffer, const T __bytes)
 {
-    const uint64_t __bytes_size = __bytes * sizeof(uint64_t);
+    const T __bytes_size = __bytes * sizeof(T);
 
     string temp_file_name;
     if (_temp_file.size() == 0)
@@ -254,7 +252,7 @@ void KwayMergeSort<T>::WriteTempFile(const uint64_t *__pbuffer, const uint64_t _
     int tf_fd = fileno(tf_out);
     ftruncate(tf_fd, __bytes_size);
 
-    uint64_t *tf_mpd = (uint64_t *)mmap(nullptr, __bytes_size, PROT_READ | PROT_WRITE, MAP_SHARED, tf_fd, 0);
+    T *tf_mpd = (T *)mmap(nullptr, __bytes_size, PROT_READ | PROT_WRITE, MAP_SHARED, tf_fd, 0);
     if (tf_mpd == MAP_FAILED)
     {
         fclose(tf_out);
@@ -267,8 +265,6 @@ void KwayMergeSort<T>::WriteTempFile(const uint64_t *__pbuffer, const uint64_t _
     if (msync(tf_mpd, __bytes, MS_SYNC) == -1)
         cerr << "Error: could not sync the file to disk\n";
 
-    // fwrite(__pbuffer, sizeof(uint64_t), __bytes, tf_out);
-
     if (munmap(tf_mpd, __bytes) == -1)
     {
         fclose(tf_out);
@@ -279,8 +275,7 @@ void KwayMergeSort<T>::WriteTempFile(const uint64_t *__pbuffer, const uint64_t _
     fclose(tf_out);
 
     ++_which_run;
-    // _v_temp_file_names.push_back(temp_file_name);
-    _v_temps.push_back(Temp(temp_file_name));
+    _v_temps.push_back(Temp<T>(temp_file_name));
 }
 
 template <class T>
@@ -307,7 +302,7 @@ void KwayMergeSort<T>::Merge()
     for (size_t i = 0; i < _v_temps.size(); ++i)
     {
         fread(&byte, 1, 1, _v_temps[i].stream);
-        out_queue.push(Merge_Run_Unit<T>(static_cast<uint64_t>(byte), _v_temps[i].stream, _compare_function));
+        out_queue.push(Merge_Run_Unit<T>(static_cast<T>(byte), _v_temps[i].stream, _compare_function));
     }
 
     while (!out_queue.empty())
@@ -324,7 +319,7 @@ void KwayMergeSort<T>::Merge()
         // Push the next byte from the lowest stream to the queue unless it's EOF
         fread(&byte, 1, 1, lowest.f);
         if (!feof(lowest.f))
-            out_queue.push(Merge_Run_Unit<T>(static_cast<uint64_t>(byte), lowest.f, _compare_function));
+            out_queue.push(Merge_Run_Unit<T>(static_cast<T>(byte), lowest.f, _compare_function));
     }
 
     // Clean up the temp files
@@ -349,7 +344,7 @@ void KwayMergeSort<T>::OpenTempFiles()
             if (fstat(tf_fd, &sb) == -1)
                 cerr << "Error: could not get " << _v_temps[i].name << " size\n";
 
-            uint64_t *tf_map = (uint64_t *)mmap(nullptr, sb.st_size, PROT_READ, MAP_PRIVATE, tf_fd, 0);
+            T *tf_map = (T *)mmap(nullptr, sb.st_size, PROT_READ, MAP_PRIVATE, tf_fd, 0);
             if (tf_map == MAP_FAILED)
             {
                 fclose(f);
