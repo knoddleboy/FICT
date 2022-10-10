@@ -52,6 +52,20 @@ public:
     }
 };
 
+class Temp
+{
+public:
+    string name;
+    FILE *stream;
+    off_t size;
+    uint64_t *map;
+
+    Temp(const string &__tf_name)
+        : name(__tf_name)
+    {
+    }
+};
+
 template <class T>
 class KwayMergeSort
 {
@@ -87,6 +101,8 @@ private:
 
     vector<string> _v_temp_file_names; // contains temp file names
     vector<FILE *> _v_temp_files;      // contains pointers on opened temp files' streams
+
+    vector<Temp> _v_temps;
 
     // Drives the creation of sorted sub-files stored on disk
     void DistributeAndSort();
@@ -160,7 +176,7 @@ void KwayMergeSort<T>::Sort()
          << "created.\n\n";
 
     t1 = high_resolution_clock::now();
-    // Merge();
+    Merge();
     t2 = high_resolution_clock::now();
 
     cout << "Merge() \t\t--- ";
@@ -239,7 +255,6 @@ void KwayMergeSort<T>::WriteTempFile(const uint64_t *__pbuffer, const uint64_t _
     ftruncate(tf_fd, __bytes_size);
 
     uint64_t *tf_mpd = (uint64_t *)mmap(nullptr, __bytes_size, PROT_READ | PROT_WRITE, MAP_SHARED, tf_fd, 0);
-
     if (tf_mpd == MAP_FAILED)
     {
         fclose(tf_out);
@@ -254,11 +269,18 @@ void KwayMergeSort<T>::WriteTempFile(const uint64_t *__pbuffer, const uint64_t _
 
     // fwrite(__pbuffer, sizeof(uint64_t), __bytes, tf_out);
 
-    munmap(tf_mpd, __bytes);
+    if (munmap(tf_mpd, __bytes) == -1)
+    {
+        fclose(tf_out);
+        cerr << "Error: could not un-mmap the file\n";
+        exit(EXIT_FAILURE);
+    }
+
     fclose(tf_out);
 
     ++_which_run;
-    _v_temp_file_names.push_back(temp_file_name);
+    // _v_temp_file_names.push_back(temp_file_name);
+    _v_temps.push_back(Temp(temp_file_name));
 }
 
 template <class T>
@@ -282,10 +304,10 @@ void KwayMergeSort<T>::Merge()
     priority_queue<Merge_Run_Unit<T>> out_queue;
 
     unsigned char byte;
-    for (size_t i = 0; i < _v_temp_files.size(); ++i)
+    for (size_t i = 0; i < _v_temps.size(); ++i)
     {
-        fread(&byte, 1, 1, _v_temp_files[i]);
-        out_queue.push(Merge_Run_Unit<T>(static_cast<uint64_t>(byte), _v_temp_files[i], _compare_function));
+        fread(&byte, 1, 1, _v_temps[i].stream);
+        out_queue.push(Merge_Run_Unit<T>(static_cast<uint64_t>(byte), _v_temps[i].stream, _compare_function));
     }
 
     while (!out_queue.empty())
@@ -307,26 +329,46 @@ void KwayMergeSort<T>::Merge()
 
     // Clean up the temp files
     CloseTempFiles();
+    fclose(f_out);
 }
 
 template <class T>
 void KwayMergeSort<T>::OpenTempFiles()
 {
     // Go through each temp file name and open its stream
-    for (size_t i = 0; i < _v_temp_file_names.size(); ++i)
+    for (size_t i = 0; i < _v_temps.size(); ++i)
     {
         FILE *f;
+        struct stat sb;
 
         // Save file stream if opened
-        if ((f = fopen(_v_temp_file_names[i].c_str(), "rb")) != nullptr)
-            _v_temp_files.push_back(f);
+        if ((f = fopen(_v_temps[i].name.c_str(), "rb")) != nullptr)
+        {
+            int tf_fd = fileno(f);
+
+            if (fstat(tf_fd, &sb) == -1)
+                cerr << "Error: could not get " << _v_temps[i].name << " size\n";
+
+            uint64_t *tf_map = (uint64_t *)mmap(nullptr, sb.st_size, PROT_READ, MAP_PRIVATE, tf_fd, 0);
+            if (tf_map == MAP_FAILED)
+            {
+                fclose(f);
+                cout << "Error mmapping the file\n";
+                exit(EXIT_FAILURE);
+            }
+
+            // _v_temp_files.push_back(f);
+            _v_temps[i].stream = f;
+            _v_temps[i].size = sb.st_size;
+            _v_temps[i].map = tf_map;
+        }
 
         // Threw an error otherwise
         else
         {
             cerr << "Unable to open temp file ("
-                 << _v_temp_file_names[i]
-                 << "). The file might not exist."
+                 << _v_temps[i].name
+                 << "). The file might not exist"
                  << endl;
             exit(EXIT_FAILURE);
         }
@@ -336,14 +378,22 @@ void KwayMergeSort<T>::OpenTempFiles()
 template <class T>
 void KwayMergeSort<T>::CloseTempFiles()
 {
-    // Close all temp files
-    for (size_t i = 0; i < _v_temp_files.size(); ++i)
-        fclose(_v_temp_files[i]);
+    // Close and delete all temp files
+    for (size_t i = 0; i < _v_temps.size(); ++i)
+    {
+        if (munmap(_v_temps[i].map, _v_temps[i].size) == -1)
+        {
+            fclose(_v_temps[i].stream);
+            cerr << "Error: could not un-mmap the file\n";
+            exit(EXIT_FAILURE);
+        }
 
-    // and delete them
-    for (size_t i = 0; i < _v_temp_file_names.size(); ++i)
-        remove(_v_temp_file_names[i].c_str());
+        fclose(_v_temps[i].stream);
+        remove(_v_temps[i].name.c_str());
+    }
 }
+
+/* Helpers */
 
 double smart_time_output(
     const high_resolution_clock::time_point &__tstart,
