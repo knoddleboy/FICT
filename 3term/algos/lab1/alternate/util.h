@@ -66,16 +66,15 @@ int parse_nways(char *__ways_str)
 	return k;
 }
 
-size_t get_file_size(FILE *file)
+size_t get_file_size(FILE *__file)
 {
-	size_t size;
-	fseek(file, 0L, SEEK_END);
-	size = ftell(file);
-	fseek(file, 0L, SEEK_SET);
+	fseek(__file, 0L, SEEK_END);
+	size_t size = ftell(__file);
+	fseek(__file, 0L, SEEK_SET);
 	return size;
 }
 
-int comparator(const void *p1, const void *p2) { return (*(int *)p1 - *(int *)p2); }
+int comparator(const void *__p1, const void *__p2) { return (*(int *)__p1 - *(int *)__p2); }
 
 #define tmpfile_block_next(file)                            \
 	{                                                       \

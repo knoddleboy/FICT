@@ -8,10 +8,10 @@
 #include "errors.h"
 #include "util.h"
 
-#define print_error_and_usage(error) \
+#define print_error_and_usage(__err) \
 	do                               \
 	{                                \
-		pr_error(error);             \
+		pr_error(__err);             \
 		print_usage(argv);           \
 	} while (0);
 
@@ -23,13 +23,11 @@ void print_usage(char *argv[])
 
 int main(int argc, char *argv[])
 {
+	int option;
 	extern char *optarg;
+
 	char outfile_path[PATH_SIZE] = {0};
 	long size = 0;
-	unsigned long registers;
-	int option;
-	uint32_t randnum;
-	time_t t;
 
 	while ((option = getopt(argc, argv, "o:s:")) != -1)
 	{
@@ -69,12 +67,12 @@ int main(int argc, char *argv[])
 		return -E_OPEN_OUTFILE;
 	}
 
-	registers = size / sizeof(uint32_t);
-	srandom((unsigned)time(&t));
+	unsigned long registers = size / sizeof(uint32_t);
+	srandom((unsigned)time(NULL));
 
 	while (registers--)
 	{
-		randnum = random();
+		uint32_t randnum = random();
 		fwrite(&randnum, sizeof(uint32_t), 1, outfile);
 	}
 
