@@ -165,23 +165,17 @@ void KwayMergeSort<T>::Sort()
     DistributeAndSort();
     auto t2 = high_resolution_clock::now();
 
-    cout << "DistributeAndSort() \t--- ";
+    printf("%-25s ", "Distribution");
     t_das = smart_time_output(t1, t2);
-    cout << "    :- "
-         << _which_run
-         << " temp"
-         << ((_which_run % 10 == 1) ? " " : "s ")
-         << "created.\n\n";
 
     t1 = high_resolution_clock::now();
     Merge();
     t2 = high_resolution_clock::now();
 
-    cout << "Merge() \t\t--- ";
-    t_mrg = smart_time_output(t1, t2);
-    cout << "    :- \n\n";
+    printf("%-25s ", "Merge");
+    double t_mrg = smart_time_output(t1, t2);
 
-    cout << "Total time \t\t--- " << fixed_float(t_das + t_mrg) << " s" << endl;
+    printf("------\n%-25s %.3lfs\n", "Total", t_das + t_mrg);
 }
 
 template <class T>

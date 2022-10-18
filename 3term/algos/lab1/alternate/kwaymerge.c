@@ -386,16 +386,16 @@ int main(int argc, char *argv[])
 	dictribute_sort(k, buffer_size, buffer, tmpfiles, infile);
 	clock_t tend = clock();
 	double dtime_spent = (double)(tend - tstart) / CLOCKS_PER_SEC;
-	printf("%-25s %.3lfs\n", "DistributeAndSort()", dtime_spent);
+	printf("%-25s %.3lfs\n", "Distribution", dtime_spent);
 
 	// Merge sorted temp files into one output file
 	tstart = clock();
 	merge(k, buffer_size, buffer, tmpfiles, outfile);
 	tend = clock();
 	double mtime_spent = (double)(tend - tstart) / CLOCKS_PER_SEC;
-	printf("%-25s %.3lfs\n", "Merge()", mtime_spent);
+	printf("%-25s %.3lfs\n", "Merge", mtime_spent);
 
-	printf("------\n%-25s %.3lfs\n", "Total:", dtime_spent + mtime_spent);
+	printf("------\n%-25s %.3lfs\n", "Total", dtime_spent + mtime_spent);
 
 	fclose(outfile);
 	fclose(infile);
