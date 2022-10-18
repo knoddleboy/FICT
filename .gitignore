@@ -220,4 +220,7 @@ Cargo.lock
 assets/
 .vscode
 *.dSYM/
+
+# Reports
 *.doc[x]
+*.pages
