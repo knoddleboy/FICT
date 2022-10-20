@@ -8,7 +8,7 @@ bool numAsc(const uint64_t &a, const uint64_t &b) { return a < b; }
 
 int main(int argc, char *argv[])
 {
-	if (argc != 3)
+	if (argc != 4)
 	{
 		cout << "Wrong number of arguments.\n\tUsage: "
 			 << argv[0] << " <in_file> <buffer_size> <?out_file> <?temps_path>"
