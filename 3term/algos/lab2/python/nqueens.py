@@ -25,11 +25,11 @@ def pos_int(val):
 
 if __name__ == "__main__":
     argparser = ArgumentParser()
-    argparser.add_argument('-nq', type=pos_int, default=4)
+    argparser.add_argument('-q', type=pos_int, default=4)
     argparser.add_argument('-l', type=str, default='nq.log')
 
     # get number of queens from cl args
-    queens: int = argparser.parse_args().nq
+    queens: int = argparser.parse_args().q
     log_path: str = argparser.parse_args().l
 
     # Set up the logger
@@ -54,8 +54,8 @@ if __name__ == "__main__":
         NQ.last_node.board.print()
         NQ.info(show_depth=True)
 
-    @memlim(1024, mem_failure_callback)  # 1GiB
-    @timelim(30 * 60)                    # 30 min
+    @memlim(1024, mem_failure_callback)         # 1GiB
+    @timelim(30 * 60, time_failure_callback)    # 30 min
     def __solve():
         with Timer():
             NQ.IDS()
