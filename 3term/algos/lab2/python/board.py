@@ -16,7 +16,7 @@ class Board:
             self.size = queens or 4
             self.matrix = [[0 for i in range(self.size)] for j in range(self.size)]
 
-        self.conf = self.conflict_number
+        self.conf = self.conflict_number()
 
     def generate_board(self):
         # populate with random Q placement
@@ -24,7 +24,6 @@ class Board:
             j = randint(0, self.size - 1)
             self.matrix[i][j] = 1
 
-    @property
     def conflict_number(self):
         conflicts = 0
         for i in range(self.size):
@@ -43,9 +42,9 @@ class Board:
         # Horizontal conflict before Qi
         # |  | Q |  |  | Q |  |
         #      ^         i
-        for row in range(i):
+        for col in range(j):
             count = 0
-            if self.matrix[row][j] == 1:
+            if self.matrix[i][col] == 1:
                 count += 1
 
             if count:
@@ -55,9 +54,9 @@ class Board:
         # Horizontal conflict after Qi
         # |  | Q |  |  | Q |  |
         #      i         ^
-        for row in range(i + 1, self.size):
+        for col in range(j + 1, self.size):
             count = 0
-            if self.matrix[row][j] == 1:
+            if self.matrix[i][col] == 1:
                 count += 1
 
             if count:
@@ -68,9 +67,9 @@ class Board:
         # |   | Q <   |
         # |   |   |   |
         # |   | Q j   |
-        for col in range(j):
+        for row in range(i):
             count = 0
-            if self.matrix[i][col] == 1:
+            if self.matrix[row][j] == 1:
                 count += 1
 
             if count:
@@ -81,9 +80,9 @@ class Board:
         # |   | Q j   |
         # |   |   |   |
         # |   | Q <   |
-        for col in range(j + 1, self.size):
+        for row in range(i + 1, self.size):
             count = 0
-            if self.matrix[i][col] == 1:
+            if self.matrix[row][j] == 1:
                 count += 1
 
             if count:
@@ -153,6 +152,11 @@ class Board:
         return conf_number
 
     def move_figure(self, row: int, shift: int):
+        # for logging
+        new_row = 0
+        new_col = 0
+        last_j = 0
+
         for j in range(self.size):
             if self.matrix[row][j] == 1:
                 self.matrix[row][j] = 0
@@ -163,11 +167,14 @@ class Board:
 
                 self.matrix[row][col] = 1
 
-                # log the move
-                NQLogger.info(f"Move Q from ({row},{j}) to ({row},{col})")
+                # for logging
+                [new_row, new_col, last_j] = [row, col, j]
                 break
 
-        self.conf = self.conflict_number
+        self.conf = self.conflict_number()
+
+        # log the move
+        NQLogger.info(f"Move Q: ({row},{last_j}) -> ({new_row},{new_col})  ::  {self.conf} conflicts after moving")
 
     def print(self, pre: str | None = None, end: str | None = '\n') -> None:
         if pre:

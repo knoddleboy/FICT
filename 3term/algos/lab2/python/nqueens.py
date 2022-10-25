@@ -1,9 +1,10 @@
 # lab 2
 
 """
-Problem: Place 8 queens on chessboard such that no two queens are in same row, column, and diagonal.
-Solution: We will put the queens one by one in each column while satisfying the requried criteria. If such a queen can not be placed, we will backtrack until a valid configuration is possible.
-Looking at the problem definition we know that two queens can not be in same column. Hence we will put each queen in the adjacent column to the previous placed one. We have to just find the suitable row while placing and mainting the constraint.
+Problem: From a random arrangement of queens on the chessboard get such arrangement that 
+         the queens do not attack each other vertically, horizontally and diagonally.
+Solution: IDS (main) and A* (mod) with heuristics: number of Q pairs that attack each other with visibility
+Constraints: 30 min, 1GiB of space
 """
 
 from argparse import ArgumentParser, ArgumentTypeError
@@ -12,8 +13,7 @@ from timer import Timer
 from logger import __logger_init__
 
 from execlim.timelim import timelim
-# from execlim.memlim import memlim
-from execlim.memlim1 import memlim
+from execlim.memlim import memlim
 
 
 def pos_int(val):
@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     # Print the root node's board
     NQ.root.board.print(pre=f"Generated {queens}x{queens} board:", end='')
-    print(f"  :- conflicts: {NQ.root.board.conflict_number}\n")
+    print(f"  :- conflicts: {NQ.root.board.conflict_number()}\n")
 
     def mem_failure_callback():
         print("--- memoty usage exceeded ---\n")
@@ -54,9 +54,8 @@ if __name__ == "__main__":
         NQ.last_node.board.print()
         NQ.info(show_depth=True)
 
-    # @memlim(1024 ** 3, mem_failure_callback)
-    @memlim(1)
-    # @timelim(60, time_failure_callback)
+    @memlim(1024, mem_failure_callback)  # 1GiB
+    @timelim(30 * 60)                    # 30 min
     def __solve():
         with Timer():
             NQ.IDS()

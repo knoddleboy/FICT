@@ -21,9 +21,8 @@ class Node:
             self.board = Board(other=other.board)
             self.children = [None] * (self.board.size * (self.board.size - 1))
 
-    @property
     def is_solved(self):
-        return self.board.conflict_number == 0
+        return self.board.conflict_number() == 0
 
     def expand(self):
         row = 0
