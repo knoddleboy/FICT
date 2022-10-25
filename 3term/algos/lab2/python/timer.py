@@ -13,7 +13,7 @@ class TimerError(Exception):
 class Timer:
     timers: ClassVar[Dict[str, float]] = {}
     name: Optional[str] = None
-    text: str = "--- elapsed in {:.3f} seconds ---"
+    text: str = "--- elapsed in {:.2f} seconds ---"
     logger: Optional[Callable[[str], None]] = print
     _start_time: Optional[float] = field(default=None, init=False, repr=False)
 
@@ -50,6 +50,7 @@ class Timer:
         # Report elapsed time
         if self.logger:
             self.logger(self.text.format(elapsed_time))
+
         if self.name:
             self.timers[self.name] += elapsed_time
 
