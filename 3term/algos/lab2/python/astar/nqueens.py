@@ -9,8 +9,8 @@ Constraints: 30 min, 1GiB of space
 
 from argparse import ArgumentParser, ArgumentTypeError
 from tree import NQueens
-from timer import Timer
-from logger import __logger_init__
+from helpers.timer import Timer
+from helpers.logger import __logger_init__
 
 from execlim.timelim import timelim
 from execlim.memlim import memlim
@@ -43,22 +43,18 @@ if __name__ == "__main__":
     print(f"  :- conflicts: {NQ.root.board.conflict_number()}\n")
 
     def mem_failure_callback():
-        print("--- memoty usage exceeded ---\n")
-        print("Last board state:")
-        NQ.last_node.board.print()
-        NQ.info(show_depth=True)
+        print("--- memory usage exceeded ---\n")
+        NQ.info()
 
     def time_failure_callback():
         print("--- execution time exceeded ---\n")
-        print("Last board state:")
-        NQ.last_node.board.print()
-        NQ.info(show_depth=True)
+        NQ.info()
 
     @memlim(1024, mem_failure_callback)         # 1GiB
     @timelim(30 * 60, time_failure_callback)    # 30 min
     def __solve():
         with Timer():
-            NQ.IDS()
+            NQ.AStar()
 
     __solve()
 

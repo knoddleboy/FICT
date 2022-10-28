@@ -1,7 +1,7 @@
+from typing import Literal, Optional
 from random import randint
-from typing import Literal
 from copy import deepcopy
-from logger import NQLogger, Optional
+from helpers.logger import NQLogger
 
 
 class Board:
@@ -10,8 +10,16 @@ class Board:
         self.matrix: list[list[Literal[0, 1]]]
 
         if other:
-            self.size = other.size
-            self.matrix = deepcopy(other.matrix)
+            # debug: initial board
+            if isinstance(other, Board):
+                self.size = other.size
+                self.matrix = deepcopy(other.matrix)
+
+            elif isinstance(other, list):
+                self.size = len(other)
+                self.matrix = other
+
+        # create empty board
         else:
             self.size = queens or 4
             self.matrix = [[0 for i in range(self.size)] for j in range(self.size)]
@@ -25,55 +33,53 @@ class Board:
             self.matrix[i][j] = 1
 
     def conflict_number(self):
-        conflicts = 0
+        raw_pairs = set()
         for i in range(self.size):
             for j in range(self.size):
                 if self.matrix[i][j] == 1:
-                    conflicts += self.get_conflict(i, j)
+                    self.get_conflict(i, j, raw_pairs)
 
-        return conflicts
+        # eliminate repeated pairs
+        pairs = set()
+        for pair in raw_pairs:
+            rev = tuple(reversed(pair))
+            if rev not in pairs:
+                pairs.add(pair)
+
+        # return the number of pairs as a conflicts number
+        return len(pairs)
 
     def correct_index(self, i, j):
         return i >= 0 and i < self.size and j >= 0 and j < self.size
 
-    def get_conflict(self, i, j):
-        conf_number = 0
+    def get_conflict(self, i, j, seen_pairs: set):
 
         # Horizontal conflict before Qi
         # |  | Q |  |  | Q |  |
         #      ^         i
-        for col in range(j):
-            count = 0
+        for col in range(abs(j - 1), 0):
             if self.matrix[i][col] == 1:
-                count += 1
-
-            if count:
-                conf_number += 1
+                seen_pairs.add(((i, j), (i, col)))
+                seen_pairs.add(((i, col), (i, j)))
                 break
 
         # Horizontal conflict after Qi
         # |  | Q |  |  | Q |  |
         #      i         ^
         for col in range(j + 1, self.size):
-            count = 0
             if self.matrix[i][col] == 1:
-                count += 1
-
-            if count:
-                conf_number += 1
+                seen_pairs.add(((i, j), (i, col)))
+                seen_pairs.add(((i, col), (i, j)))
                 break
 
         # Vertical conflict before Qj
         # |   | Q <   |
         # |   |   |   |
         # |   | Q j   |
-        for row in range(i):
-            count = 0
+        for row in range(abs(i - 1), 0):
             if self.matrix[row][j] == 1:
-                count += 1
-
-            if count:
-                conf_number += 1
+                seen_pairs.add(((i, j), (row, j)))
+                seen_pairs.add(((row, j), (i, j)))
                 break
 
         # Vertical conflict after Qj
@@ -81,12 +87,9 @@ class Board:
         # |   |   |   |
         # |   | Q <   |
         for row in range(i + 1, self.size):
-            count = 0
             if self.matrix[row][j] == 1:
-                count += 1
-
-            if count:
-                conf_number += 1
+                seen_pairs.add(((i, j), (row, j)))
+                seen_pairs.add(((row, j), (i, j)))
                 break
 
         row = i - 1
@@ -98,7 +101,8 @@ class Board:
         # |   |   | Q row,col
         while self.correct_index(row, col):
             if self.matrix[row][col] == 1:
-                conf_number += 1
+                seen_pairs.add(((i, j), (row, col)))
+                seen_pairs.add(((row, col), (i, j)))
                 break
 
             row -= 1
@@ -113,7 +117,8 @@ class Board:
         # |   |   | Q <
         while self.correct_index(row, col):
             if self.matrix[row][col] == 1:
-                conf_number += 1
+                seen_pairs.add(((i, j), (row, col)))
+                seen_pairs.add(((row, col), (i, j)))
                 break
 
             row += 1
@@ -128,7 +133,8 @@ class Board:
         # | Q <   |   |
         while self.correct_index(row, col):
             if self.matrix[row][col] == 1:
-                conf_number += 1
+                seen_pairs.add(((i, j), (row, col)))
+                seen_pairs.add(((row, col), (i, j)))
                 break
 
             row -= 1
@@ -143,13 +149,12 @@ class Board:
         # | Q row,col |
         while self.correct_index(row, col):
             if self.matrix[row][col] == 1:
-                conf_number += 1
+                seen_pairs.add(((i, j), (row, col)))
+                seen_pairs.add(((row, col), (i, j)))
                 break
 
             row += 1
             col -= 1
-
-        return conf_number
 
     def move_figure(self, row: int, shift: int):
         # for logging
