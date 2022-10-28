@@ -1,0 +1,363 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+/* Reset defaults */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global variables */
+:root {
+    --blockHeight: 8vw;
+    --asideWidth: 28vw;
+    --mainMargin: calc(var(--blockHeight) / 2);
+
+    --aside-news-gap: 20px;
+    --grid-gap: 40px;
+
+    --red: rgb(235, 194, 182);
+    --redish: rgb(235, 73, 51);
+    --light-redish: rgb(223, 135, 124);
+    --green: rgb(178, 236, 185);
+    --blue: rgb(145, 197, 235);
+}
+
+html {
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    width: 100vw;
+    display: flex;
+}
+
+h1 {
+    font-size: 28px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+nav,
+aside,
+article,
+footer {
+    display: block;
+}
+
+li:not(ol>li) {
+    list-style: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.nav__navbar--current {
+    font-weight: 700;
+}
+
+/* ASIDE */
+
+.aside {
+    width: var(--asideWidth);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--red);
+    border: 1px solid black;
+}
+
+.aside section {
+    padding: calc(var(--mainMargin) / 2);
+}
+
+.aside__news {
+    flex: 1;
+}
+
+.news__title {
+    text-transform: uppercase;
+    margin-bottom: var(--aside-news-gap);
+}
+
+.aside__news .news__card:not(:first-of-type) {
+    margin-top: var(--aside-news-gap);
+}
+
+.card__footer {
+    margin-top: 4px;
+    color: rgb(0 0 0 / 40%);
+    fill: rgb(0 0 0 / 40%);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.aside__news .news__card:not(:last-of-type) .card__footer {
+    padding-bottom: var(--aside-news-gap);
+    border-bottom: 1px solid rgb(0 0 0 / 20%);
+}
+
+.aside section:last-of-type {
+    padding: 10px;
+}
+
+.aside__marquee {
+    height: var(--blockHeight);
+    background-color: var(--green);
+    border-top: 1px solid black;
+}
+
+/* MAIN */
+
+main {
+    margin-left: var(--mainMargin);
+    flex: 1;
+}
+
+header {
+    height: var(--blockHeight);
+    padding: 0 calc(var(--mainMargin) / 2);
+    background-color: var(--blue);
+    border: 1px solid black;
+}
+
+.nav {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav__logo {
+    width: var(--blockHeight);
+    height: calc(var(--blockHeight) / 2);
+    background-color: white;
+    border: 1px solid black;
+    text-shadow:
+        0 1px var(--redish),
+        -1px 0 var(--light-redish),
+        -1px 2px var(--redish),
+        -2px 1px var(--light-redish),
+        -2px 3px var(--redish);
+}
+
+.nav__navbar {
+    width: 40%;
+    min-width: 390px;
+    display: flex;
+    justify-content: space-between;
+    float: right;
+}
+
+.nav__navbar li {
+    text-transform: uppercase;
+    position: relative;
+}
+
+.nav__navbar li::before {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    width: 100%;
+    height: 2px;
+    border-radius: 1px;
+    background-color: transparent;
+    pointer-events: none;
+}
+
+.nav__navbar li:nth-of-type(1):hover::before {
+    background-color: #008A5A;
+}
+
+.nav__navbar li:nth-of-type(2):hover::before {
+    background-color: #F9F871;
+}
+
+.nav__navbar li:nth-of-type(3):hover::before {
+    background-color: var(--redish);
+}
+
+.nav__navbar li:last-of-type a span {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-left: 6px;
+    border-radius: 100%;
+
+    animation: live-dot-anim 3s infinite;
+}
+
+@keyframes live-dot-anim {
+    0% {
+        background-color: transparent;
+    }
+
+    50% {
+        background-color: var(--redish);
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+.marticle {
+    height: calc(100% - 2 * var(--blockHeight));
+    padding: var(--grid-gap);
+    background-color: transparent;
+    border-left: 1px solid black;
+}
+
+.marticle h1 {
+    margin-bottom: 26px;
+}
+
+.marticle h1 svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--redish);
+}
+
+.marticle .content {
+    display: flex;
+    flex-flow: row wrap;
+    column-gap: var(--grid-gap);
+    row-gap: var(--grid-gap);
+}
+
+.marticle .content__card {
+    /* Takes up 1/3 of container space considering 2 gaps between each triad */
+    max-width: calc(100% / 3 - var(--grid-gap) / 1.5);
+    flex-grow: 1;
+}
+
+.marticle .content__card figure {
+    margin-bottom: 4px;
+}
+
+.marticle .content__card .card__footer {
+    display: flex;
+    margin-top: 8px;
+}
+
+.marticle .content__card .card__footer time {
+    margin-right: 20px;
+}
+
+.marticle .content svg {
+    width: 14px;
+    margin-right: 4px;
+}
+
+.footer {
+    height: var(--blockHeight);
+    padding: 0 calc(var(--mainMargin) / 2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--blue);
+    border: 1px solid black;
+}
+
+.footer__socials {
+    background-color: white;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px;
+}
+
+.footer__socials a {
+    margin: 0 8px;
+    display: flex;
+    align-items: center;
+}
+
+.footer__socials a svg {
+    width: 30px;
+    fill: rgb(0 0 0 / 80%);
+    transition: fill 150ms ease;
+}
+
+.footer__socials a:nth-of-type(1):hover svg {
+    fill: #1F4690;
+}
+
+.footer__socials a:nth-of-type(2):hover svg {
+    fill: #D2001A;
+}
+
+.footer__socials a:nth-of-type(3):hover svg {
+    fill: #E80F88;
+}
+
+.footer__socials a:nth-of-type(4):hover svg {
+    fill: #47B5FF;
+}
+
+.center--flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.j-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.d-col {
+    flex-direction: column;
+}
+
+.text--upper {
+    text-transform: uppercase;
+}
+
+/* MEDIA */
+
+@media screen and (min-width: 1024px) {
+    :root {
+        --blockHeight: 6vw;
+        --asideWidth: 24vw;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .navbar {
+        width: 60%;
+    }
+
+    .navbar li::before {
+        bottom: -8px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .bottom-logo a svg {
+        width: 22px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        width: 65%;
+    }
+
+    .navbar li a {
+        font-size: 14px;
+    }
+}
