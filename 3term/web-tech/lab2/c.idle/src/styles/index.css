@@ -74,6 +74,7 @@ a {
     position: relative;
     background-color: var(--red);
     border: 1px solid black;
+    vertical-align: middle;
 }
 
 .aside section {
