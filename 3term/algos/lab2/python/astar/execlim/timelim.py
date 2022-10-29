@@ -33,5 +33,8 @@ def timelim(__sec: int, __callback: Optional[Callable[[], None]] = None):
     try:
         yield
 
+    except KeyboardInterrupt:
+        signal.alarm(0)
+
     finally:
         signal.alarm(0)
