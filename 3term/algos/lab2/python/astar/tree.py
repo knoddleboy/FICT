@@ -11,14 +11,16 @@ class NQueens:
         self.total_states: int = 1
         self.iter: int = 0
         self.size = queens
-        self.root = Node(queens=queens, other=board if board else None)
+
+        # initial `other` may be given manually
+        self.root = Node(queens=queens, other=board)
 
     def AStar(self):
         NQLogger.info("** A* Algorithm **")
 
         # priority queue that uses pre-defined heuristic function implemented in node's comparator
         opened: PriorityQueue[Node] = PriorityQueue()
-        closed: list[Board] = []
+        closed: set[Board] = set()
 
         opened.put(self.root)
         NQLogger.info("Put root into queue")
@@ -38,7 +40,7 @@ class NQueens:
                 self.info()
                 break
 
-            closed.append(top.board)
+            closed.add(top.board)
 
             NQLogger.info(f"#{self.iter}: Expand with {len(top.children)} successors")
             top.expand()
@@ -46,9 +48,8 @@ class NQueens:
             successors: list[Node] = top.children
 
             for i in range(len(successors)):
-                for j in range(len(closed)):
-                    if successors[i].board == closed[j]:
-                        continue
+                if successors[i].board in closed:
+                    continue
 
                 opened.put(successors[i])
 
