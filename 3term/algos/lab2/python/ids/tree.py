@@ -1,16 +1,17 @@
 from copy import deepcopy
 from node import Node
+from board import Board, Optional
 from helpers.logger import NQLogger
 
 
 class NQueens:
-    def __init__(self, queens: int) -> None:
+    def __init__(self, queens: int, board: Optional[Board] = None) -> None:
         self.memory_states: int = 1
         self.total_states: int = 1
         self.iter: int = 0
         self.size = queens
-        self.root = Node(queens=queens)
         self.last_node: Node
+        self.root = Node(queens=queens, other=board if board else None)
 
     def IDS(self):
         NQLogger.info("** IDS Algorithm **")

@@ -1,7 +1,7 @@
+from typing import Literal, Optional
 from random import randint
-from typing import Literal
 from copy import deepcopy
-from helpers.logger import NQLogger, Optional
+from helpers.logger import NQLogger
 
 
 class Board:
@@ -10,8 +10,16 @@ class Board:
         self.matrix: list[list[Literal[0, 1]]]
 
         if other:
-            self.size = other.size
-            self.matrix = deepcopy(other.matrix)
+            # debug: initial board
+            if isinstance(other, Board):
+                self.size = other.size
+                self.matrix = deepcopy(other.matrix)
+
+            elif isinstance(other, list):
+                self.size = len(other)
+                self.matrix = other
+
+        # create empty board
         else:
             self.size = queens or 4
             self.matrix = [[0 for i in range(self.size)] for j in range(self.size)]

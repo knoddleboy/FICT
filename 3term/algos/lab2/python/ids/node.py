@@ -9,15 +9,20 @@ class Node:
         self.board: Board
         self.children: list[Any]
 
-        if not other:
+        if other and isinstance(other, Node):
+            self.depth = other.depth + 1
+            self.board = Board(other=other.board)
+            self.children = [None] * (self.board.size * (self.board.size - 1))
+
+        elif other and isinstance(other, Board):
+            self.depth = 1
+            self.board = deepcopy(other)
+            self.children = [None] * (self.board.size * (self.board.size - 1))
+
+        elif not other:
             self.depth = 1
             self.board = Board(queens=queens)  # create empty board
             self.board.generate_board()
-            self.children = [None] * (self.board.size * (self.board.size - 1))
-
-        else:
-            self.depth = other.depth + 1
-            self.board = Board(other=other.board)
             self.children = [None] * (self.board.size * (self.board.size - 1))
 
     def is_solved(self):
