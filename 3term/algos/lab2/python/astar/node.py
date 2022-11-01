@@ -25,9 +25,15 @@ class Node:
             self.board.generate_board()
             self.children = [None] * (self.board.size * (self.board.size - 1))
 
+    @property
+    def cost(self):
+        _g = self.depth
+        _h = self.board.conflict_number()
+        return _g + _h
+
     # Comparator for priority queue
     def __lt__(self, node):
-        return self.board.conflict_number() < node.board.conflict_number()
+        return self.cost < node.cost
 
     def is_solved(self):
         return self.board.conflict_number() == 0
