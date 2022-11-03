@@ -19,7 +19,6 @@ class NQueens:
         limit = 1
         while not self._LDFS(self.root, limit):
             limit += 1
-            self.memory_states = 1
 
         # print info
         self.info()
@@ -46,11 +45,11 @@ class NQueens:
             NQLogger.info(f"#{self.iter}: Expand with {len(node.children)} child nodes")
 
             node.expand()
-            self.memory_states += self.size * (self.size - 1)
-            self.total_states += self.size * (self.size - 1)
+            self.total_states += len(node.children)
 
             for i in range(len(node.children)):
                 if self._LDFS(node.children[i], limit):
+                    self.memory_states += len(node.children)
                     return True
 
         return False
