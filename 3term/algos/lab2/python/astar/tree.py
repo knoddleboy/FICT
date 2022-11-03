@@ -35,7 +35,7 @@ class NQueens:
                 top.board.print()
 
                 self.total_states = opened.qsize() + len(closed)
-                self.memory_states = opened.qsize()
+                self.memory_states = opened.qsize() + len(closed)
 
                 self.info()
                 break
