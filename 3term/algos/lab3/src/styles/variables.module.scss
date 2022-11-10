@@ -1,0 +1,88 @@
+/* COLORS */
+$system-primary-dark: #222222;
+$system-secondary-dark: #4B4E6D;
+$system-tertiary-dark: #95A3B3;
+$system-primary-light: #ffffff;
+$system-primary-green: #84DCC6;
+
+:export {
+    systemPrimaryDark: $system-primary-dark;
+    systemSecondaryDark: $system-secondary-dark;
+    systemTertiaryDark: $system-tertiary-dark;
+    systemPrimaryLight: $system-primary-light;
+    systemPrimaryGreen: $system-primary-green;
+}
+
+/* TYPOGRAPHY */
+@mixin large-title {
+    font-size: 2.1669rem;
+    font-weight: 400;
+    line-height: 2.6669rem;
+}
+
+@mixin title-1 {
+    font-size: 1.8331rem;
+    font-weight: 400;
+    line-height: 2.1669rem;
+}
+
+@mixin title-2 {
+    font-size: 1.4169rem;
+    font-weight: 400;
+    line-height: 1.8331rem;
+}
+
+@mixin title-3 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.8331rem;
+}
+
+@mixin headline {
+    font-size: 1.0831rem;
+    font-weight: 700;
+    line-height: 1.3331rem;
+}
+
+@mixin subheadline {
+    font-size: 0.9169rem;
+    font-weight: 600;
+    line-height: 1.1669rem;
+}
+
+@mixin body {
+    font-size: 1.0831rem;
+    font-weight: 400;
+    line-height: 1.3331rem;
+}
+
+@mixin callout {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+}
+
+@mixin footnote {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.0831rem;
+}
+
+@mixin caption-1 {
+    font-size: 0.8331rem;
+    font-weight: 400;
+    line-height: 1.0831rem;
+}
+
+@mixin caption-2 {
+    font-size: 0.8331rem;
+    font-weight: 600;
+    line-height: 1.0831rem;
+}
+
+/* OTHER */
+@mixin center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

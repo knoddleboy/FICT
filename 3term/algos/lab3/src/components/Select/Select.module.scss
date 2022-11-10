@@ -1,0 +1,15 @@
+@import "../../styles/variables.module.scss";
+
+.selectRoot {
+    width: calc(100% / 3);
+    height: 100vh;
+    padding: 12px;
+    background-color: lighten($system-tertiary-dark, 32%);
+    color: $system-secondary-dark;
+    overflow-y: scroll;
+
+    .title {
+        @include caption-2;
+        text-align: center;
+    }
+}

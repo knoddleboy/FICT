@@ -7,7 +7,7 @@
         "distDir": "../dist"
     },
     "package": {
-        "productName": "avl-db",
+        "productName": "AVL DB",
         "version": "0.1.0"
     },
     "tauri": {
