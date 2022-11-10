@@ -5,12 +5,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LAB 1 | Var 15 | Web Technologies</title>
-    <link rel="stylesheet" href="../../src/styles/index.css" />
-    <link rel="icon" type="image/x-icon" href="../../assets/star-solid.svg">
+    <title>LAB 3 | Var 15 | Web Technologies</title>
+    <link rel="stylesheet" href="./src/styles/index.css" />
+    <link rel="icon" type="image/x-icon" href="./assets/star-solid.svg">
 </head>
 
 <body>
+    <input id="aside-folder" type="checkbox">
+    <label for="aside-folder"></label>
     <aside class="aside">
         <section class="aside__news center--flex d-col">
             <h2 class="news__title">Стрічка новин</h2>
@@ -79,7 +81,8 @@
                 <article class="news__card">
                     <h4 class="card__body">
                         <a href="">
-                            "ru-людожерство": у Зеленського відреагували на заклики "особливо наполегливих" до діалогу з
+                            "ru-людожерство": у Зеленського відреагували на заклики "особливо наполегливих" до
+                            діалогу з
                             РФ
                         </a>
                     </h4>
@@ -98,32 +101,52 @@
     <main>
         <header>
             <nav class="nav">
-                <a href="../../index.html" class="nav__logo center--flex">
+                <a href="./index.html" class="nav__logo center--flex">
                     <h1>TNS</h1>
                 </a>
-                <ul class="nav__navbar">
-                    <li class="nav__navbar--current">
-                        <a href="./all-news.html">Усі публікації</a>
-                    </li>
-                    <li>
-                        <a href="./exclusive.html">Ексклюзив</a>
-                    </li>
-                    <li>
-                        <a href="./online.html" class="center--flex">Наживо
-                            <span></span>
-                        </a>
-                    </li>
-                </ul>
+                <div id="toggleableMenu">
+                    <!-- 
+                        A fake / hidden checkbox is used as click reciever, 
+                        so one can use the :checked selector on it.
+                     -->
+                    <input type="checkbox">
+
+                    <!-- Hamburger -->
+                    <span id="hamburger"></span>
+                    <span id="hamburger"></span>
+                    <span id="hamburger"></span>
+
+                    <!-- Menu -->
+                    <ul class="nav__navbar">
+                        <li>
+                            <a href="./public/pages/all-news.html">Усі публікації</a>
+                        </li>
+                        <li>
+                            <a href="./public/pages/exclusive.html">Ексклюзив</a>
+                        </li>
+                        <li>
+                            <a href="./public/pages/online.html" class="center--flex">Наживо
+                                <span></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </header>
         <article class="marticle">
-            <h1 class="text--upper">Усі публікації</h1>
+            <h1>
+                Головні новини
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                    <path
+                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                </svg>
+            </h1>
             <div class="content">
                 <article class="content__card">
                     <figure>
                         <img width="100%"
                             src="https://img.tsn.ua/cached/689/tsn-45ddb1c1da8bc78232f746637fde253d/thumbs/404x202/09/58/ee5585d43418c88a19e0638c7b805809.jpeg"
-                            alt="" loading="lazy">
+                            alt="">
                     </figure>
                     <h4 class="card__body">
                         <a href="">
@@ -144,43 +167,43 @@
                 <article class="content__card">
                     <figure>
                         <img width="100%"
-                            src="https://img.tsn.ua/cached/037/tsn-15890496c3fba55a55e21f0ca3090d06/thumbs/404x202/19/38/461a26d2fe0c068a545f66f196513819.jpeg"
+                            src="https://img.tsn.ua/cached/155/tsn-15890496c3fba55a55e21f0ca3090d06/thumbs/404x202/99/f0/374ade116bcdbcc77eb744b14c64f099.jpeg"
                             alt="">
                     </figure>
                     <h4 class="card__body">
-                        <a href="">Квартира у Львові: скільки коштує найдешевше житло у місті та що пропонують за 13
-                            тисяч доларів</a>
+                        <a href="">
+                            У Росії складають списки ухилянтів: у людей конфісковуватимуть майно та віддаватимуть
+                            мобілізованим</a>
                     </h4>
                     <footer class="card__footer">
-                        <time datetime="2022-09-28T16:08:00+03:00">10:20, 20.10.22</time>
+                        <time datetime="2022-09-28T16:08:00+03:00">15:01, 28.09.22</time>
                         <span class="j-between">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                                 <path
                                     d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z" />
                             </svg>
-                            2385
+                            2107
                         </span>
                     </footer>
                 </article>
                 <article class="content__card">
                     <figure>
                         <img width="100%"
-                            src="https://img.tsn.ua/cached/112/tsn-15890496c3fba55a55e21f0ca3090d06/thumbs/404x202/3c/24/10777a818192befb5ef9da2a538f243c.jpeg"
-                            alt="" loading="lazy">
+                            src="https://img.tsn.ua/cached/209/tsn-15890496c3fba55a55e21f0ca3090d06/thumbs/404x202/3f/47/a0dc1b01731ab3c852dbde6cb15b473f.jpeg"
+                            alt="">
                     </figure>
                     <h4 class="card__body">
                         <a href="">
-                            Лайкала пости окупантів у заборонених соцмережах: історія українки, яка просила росіян
-                            бомбити Черкаси</a>
+                            Мешканців Київщини попередили про гучні вибухи: що сталося</a>
                     </h4>
                     <footer class="card__footer">
-                        <time datetime="2022-09-28T16:08:00+03:00">10:29, 20.10.22</time>
+                        <time datetime="2022-09-28T16:08:00+03:00">14:52, 28.09.22</time>
                         <span class="j-between">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                                 <path
                                     d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z" />
                             </svg>
-                            5639
+                            685
                         </span>
                     </footer>
                 </article>
@@ -188,7 +211,7 @@
                     <figure>
                         <img width="100%"
                             src="https://img.tsn.ua/cached/462/tsn-86026451a4bd5b82b0f7aa9436ae117b/thumbs/404x202/08/3c/abcc36f4b27bc8ccce030c09931c3c08.jpeg"
-                            alt="" loading="lazy">
+                            alt="">
                     </figure>
                     <h4 class="card__body">
                         <a href="">
@@ -209,7 +232,7 @@
                     <figure>
                         <img width="100%"
                             src="https://img.tsn.ua/cached/276/tsn-ef193642135c1378f91261f26d18fb96/thumbs/404x202/c2/9d/31a757af68d94ec12d5cdebe6f219dc2.jpeg"
-                            alt="" loading="lazy">
+                            alt="">
                     </figure>
                     <h4 class="card__body">
                         <a href="">
@@ -230,29 +253,30 @@
                 <article class="content__card">
                     <figure>
                         <img width="100%"
-                            src="https://img.tsn.ua/cached/767/tsn-15890496c3fba55a55e21f0ca3090d06/thumbs/404x202/d9/24/87bc30b249553e48ebdaf1c927c224d9.jpeg"
-                            alt="" loading="lazy">
+                            src="https://img.tsn.ua/cached/111/tsn-84ee4f9844c21d3af2b3cfbad2c9c711/thumbs/404x202/37/9d/c02eb6ae4502e69c50fff0e16b519d37.jpeg"
+                            alt="">
                     </figure>
                     <h4 class="card__body">
                         <a href="">
-                            Історик описав фінал Лукашенка: "Здійснить останній стрибок на Україну"</a>
+                            З тимчасово окупованих районів Харківщини евакуювали понад 750 людей - Синєгубов</a>
                     </h4>
                     <footer class="card__footer">
-                        <time datetime="2022-09-28T16:08:00+03:00">10:34, 20.10.22</time>
+                        <time datetime="2022-09-28T16:08:00+03:00">14:10, 28.09.22</time>
                         <span class="j-between">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                                 <path
                                     d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z" />
                             </svg>
-                            2778
+                            1685
                         </span>
                     </footer>
                 </article>
+
                 <article class="content__card">
                     <figure>
                         <img width="100%"
                             src="https://img.tsn.ua/cached/052/tsn-2e5933e84c8f120777c30b7610ecadcd/thumbs/404x202/10/5d/3c06a5aacc4ee74841a25aac18295d10.jpeg"
-                            alt="" loading="lazy">
+                            alt="">
                     </figure>
                     <h4 class="card__body">
                         <a href="">У МВФ розповіли про вплив вторгнення РФ на економіку України</a>
@@ -272,7 +296,7 @@
                     <figure>
                         <img width="100%"
                             src="https://img.tsn.ua/cached/327/tsn-15890496c3fba55a55e21f0ca3090d06/thumbs/404x202/b6/9d/229003a66deb4035720872c76b919db6.jpeg"
-                            alt="" loading="lazy">
+                            alt="">
                     </figure>
                     <h4 class="card__body">
                         <a href="">Виносять чайники, телевізори і холодильники: окупанти готуються до втечі з
@@ -286,27 +310,6 @@
                                     d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z" />
                             </svg>
                             1685
-                        </span>
-                    </footer>
-                </article>
-                <article class="content__card">
-                    <figure>
-                        <img width="100%"
-                            src="https://img.tsn.ua/cached/609/tsn-15890496c3fba55a55e21f0ca3090d06/thumbs/404x202/cf/29/0b34a4b778520a9fc66fadb302df29cf.jpeg"
-                            alt="" loading="lazy">
-                    </figure>
-                    <h4 class="card__body">
-                        <a href="">"Вставай, страна огромная!": експерт пояснив, навіщо Путін "запровадив" воєнний стан
-                            та рівні реагування</a>
-                    </h4>
-                    <footer class="card__footer">
-                        <time datetime="2022-09-28T16:08:00+03:00">10:43, 20.10.22</time>
-                        <span class="j-between">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-                                <path
-                                    d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z" />
-                            </svg>
-                            5738
                         </span>
                     </footer>
                 </article>
