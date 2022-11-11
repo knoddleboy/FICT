@@ -3,12 +3,12 @@
 .editButton {
     padding: 8px;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 8px;
+    left: 8px;
     border-radius: 50%;
 
     .editButtonIcon {
-        fill: lighten($system-secondary-dark, 0);
+        fill: lighten($system-secondary-dark, 20%);
     }
 }
 

@@ -1,0 +1,13 @@
+.contextMenuItem {
+    padding: 8px 28px;
+
+    &:nth-of-type(1) {
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    &:nth-last-of-type(1) {
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+}

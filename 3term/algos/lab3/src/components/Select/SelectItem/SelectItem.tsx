@@ -4,7 +4,7 @@ import Button from "../../Button";
 import variables from "../../../styles/variables.module.scss";
 import styles from "./SelectItem.module.scss";
 
-export const SelectItem: FC<{ name?: string }> = ({ name }) => {
+export const SelectItem: FC = ({ children }) => {
     return (
         <Button
             background={{
@@ -15,7 +15,7 @@ export const SelectItem: FC<{ name?: string }> = ({ name }) => {
         >
             <div className={styles.selectItemWrapper}>
                 <DBIcon fill={variables.systemSecondaryDark} />
-                <div style={{ marginLeft: "8px" }}>{name}</div>
+                <div style={{ marginLeft: "8px" }}>{children}</div>
             </div>
         </Button>
     );

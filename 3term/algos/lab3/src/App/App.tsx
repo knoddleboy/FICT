@@ -1,24 +1,43 @@
 import { createContext } from "preact";
-import { useState, useMemo, StateUpdater } from "preact/hooks";
+import { useState, useMemo, StateUpdater, useEffect } from "preact/hooks";
 import Select from "../components/Select";
 import Workbench from "../components/Workbench";
 
+import { createDir, BaseDirectory, exists } from "@tauri-apps/api/fs";
+import { MAIN_DATA_DIR } from "../constants";
+
 interface IAppContext {
-    activateTableRemoval: boolean;
-    setActivateTableRemoval: StateUpdater<boolean>;
+    activateTableEditing: boolean;
+    setActivateTableEditing: StateUpdater<boolean>;
 }
 
 export const AppContext = createContext<IAppContext>({
-    activateTableRemoval: false,
-    setActivateTableRemoval: () => {},
+    activateTableEditing: false,
+    setActivateTableEditing: () => {},
 });
 
 export function App() {
-    const [activateTableRemoval, setActivateTableRemoval] = useState(false);
+    const [activateTableEditing, setActivateTableEditing] = useState(false);
     const val = useMemo(
-        () => ({ activateTableRemoval, setActivateTableRemoval }),
-        [activateTableRemoval]
+        () => ({ activateTableEditing, setActivateTableEditing }),
+        [activateTableEditing]
     );
+
+    // Create `$APPDATA/databases` directory on startup
+    useEffect(() => {
+        async function direxist() {
+            return await exists(MAIN_DATA_DIR, { dir: BaseDirectory.AppData });
+        }
+
+        (async () => {
+            if (!(await direxist())) {
+                await createDir(MAIN_DATA_DIR, {
+                    dir: BaseDirectory.AppData,
+                    recursive: true,
+                });
+            }
+        })();
+    }, []);
 
     return (
         <>

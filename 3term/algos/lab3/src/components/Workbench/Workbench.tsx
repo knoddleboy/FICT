@@ -6,13 +6,23 @@ import styles from "./Workbench.module.scss";
 import variables from "../../styles/variables.module.scss";
 
 import { AppContext } from "../../App";
+import ContextMenu from "../ContextMenu";
 
 export const Workbench: FC<{ workState: boolean }> = ({ workState }) => {
-    const { setActivateTableRemoval } = useContext(AppContext);
+    const { setActivateTableEditing } = useContext(AppContext);
 
     return (
         <>
             <div className={styles.workbenchRoot}>
+                {/* <ContextMenu
+                    background={{
+                        color: variables.systemTertiaryDark,
+                        alpha: 32,
+                    }}
+                >
+                    <ContextMenu.Item>Create</ContextMenu.Item>
+                    <ContextMenu.Item>Delete</ContextMenu.Item>
+                </ContextMenu> */}
                 <Button
                     background={{
                         color: variables.systemTertiaryDark,
@@ -20,7 +30,7 @@ export const Workbench: FC<{ workState: boolean }> = ({ workState }) => {
                     }}
                     className={styles.editButton}
                     onClick={() => {
-                        setActivateTableRemoval((prev) => !prev);
+                        setActivateTableEditing((prev) => !prev);
                     }}
                 >
                     <EditIcon size={20} className={styles.editButtonIcon} />

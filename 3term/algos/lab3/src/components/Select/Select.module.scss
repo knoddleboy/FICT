@@ -13,3 +13,20 @@
         text-align: center;
     }
 }
+
+.selectEmpty {
+    width: 100%;
+    height: calc(100% - 29px);
+    @include center;
+
+    .selectEmptyIconWrapper {
+        // background-color: lighten($system-tertiary-dark, 30%);
+        @include center;
+        padding: 10px;
+        border-radius: 50%;
+    }
+
+    .selectEmptyIcon {
+        fill: lighten($system-secondary-dark, 45%);
+    }
+}
