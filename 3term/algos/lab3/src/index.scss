@@ -1,5 +1,12 @@
 @import "./styles/variables.module.scss";
 
+@mixin standard-font {
+    font-size: 1em;
+    font-weight: 400;
+    font-family: inherit;
+    color: inherit;
+}
+
 :root {
     font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
     font-size: 16px;
@@ -27,48 +34,31 @@
     box-sizing: border-box;
 }
 
-ul {
-    list-style: none;
-}
-
-button {
-    font-size: 1em;
-    font-weight: 400;
-    font-family: inherit;
-    color: inherit;
-    background: none;
-    border: none;
-}
-
 body {
     min-height: 100vh;
     overflow: hidden;
 }
 
+ul {
+    list-style: none;
+}
+
+button {
+    @include standard-font;
+    background: none;
+    border: none;
+}
+
+input {
+    @include standard-font;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
 #app {
     display: flex;
 }
-
-// button {
-//     border-radius: 8px;
-//     border: 1px solid transparent;
-//     padding: 0.6em 1.2em;
-//     font-size: 1em;
-//     font-weight: 500;
-//     font-family: inherit;
-//     background-color: #1a1a1a;
-//     cursor: pointer;
-//     transition: border-color 0.25s;
-// }
-
-// button:hover {
-//     border-color: #646cff;
-// }
-
-// button:focus,
-// button:focus-visible {
-//     outline: 4px auto -webkit-focus-ring-color;
-// }
 
 // @media (prefers-color-scheme: light) {
 //     :root {

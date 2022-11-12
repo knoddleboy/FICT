@@ -30,3 +30,14 @@
         fill: lighten($system-secondary-dark, 45%);
     }
 }
+
+.inp {
+    width: 100%;
+    border: 1px solid lighten($system-secondary-dark, 30%);
+    border-radius: 6px;
+    padding: 2px 4px;
+
+    &:focus {
+        border: 1px solid $system-secondary-dark;
+    }
+}

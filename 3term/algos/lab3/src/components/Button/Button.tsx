@@ -12,6 +12,7 @@ interface IButton {
     foregraund?: {
         color: string;
     };
+    disabled?: boolean;
     /** Classname for customization via sass module */
     className?: string;
     onClick?(): void;
@@ -21,6 +22,7 @@ interface IStyledButton {
     bgcolor: string;
     bgalpha: number;
     fgcolor: string;
+    disabled: boolean;
 }
 
 const StyledButton = styled.button<{ children: any } & IStyledButton>`
@@ -28,18 +30,28 @@ const StyledButton = styled.button<{ children: any } & IStyledButton>`
     align-items: center;
     background-color: ${(props) => lighten(props.bgalpha / 100, props.bgcolor)};
     transition: background-color 100ms cubic-bezier(0, 0, 0.5, 1);
-    cursor: pointer;
+    cursor: ${(props) => (props.disabled ? "default" : "pointer")};
 
     :hover {
         background-color: ${(props) => lighten((props.bgalpha * 7) / 8 / 100, props.bgcolor)};
     }
 
     :active {
-        background-color: ${(props) => lighten((props.bgalpha * 13) / 16 / 100, props.bgcolor)};
+        background-color: ${(props) => {
+            if (!props.disabled) return lighten((props.bgalpha * 13) / 16 / 100, props.bgcolor);
+            else return;
+        }};
     }
 `;
 
-export const Button: FC<IButton> = ({ background, foregraund, className, children, onClick }) => {
+export const Button: FC<IButton> = ({
+    background,
+    foregraund,
+    disabled,
+    className,
+    children,
+    onClick,
+}) => {
     const { color, alpha } = background ?? {};
 
     return (
@@ -48,7 +60,8 @@ export const Button: FC<IButton> = ({ background, foregraund, className, childre
             bgcolor={color || "transparent"}
             bgalpha={alpha || 0}
             fgcolor={foregraund?.color ?? "black"}
-            onClick={onClick}
+            disabled={disabled || false}
+            onClick={!disabled ? onClick : undefined}
         >
             {children}
         </StyledButton>
