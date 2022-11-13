@@ -1,12 +1,8 @@
-import { toChildArray, FunctionalComponent as FC, Ref } from "preact";
-import styled from "styled-components";
-import Button from "../Button";
-import styles from "./ContextMenu.module.scss";
-
+import { FunctionalComponent as FC, Ref } from "preact";
 import useDelayUnmount from "../../hooks/useDelayUnmount";
-import { useState } from "preact/hooks";
-
-interface IContextMenuItem extends FC {}
+import Button from "../Button";
+import styled from "styled-components";
+import styles from "./ContextMenu.module.scss";
 
 interface IContextMenu {
     active?: boolean;
@@ -21,13 +17,7 @@ interface IContextMenu {
     left?: number;
 }
 
-interface IStyledContextMenu {
-    bgcolor: string;
-    bgalpha: number;
-    mounted: boolean;
-}
-
-const StyledContextMenu = styled.div<{ children: any } & IStyledContextMenu>`
+const StyledContextMenu = styled.div<{ children: any } & { mounted: boolean }>`
     position: absolute;
     border-radius: 12px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -2px;
@@ -56,39 +46,36 @@ const StyledContextMenu = styled.div<{ children: any } & IStyledContextMenu>`
     }
 `;
 
-export const ContextMenu: FC<IContextMenu> & { Item: IContextMenuItem } = ({
+export const ContextMenu: FC<IContextMenu> = ({
     active = false,
     contextRef,
-    background,
     top,
     left,
     children,
 }) => {
-    let { color, alpha } = background ?? {};
-    color = color || "transparent";
-    alpha = alpha || 0;
-
     const shouldRender = useDelayUnmount(active, 100);
 
     return shouldRender ? (
-        <StyledContextMenu
-            bgcolor={color}
-            bgalpha={alpha || 0}
-            mounted={active}
-            style={{ top, left }}
-            ref={contextRef}
-        >
-            {toChildArray(children).map((child) => (
-                <Button
-                    background={{ color: color || "transparent", alpha: alpha || 0 }}
-                    className={styles.contextMenuItem}
-                >
-                    {child}
-                </Button>
-            ))}
+        <StyledContextMenu mounted={active} style={{ top, left }} ref={contextRef}>
+            {children}
         </StyledContextMenu>
     ) : null;
 };
 
-const Item: FC = ({ children }) => <>{children}</>;
-ContextMenu.Item = Item;
+interface IContextItem {
+    background?: {
+        /** Color in hex */
+        color: string;
+        /** Alpha in percent */
+        alpha?: number;
+    };
+    onClick?(): void;
+}
+
+export const ContextItem: FC<IContextItem> = ({ background, onClick, children }) => {
+    return (
+        <Button background={background} className={styles.contextMenuItem} onClick={onClick}>
+            {children}
+        </Button>
+    );
+};
