@@ -1,8 +1,9 @@
-import { FunctionalComponent as FC } from "preact";
+import { FunctionalComponent as FC, Ref } from "preact";
 import styled from "styled-components";
 import { lighten } from "polished";
 
 interface IButton {
+    buttonRef?: Ref<HTMLButtonElement>;
     background?: {
         /** Color in hex */
         color: string;
@@ -27,6 +28,7 @@ interface IStyledButton {
 
 const StyledButton = styled.button<{ children: any } & IStyledButton>`
     display: flex;
+    justify-content: center;
     align-items: center;
     background-color: ${(props) => lighten(props.bgalpha / 100, props.bgcolor)};
     transition: background-color 100ms cubic-bezier(0, 0, 0.5, 1);
@@ -45,6 +47,7 @@ const StyledButton = styled.button<{ children: any } & IStyledButton>`
 `;
 
 export const Button: FC<IButton> = ({
+    buttonRef,
     background,
     foregraund,
     disabled,
@@ -62,6 +65,7 @@ export const Button: FC<IButton> = ({
             fgcolor={foregraund?.color ?? "black"}
             disabled={disabled || false}
             onClick={!disabled ? onClick : undefined}
+            ref={buttonRef}
         >
             {children}
         </StyledButton>
