@@ -13,12 +13,13 @@ interface IContextMenu {
         /** Alpha in percent */
         alpha?: number;
     };
-    top?: number;
-    left?: number;
+    top?: number | string;
+    left?: number | string;
 }
 
 const StyledContextMenu = styled.div<{ children: any } & { mounted: boolean }>`
     position: absolute;
+    z-index: 999;
     border-radius: 12px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -2px;
     transform-origin: 0 0;

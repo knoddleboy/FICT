@@ -4,6 +4,7 @@ $system-secondary-dark: #4B4E6D;
 $system-tertiary-dark: #95A3B3;
 $system-primary-light: #ffffff;
 $system-primary-green: #84DCC6;
+$system-primary-red: red;
 
 :export {
     systemPrimaryDark: $system-primary-dark;
@@ -11,6 +12,7 @@ $system-primary-green: #84DCC6;
     systemTertiaryDark: $system-tertiary-dark;
     systemPrimaryLight: $system-primary-light;
     systemPrimaryGreen: $system-primary-green;
+    systemPrimaryRed: $system-primary-red;
 }
 
 /* TYPOGRAPHY */

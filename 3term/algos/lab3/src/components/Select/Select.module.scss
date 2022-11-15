@@ -1,9 +1,23 @@
 @import "../../styles/variables.module.scss";
 
+.editButton {
+    padding: 8px;
+    position: absolute;
+    top: 2%;
+    left: 27%;
+    border-radius: 50%;
+    z-index: 1;
+
+    .editButtonIcon {
+        fill: lighten($system-secondary-dark, 20%);
+    }
+}
+
 .selectRoot {
     width: calc(100% / 3);
     height: 100vh;
     padding: 12px;
+    position: relative;
     background-color: lighten($system-tertiary-dark, 32%);
     color: $system-secondary-dark;
     overflow-y: scroll;
@@ -32,7 +46,7 @@
     }
 }
 
-.inp {
+.templateInput {
     width: 100%;
     border: 1px solid lighten($system-secondary-dark, 30%);
     border-radius: 6px;
