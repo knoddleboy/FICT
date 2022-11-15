@@ -231,7 +231,7 @@ export const Select = () => {
                     {invokeDeleteTable ? "Choose to delete" : "Tables"}
                 </h4>
 
-                {tableEntries.length ? (
+                {tableEntries.length || tableCreatingTemplate ? (
                     // renders: when there are saved tables and return select list of them
                     <>
                         {tableCreatingTemplate && (
@@ -279,22 +279,6 @@ export const Select = () => {
                             })}
                         </ul>
                     </>
-                ) : // NO TABLES EXISTS
-                tableCreatingTemplate ? (
-                    // renders: when clicked on "+" (add) button
-                    tableCreatingTemplate &&
-                    !finishNewTable && (
-                        // renders: when focused on table name input
-                        <SelectItem disabled>
-                            <input
-                                type="text"
-                                className={styles.templateInput}
-                                ref={tableCreatingTemplateInputRef}
-                                onBlur={() => setTableCreatingTemplate(false)}
-                                onKeyDown={handleInputEnd}
-                            />
-                        </SelectItem>
-                    )
                 ) : (
                     // -- Add Table Button --
                     // renders: when there is no tables
