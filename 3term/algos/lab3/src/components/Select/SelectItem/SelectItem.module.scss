@@ -12,8 +12,10 @@
     align-items: center;
     padding: 10px 6px;
 
-    .selectItemName {
-        margin-left: 6px;
+    .selectItemChildren {
+        width: inherit;
+        margin-left: 10px;
+        text-align: start;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

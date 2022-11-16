@@ -1,9 +1,10 @@
 import { writeTextFile, removeFile, readDir, FileEntry, BaseDirectory } from "@tauri-apps/api/fs";
-import { useState, useRef, useEffect } from "preact/hooks";
+import { useState, useRef, useEffect, useContext } from "preact/hooks";
 import filenamify from "filenamify";
 
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { MAIN_DATA_DIR, EXTENSION } from "../../constants";
+import { AppContext } from "../../App";
 
 import Button from "../Button";
 import SelectItem from "./SelectItem";
@@ -21,29 +22,32 @@ const initalTableEntries = await readDir(MAIN_DATA_DIR, {
 
 export const Select = () => {
     /********************
+     *      CONTEXT     *
+     ********************/
+
+    const { workingTable } = useContext(AppContext);
+
+    /********************
      *      STATES      *
      ********************/
 
     const [invokeCreateTable, setInvokeCreateTable] = useState(false);
     const [invokeDeleteTable, setInvokeDeleteTable] = useState(false);
 
-    // Array of saved tables
+    // array of saved tables
     const [tableEntries, setTableEntries] = useState<FileEntry[]>(initalTableEntries);
 
-    // When `true` show creating template (with input)
+    // when `true` show creating template (with input)
     const [tableCreatingTemplate, setTableCreatingTemplate] = useState(false);
-
-    // Name of newly create table to display in `Select`
-    const [newTableName, setNewTableName] = useState("");
-
-    // Whether user save a new table (clicked Enter) to replace template with the table
-    const [finishNewTable, setFinishNewTable] = useState(false);
 
     // open-close context menu
     const [openContext, setOpenContext] = useState(false);
 
     // set of clicked tables while deleting
     const [tableClicked, setTableClicked] = useState<Set<number>>(new Set());
+
+    // current working table. holds `string` aka file name
+    const [currentTable, setCurrentTable] = useState<string>("");
 
     /********************
      *       REFS       *
@@ -83,8 +87,6 @@ export const Select = () => {
     const resetTemplate = () => {
         setTableCreatingTemplate(false);
         setInvokeCreateTable(false);
-        setNewTableName("");
-        setFinishNewTable(false);
     };
 
     const handleInputEnd = (e: KeyboardEvent) => {
@@ -99,7 +101,7 @@ export const Select = () => {
         if (e.key === "Enter" && val) {
             // ensure entered name does not exists yet
             for (const t of tableEntries) {
-                const fname = t.name?.split(".").slice(0, -1).join(".");
+                const fname = removeExtension(t.name);
                 if (fname === val) {
                     input.style.borderColor = variables.systemPrimaryRed;
                     return;
@@ -107,8 +109,6 @@ export const Select = () => {
             }
 
             val = filenamify(val); // convert to a valid filename
-            setNewTableName(val);
-            setFinishNewTable(true);
             createTable(val);
 
             resetTemplate();
@@ -119,19 +119,28 @@ export const Select = () => {
     const deleteTables = (tables: Set<number>) => {
         if (!tables.size) return;
 
-        // remove tables from enties ...
-        setTableEntries((prev) => [...prev].filter((_, i) => !tables.has(i)));
-
-        // ... as well as from disk
+        // remove tables from disk ...
         tables.forEach((t) => {
             removeFile(`${MAIN_DATA_DIR}/${tableEntries[t].name}`, { dir: BaseDirectory.AppData });
+            if (tableEntries[t] === workingTable.value) {
+                workingTable.value = undefined;
+                setCurrentTable("");
+            }
         });
+
+        // .. as well as from enties
+        setTableEntries((prev) => [...prev].filter((_, i) => !tables.has(i)));
 
         setTableClicked(new Set()); // remove selection
         setInvokeDeleteTable(false); // reset delete invoke
 
         setOpenContext(false); // close context after deletion
     };
+
+    function removeExtension(filename: string | undefined) {
+        if (!filename || !filename.length) return "";
+        return filename.split(".").slice(0, -1).join(".");
+    }
 
     /********************
      *      EFFECTS     *
@@ -192,15 +201,15 @@ export const Select = () => {
                         alpha: 32,
                     }}
                     onClick={() => {
-                        // on second click: delete selected tables (if any)
-                        if (invokeDeleteTable && tableClicked.size) {
-                            deleteTables(tableClicked);
+                        // TODO: display deletion msg (?)
+                        //  no need to delete when there are no tables
+                        if (!tableEntries.length) {
                             return;
                         }
 
-                        // TODO: display deletion msg
-                        //  no need to delete when there are no tables
-                        if (!tableEntries.length) {
+                        // on second click: delete selected tables (if any)
+                        if (invokeDeleteTable && tableClicked.size) {
+                            deleteTables(tableClicked);
                             return;
                         }
 
@@ -250,7 +259,8 @@ export const Select = () => {
                                 return (
                                     <li key={idx}>
                                         <SelectItem
-                                            selected={tableClicked.has(idx)}
+                                            toRemove={tableClicked.has(idx)}
+                                            selected={currentTable === table.name}
                                             onClick={() => {
                                                 if (invokeDeleteTable) {
                                                     // if `idx` table was already clicked, remove its index ...
@@ -269,10 +279,22 @@ export const Select = () => {
                                                             (prev) => new Set(prev.add(idx))
                                                         );
                                                     }
+                                                    return;
+                                                }
+
+                                                if (
+                                                    !workingTable.value ||
+                                                    workingTable.value !== tableEntries[idx]
+                                                ) {
+                                                    setCurrentTable(table.name!);
+                                                    workingTable.value = tableEntries[idx];
+                                                } else {
+                                                    setCurrentTable("");
+                                                    workingTable.value = undefined;
                                                 }
                                             }}
                                         >
-                                            {table.name}
+                                            {removeExtension(table.name)}
                                         </SelectItem>
                                     </li>
                                 );

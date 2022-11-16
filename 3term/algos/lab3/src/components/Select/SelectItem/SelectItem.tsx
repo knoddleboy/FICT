@@ -6,6 +6,7 @@ import styles from "./SelectItem.module.scss";
 
 interface ISelectItem {
     disabled?: boolean;
+    toRemove?: boolean;
     selected?: boolean;
     onClick?(): void;
 }
@@ -13,6 +14,7 @@ interface ISelectItem {
 export const SelectItem: FC<ISelectItem> = ({
     disabled = false,
     selected = false,
+    toRemove = false,
     onClick,
     children,
 }) => {
@@ -20,7 +22,7 @@ export const SelectItem: FC<ISelectItem> = ({
         <Button
             background={{
                 color: variables.systemTertiaryDark,
-                alpha: selected ? 26 : 32,
+                alpha: toRemove ? 26 : selected ? 29 : 32,
             }}
             disabled={disabled}
             className={styles.selectItemButton}
@@ -33,7 +35,7 @@ export const SelectItem: FC<ISelectItem> = ({
                         style={{ verticalAlign: "middle" }}
                     />
                 </div>
-                <div className={styles.selectItemName}>{children}</div>
+                <div className={styles.selectItemChildren}>{children}</div>
             </div>
         </Button>
     );
