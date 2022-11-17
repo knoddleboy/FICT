@@ -1,21 +1,18 @@
 @import "../../styles/variables.module.scss";
 
-.editButton {
-    padding: 8px;
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    border-radius: 50%;
+$accent-bg-color: lighten($system-tertiary-dark, 33%);
+$accent-border-color: lighten($system-tertiary-dark, 28%);
+$table-padding: 20px;
 
-    .editButtonIcon {
-        fill: lighten($system-secondary-dark, 20%);
-    }
-}
+$search-height: 12%;
+$table-head-height: 34px;
+$bottom-panel-height: 42px;
 
 .workbenchRoot {
     width: 100%;
     height: 100vh;
     position: relative;
+    border-left: 1px solid $accent-border-color;
 }
 
 .workbenchEmpty {
@@ -28,6 +25,150 @@
     transform: translate(-50%, -50%);
 }
 
-.table {
+.working {
     width: 100%;
+    height: $search-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .searchInput {
+        width: 60%;
+        display: flex;
+        align-items: center;
+
+        $input-border-radius: 8px;
+
+        label {
+            height: 32px;
+            @include center;
+            background-color: $accent-bg-color;
+            border-radius: $input-border-radius 0 0 $input-border-radius;
+            border: 1px solid $accent-border-color;
+            border-right: none;
+            padding-left: 4px;
+        }
+
+        input {
+            width: 100%;
+            padding: 4px;
+            background-color: $accent-bg-color;
+            border-radius: 0 $input-border-radius $input-border-radius 0;
+            border: 1px solid $accent-border-color;
+            border-left: none;
+            outline: none;
+
+            &::placeholder {
+                color: inherit;
+                opacity: 0.5;
+            }
+        }
+    }
+}
+
+.dataRowHead {
+    width: 100%;
+    padding: 4px 0;
+    font-weight: 600;
+    background-color: $accent-bg-color;
+    border-bottom: 2px solid $accent-border-color;
+
+    .dataKeyField {
+        width: 20%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 10px;
+        border-right: 1px solid $accent-border-color;
+    }
+
+    .dataValueField {
+        width: calc(80% - $table-padding);
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 10px;
+    }
+}
+
+.displayTableRoot {
+    width: 100%;
+    height: calc(100% - ($search-height + $table-head-height + $bottom-panel-height));
+    overflow-y: scroll;
+
+    h4 {
+        text-align: center;
+    }
+
+    .dataRow {
+        width: 100%;
+
+        &:nth-of-type(2n) {
+            background-color: lighten($system-tertiary-dark, 32%);
+        }
+    }
+
+    .dataKeyField {
+        width: 20%;
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 6px;
+        padding-left: 10px;
+        border-right: 1px solid lighten($system-tertiary-dark, 29%);
+    }
+
+    .dataValueField {
+        width: calc(80% - $table-padding);
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding-left: 10px;
+    }
+}
+
+.bottomPanel {
+    width: 100%;
+    max-height: 42px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $panel-padding 20px;
+    border-top: 2px solid $accent-border-color;
+    font-size: small;
+
+    .dataView {
+        display: flex;
+
+        button {
+            padding: 2px 10px;
+            border: 1px solid $accent-border-color;
+            font-weight: 500;
+
+            &:nth-of-type(1) {
+                border-radius: 5px 0 0 5px;
+                border-right: none;
+            }
+
+            &:nth-of-type(2) {
+                border-radius: 0 5px 5px 0;
+                border-left: none;
+            }
+        }
+    }
+
+    .rowsEdit {
+        display: flex;
+
+        button {
+            padding: 1px 4px;
+            border: 1px solid $accent-border-color;
+            border-radius: 5px;
+            font-weight: 500;
+
+            &:nth-of-type(1) {
+                margin-right: 10px;
+            }
+        }
+    }
 }

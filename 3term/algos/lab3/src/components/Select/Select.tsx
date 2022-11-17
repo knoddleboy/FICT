@@ -8,8 +8,7 @@ import { AppContext } from "../../App";
 
 import Button from "../Button";
 import SelectItem from "./SelectItem";
-import ContextMenu, { ContextItem } from "../ContextMenu";
-import { AddIcon, EditIcon } from "../../assets/svg";
+import { AddIcon, AddIconThin, RemoveIcon } from "../../assets/svg";
 
 import styles from "./Select.module.scss";
 import variables from "../../styles/variables.module.scss";
@@ -40,9 +39,6 @@ export const Select = () => {
     // when `true` show creating template (with input)
     const [tableCreatingTemplate, setTableCreatingTemplate] = useState(false);
 
-    // open-close context menu
-    const [openContext, setOpenContext] = useState(false);
-
     // set of clicked tables while deleting
     const [tableClicked, setTableClicked] = useState<Set<number>>(new Set());
 
@@ -57,8 +53,7 @@ export const Select = () => {
 
     const tablesListRef = useRef<HTMLUListElement>(null);
 
-    // Close edit context when clicked outside
-    const contextRef = useRef<HTMLDivElement>(null);
+    const deleteButtonRef = useRef<HTMLButtonElement>(null);
 
     const editButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -112,7 +107,6 @@ export const Select = () => {
             createTable(val);
 
             resetTemplate();
-            setOpenContext(false); // close context when finished
         }
     };
 
@@ -133,8 +127,6 @@ export const Select = () => {
 
         setTableClicked(new Set()); // remove selection
         setInvokeDeleteTable(false); // reset delete invoke
-
-        setOpenContext(false); // close context after deletion
     };
 
     function removeExtension(filename: string | undefined) {
@@ -160,151 +152,86 @@ export const Select = () => {
     }, [invokeCreateTable]);
 
     useOnClickOutside(
-        contextRef,
+        deleteButtonRef,
         () => {
-            setOpenContext(false); // close context menu
-
-            setInvokeCreateTable(false); // reset invokes
-            setInvokeDeleteTable(false); // ..
-
+            setInvokeDeleteTable(false); // reset invoke
             setTableClicked(new Set()); // remove selection from tables
         },
-        invokeDeleteTable ? [editButtonRef, tablesListRef] : [editButtonRef]
+        [tablesListRef]
     );
 
     return (
         <>
-            <ContextMenu
-                top={"calc(2% + 36px)"}
-                left={"calc(27% + 36px)"}
-                active={openContext}
-                contextRef={contextRef}
-            >
-                <ContextItem
-                    background={{
-                        color: variables.systemTertiaryDark,
-                        alpha: 32,
-                    }}
-                    onClick={() => {
-                        setInvokeCreateTable(true);
-
-                        // set false to ensure that when creating a new table,
-                        // delition does not occur
-                        setInvokeDeleteTable(false);
-                    }}
-                >
-                    Create
-                </ContextItem>
-                <ContextItem
-                    background={{
-                        color: variables.systemTertiaryDark,
-                        alpha: 32,
-                    }}
-                    onClick={() => {
-                        // TODO: display deletion msg (?)
-                        //  no need to delete when there are no tables
-                        if (!tableEntries.length) {
-                            return;
-                        }
-
-                        // on second click: delete selected tables (if any)
-                        if (invokeDeleteTable && tableClicked.size) {
-                            deleteTables(tableClicked);
-                            return;
-                        }
-
-                        setInvokeDeleteTable(true);
-
-                        // set false to ensure that when deleting tables,
-                        // creation does not occur
-                        setInvokeCreateTable(false);
-                    }}
-                >
-                    Delete
-                </ContextItem>
-            </ContextMenu>
-            <Button
-                background={{
-                    color: variables.systemTertiaryDark,
-                    alpha: 32,
-                }}
-                className={styles.editButton}
-                onClick={() => setOpenContext((prev) => !prev)}
-                buttonRef={editButtonRef}
-            >
-                <EditIcon size={20} className={styles.editButtonIcon} />
-            </Button>
-
             <div className={styles.selectRoot}>
                 <h4 className={styles.title}>
                     {invokeDeleteTable ? "Choose to delete" : "Tables"}
                 </h4>
 
-                {tableEntries.length || tableCreatingTemplate ? (
-                    // renders: when there are saved tables and return select list of them
-                    <>
-                        {tableCreatingTemplate && (
-                            <SelectItem disabled>
-                                <input
-                                    type="text"
-                                    className={styles.templateInput}
-                                    ref={tableCreatingTemplateInputRef}
-                                    onBlur={resetTemplate}
-                                    onKeyDown={handleInputEnd}
-                                />
-                            </SelectItem>
-                        )}
-                        <ul ref={tablesListRef}>
-                            {tableEntries.map((table, idx) => {
-                                return (
-                                    <li key={idx}>
-                                        <SelectItem
-                                            toRemove={tableClicked.has(idx)}
-                                            selected={currentTable === table.name}
-                                            onClick={() => {
-                                                if (invokeDeleteTable) {
-                                                    // if `idx` table was already clicked, remove its index ...
-                                                    if (tableClicked.has(idx)) {
-                                                        setTableClicked(
-                                                            (prev) =>
-                                                                new Set(
-                                                                    [...prev].filter(
-                                                                        (i) => i !== idx
+                <div className={styles.tablesContainer}>
+                    {tableEntries.length || tableCreatingTemplate ? (
+                        // renders: when there are saved tables and return select list of them
+                        <>
+                            {tableCreatingTemplate && (
+                                <SelectItem disabled>
+                                    <input
+                                        type="text"
+                                        className={styles.templateInput}
+                                        ref={tableCreatingTemplateInputRef}
+                                        onBlur={resetTemplate}
+                                        onKeyDown={handleInputEnd}
+                                    />
+                                </SelectItem>
+                            )}
+                            <ul ref={tablesListRef}>
+                                {tableEntries.map((table, idx) => {
+                                    return (
+                                        <li key={idx}>
+                                            <SelectItem
+                                                toRemove={tableClicked.has(idx)}
+                                                selected={currentTable === table.name}
+                                                onClick={() => {
+                                                    if (invokeDeleteTable) {
+                                                        // if `idx` table was already clicked, remove its index ...
+                                                        if (tableClicked.has(idx)) {
+                                                            setTableClicked(
+                                                                (prev) =>
+                                                                    new Set(
+                                                                        [...prev].filter(
+                                                                            (i) => i !== idx
+                                                                        )
                                                                     )
-                                                                )
-                                                        );
-                                                        // ... otherwise add its index
-                                                    } else {
-                                                        setTableClicked(
-                                                            (prev) => new Set(prev.add(idx))
-                                                        );
+                                                            );
+                                                            // ... otherwise add its index
+                                                        } else {
+                                                            setTableClicked(
+                                                                (prev) => new Set(prev.add(idx))
+                                                            );
+                                                        }
+                                                        return;
                                                     }
-                                                    return;
-                                                }
 
-                                                if (
-                                                    !workingTable.value ||
-                                                    workingTable.value !== tableEntries[idx]
-                                                ) {
-                                                    setCurrentTable(table.name!);
-                                                    workingTable.value = tableEntries[idx];
-                                                } else {
-                                                    setCurrentTable("");
-                                                    workingTable.value = undefined;
-                                                }
-                                            }}
-                                        >
-                                            {removeExtension(table.name)}
-                                        </SelectItem>
-                                    </li>
-                                );
-                            })}
-                        </ul>
-                    </>
-                ) : (
-                    // -- Add Table Button --
-                    // renders: when there is no tables
-                    <div className={styles.selectEmpty}>
+                                                    if (
+                                                        !workingTable.value ||
+                                                        workingTable.value !== tableEntries[idx]
+                                                    ) {
+                                                        setCurrentTable(table.name!);
+                                                        workingTable.value = tableEntries[idx];
+                                                    } else {
+                                                        setCurrentTable("");
+                                                        workingTable.value = undefined;
+                                                    }
+                                                }}
+                                            >
+                                                {removeExtension(table.name)}
+                                            </SelectItem>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </>
+                    ) : (
+                        // -- Add Table Button --
+                        // renders: when there is no tables
                         <Button
                             background={{
                                 color: variables.systemTertiaryDark,
@@ -317,8 +244,56 @@ export const Select = () => {
                         >
                             <AddIcon size={36} className={styles.selectEmptyIcon} />
                         </Button>
-                    </div>
-                )}
+                    )}
+                </div>
+
+                <div className={styles.editPanel}>
+                    <Button
+                        background={{
+                            color: variables.systemTertiaryDark,
+                            alpha: 28,
+                        }}
+                        onClick={() => {
+                            // TODO: display deletion msg (?)
+                            //  no need to delete when there are no tables
+                            if (!tableEntries.length) {
+                                return;
+                            }
+
+                            // on second click: delete selected tables (if any)
+                            if (invokeDeleteTable && tableClicked.size) {
+                                deleteTables(tableClicked);
+                                return;
+                            }
+
+                            setInvokeDeleteTable(true);
+
+                            // set false to ensure that when deleting tables,
+                            // creation does not occur
+                            setInvokeCreateTable(false);
+                        }}
+                        buttonRef={deleteButtonRef}
+                    >
+                        <RemoveIcon size={20} fill={variables.systemSecondaryDark} />
+                        Table
+                    </Button>
+                    <Button
+                        background={{
+                            color: variables.systemTertiaryDark,
+                            alpha: 28,
+                        }}
+                        onClick={() => {
+                            setInvokeCreateTable(true);
+
+                            // set false to ensure that when creating a new table,
+                            // delition does not occur
+                            setInvokeDeleteTable(false);
+                        }}
+                    >
+                        <AddIconThin size={20} fill={variables.systemSecondaryDark} />
+                        Table
+                    </Button>
+                </div>
             </div>
         </>
     );

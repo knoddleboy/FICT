@@ -1,5 +1,5 @@
 import { FunctionalComponent as FC } from "preact";
-import { DBIcon } from "../../../assets/svg";
+import { DBIcon, AddIcon } from "../../../assets/svg";
 import Button from "../../Button";
 import variables from "../../../styles/variables.module.scss";
 import styles from "./SelectItem.module.scss";

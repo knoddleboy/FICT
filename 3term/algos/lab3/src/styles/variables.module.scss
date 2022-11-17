@@ -6,6 +6,8 @@ $system-primary-light: #ffffff;
 $system-primary-green: #84DCC6;
 $system-primary-red: red;
 
+$panel-padding: 8px;
+
 :export {
     systemPrimaryDark: $system-primary-dark;
     systemSecondaryDark: $system-secondary-dark;

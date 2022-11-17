@@ -13,6 +13,7 @@ interface IButton {
     foregraund?: {
         color: string;
     };
+    active?: boolean;
     disabled?: boolean;
     /** Classname for customization via sass module */
     className?: string;
@@ -30,6 +31,7 @@ const StyledButton = styled.button<{ children: any } & IStyledButton>`
     display: flex;
     justify-content: center;
     align-items: center;
+    color: ${(props) => props.fgcolor};
     background-color: ${(props) => lighten(props.bgalpha / 100, props.bgcolor)};
     transition: background-color 100ms cubic-bezier(0, 0, 0.5, 1);
     cursor: ${(props) => (props.disabled ? "default" : "pointer")};
@@ -50,7 +52,7 @@ export const Button: FC<IButton> = ({
     buttonRef,
     background,
     foregraund,
-    disabled,
+    disabled = false,
     className,
     children,
     onClick,
@@ -62,8 +64,8 @@ export const Button: FC<IButton> = ({
             className={className}
             bgcolor={color || "transparent"}
             bgalpha={alpha || 0}
-            fgcolor={foregraund?.color ?? "black"}
-            disabled={disabled || false}
+            fgcolor={foregraund?.color ?? "inherit"}
+            disabled={disabled}
             onClick={!disabled ? onClick : undefined}
             ref={buttonRef}
         >
