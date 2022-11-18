@@ -5,8 +5,10 @@ $accent-border-color: lighten($system-tertiary-dark, 28%);
 $table-padding: 20px;
 
 $search-height: 12%;
-$table-head-height: 34px;
+$table-row-height: 34px;
 $bottom-panel-height: 42px;
+
+$table-inner-padding: 10px;
 
 .workbenchRoot {
     width: 100%;
@@ -68,32 +70,34 @@ $bottom-panel-height: 42px;
 
 .dataRowHead {
     width: 100%;
-    padding: 4px 0;
+    height: 32px;
     font-weight: 600;
     background-color: $accent-bg-color;
     border-bottom: 2px solid $accent-border-color;
 
     .dataKeyField {
         width: 20%;
+        height: 100%;
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        padding-left: 10px;
+        padding-left: $table-inner-padding;
         border-right: 1px solid $accent-border-color;
     }
 
     .dataValueField {
-        width: calc(80% - $table-padding);
+        width: 80%;
+        height: 100%;
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        padding-left: 10px;
+        padding-left: $table-inner-padding;
     }
 }
 
 .displayTableRoot {
     width: 100%;
-    height: calc(100% - ($search-height + $table-head-height + $bottom-panel-height));
+    height: calc(100% - ($search-height + $table-row-height + $bottom-panel-height));
     overflow-y: scroll;
 
     h4 {
@@ -102,28 +106,72 @@ $bottom-panel-height: 42px;
 
     .dataRow {
         width: 100%;
+        height: $table-row-height;
+        display: flex;
+        align-items: center;
 
         &:nth-of-type(2n) {
             background-color: lighten($system-tertiary-dark, 32%);
+        }
+
+        input {
+            height: 100%;
+            padding: 4px $table-inner-padding;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        &:nth-of-type(1) {
+            input {
+                height: calc(100% - 3px);
+                top: 3px;
+            }
+        }
+
+        &:nth-last-of-type(1) {
+            input {
+                height: calc(100% - 3px);
+            }
         }
     }
 
     .dataKeyField {
         width: 20%;
+        height: 100%;
         display: inline-flex;
         justify-content: flex-start;
         align-items: center;
-        padding: 6px;
-        padding-left: 10px;
+        position: relative;
         border-right: 1px solid lighten($system-tertiary-dark, 29%);
+
+        input {
+            width: calc(100% - 3px);
+            left: 3px;
+        }
+
+        span {
+            margin-right: $table-inner-padding;
+        }
     }
 
     .dataValueField {
-        width: calc(80% - $table-padding);
+        width: 80%;
+        height: 100%;
+        padding-right: $table-padding;
         display: inline-flex;
         justify-content: flex-start;
         align-items: center;
-        padding-left: 10px;
+        position: relative;
+
+        input {
+            width: calc(100% - 3px);
+        }
+
+        span {
+            margin-right: $table-inner-padding;
+        }
     }
 }
 

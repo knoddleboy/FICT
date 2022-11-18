@@ -5,47 +5,32 @@ import variables from "../../styles/variables.module.scss";
 import { AddIconThin, RemoveIcon, SearchIcon } from "../../assets/svg";
 
 import { AppContext } from "../../App";
-import { useContext, useState } from "preact/hooks";
+import { useContext, useEffect, useRef, useState } from "preact/hooks";
 import Button from "../Button";
 
-const data = [
-    { key: 1, value: "value1", left: 2, right: 3 },
-    { key: 2, value: "value2", left: 4, right: 5 },
-    { key: 3, value: "value3", left: 6, right: 7 },
-    { key: 4, value: "value4", left: null, right: null },
-    { key: 5, value: "value5", left: null, right: null },
-    { key: 6, value: "value6", left: null, right: null },
-    { key: 7, value: "value7", left: null, right: 8 },
-    { key: 8, value: "value8", left: null, right: null },
-    { key: 9, value: "value8", left: null, right: null },
-    { key: 10, value: "value8", left: null, right: null },
-    { key: 11, value: "value8", left: null, right: null },
-    { key: 12, value: "value8", left: null, right: null },
-    { key: 13, value: "value8", left: null, right: null },
-    { key: 14, value: "value8", left: null, right: null },
-    { key: 15, value: "value8", left: null, right: null },
-    { key: 16, value: "value8", left: null, right: null },
-    { key: 17, value: "value8", left: null, right: null },
-    { key: 18, value: "value8", left: null, right: null },
-    { key: 19, value: "value8", left: null, right: null },
-    { key: 20, value: "value8", left: null, right: null },
-    { key: 21, value: "value8", left: null, right: null },
-    { key: 22, value: "value8", left: null, right: null },
-    { key: 23, value: "value8", left: null, right: null },
-    { key: 24, value: "value8", left: null, right: null },
-    { key: 25, value: "value8", left: null, right: null },
-    { key: 26, value: "value8", left: null, right: null },
-    { key: 27, value: "value8", left: null, right: null },
-    { key: 28, value: "value8", left: null, right: null },
-    { key: 29, value: "value8", left: null, right: null },
-    { key: 30, value: "value8", left: null, right: null },
-    { key: 31, value: "value8", left: null, right: null },
-];
+type TableData = {
+    key: number | null;
+    value: string | null;
+};
 
 export const Workbench: FC = () => {
     const { workingTable } = useContext(AppContext);
 
     const [activeViewButton, setActiveViewButton] = useState(0);
+
+    const sceletonData = new Array<TableData>(30).fill({
+        key: null,
+        value: null,
+    });
+
+    const templateInputRowRef = useRef<HTMLInputElement>(null);
+    const [templateInputRow, setTemplateInputRow] = useState([-1, -1]);
+
+    useEffect(() => {
+        if (templateInputRow[1] > -1) {
+            templateInputRowRef.current?.focus();
+        }
+    }, [templateInputRow]);
 
     return (
         <>
@@ -65,10 +50,40 @@ export const Workbench: FC = () => {
                             <div className={styles.dataValueField}>value</div>
                         </div>
                         <div className={styles.displayTableRoot}>
-                            {data.map((d) => (
+                            {sceletonData.map((d, idx) => (
                                 <div className={styles.dataRow}>
-                                    <div className={styles.dataKeyField}>{d.key}</div>
-                                    <div className={styles.dataValueField}>{d.value}</div>
+                                    <div
+                                        className={styles.dataKeyField}
+                                        onDblClick={() => setTemplateInputRow([0, idx])}
+                                    >
+                                        {templateInputRow[0] === 0 &&
+                                        templateInputRow[1] === idx ? (
+                                            <input
+                                                type="text"
+                                                value={d.key ?? ""}
+                                                onBlur={() => setTemplateInputRow([-1, -1])}
+                                                ref={templateInputRowRef}
+                                            />
+                                        ) : (
+                                            <span>{d.key}</span>
+                                        )}
+                                    </div>
+                                    <div
+                                        className={styles.dataValueField}
+                                        onDblClick={() => setTemplateInputRow([1, idx])}
+                                    >
+                                        {templateInputRow[0] === 1 &&
+                                        templateInputRow[1] === idx ? (
+                                            <input
+                                                type="text"
+                                                value={d.key ?? ""}
+                                                onBlur={() => setTemplateInputRow([-1, -1])}
+                                                ref={templateInputRowRef}
+                                            />
+                                        ) : (
+                                            <span>{d.value}</span>
+                                        )}
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -110,7 +125,7 @@ export const Workbench: FC = () => {
                                 </Button>
                             </div>
                             <div className={styles.info}>
-                                <span>~31 rows</span>
+                                <span>~{sceletonData.length} rows</span>
                             </div>
                             <div className={styles.rowsEdit}>
                                 <Button
