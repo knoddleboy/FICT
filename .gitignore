@@ -220,6 +220,7 @@ Cargo.lock
 assets/
 .vscode
 *.dSYM/
+db/
 
 # Reports
 *.doc[x]
