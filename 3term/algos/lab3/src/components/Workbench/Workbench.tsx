@@ -13,6 +13,15 @@ type TableData = {
     value: string | null;
 };
 
+const data = [
+    { key: 927358934684283, value: "hlmcalwjet" },
+    { key: 1, value: "ljhdvn" },
+    { key: 2, value: "rghtop" },
+    { key: 3, value: "ehrth" },
+    { key: 4, value: "drthrth" },
+    { key: 5, value: "vmnlske" },
+];
+
 export const Workbench: FC = () => {
     const { workingTable } = useContext(AppContext);
 
@@ -32,6 +41,32 @@ export const Workbench: FC = () => {
         }
     }, [templateInputRow]);
 
+    const handleInputEnd = (e: KeyboardEvent, idx: number, column: number) => {
+        const input = templateInputRowRef.current;
+        if (!input) return;
+
+        if (e.key === "Escape") {
+            input.blur();
+        }
+
+        let val = input.value;
+        if (e.key === "Enter") {
+            if (column === 0) {
+                if (!val) {
+                    input.style.border = "1px solid red";
+                    input.style.backgroundColor = "#ffe6e6";
+                    return;
+                }
+
+                data[idx].key = parseInt(val);
+            } else if (column === 1) {
+                data[idx].value = val;
+            }
+
+            input.blur();
+        }
+    };
+
     return (
         <>
             <div className={styles.workbenchRoot}>
@@ -50,8 +85,8 @@ export const Workbench: FC = () => {
                             <div className={styles.dataValueField}>value</div>
                         </div>
                         <div className={styles.displayTableRoot}>
-                            {sceletonData.map((d, idx) => (
-                                <div className={styles.dataRow}>
+                            {data.map((d, idx) => (
+                                <div className={styles.dataRow} key={idx}>
                                     <div
                                         className={styles.dataKeyField}
                                         onDblClick={() => setTemplateInputRow([0, idx])}
@@ -63,6 +98,7 @@ export const Workbench: FC = () => {
                                                 value={d.key ?? ""}
                                                 onBlur={() => setTemplateInputRow([-1, -1])}
                                                 ref={templateInputRowRef}
+                                                onKeyDown={(e) => handleInputEnd(e, idx, 0)}
                                             />
                                         ) : (
                                             <span>{d.key}</span>
@@ -76,9 +112,10 @@ export const Workbench: FC = () => {
                                         templateInputRow[1] === idx ? (
                                             <input
                                                 type="text"
-                                                value={d.key ?? ""}
+                                                value={d.value ?? ""}
                                                 onBlur={() => setTemplateInputRow([-1, -1])}
                                                 ref={templateInputRowRef}
+                                                onKeyDown={(e) => handleInputEnd(e, idx, 1)}
                                             />
                                         ) : (
                                             <span>{d.value}</span>
