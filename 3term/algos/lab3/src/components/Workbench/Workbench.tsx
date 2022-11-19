@@ -8,6 +8,9 @@ import { AppContext } from "../../App";
 import { useContext, useEffect, useRef, useState } from "preact/hooks";
 import Button from "../Button";
 
+import { readTextFile, BaseDirectory, FileEntry } from "@tauri-apps/api/fs";
+import { MAIN_DATA_DIR } from "../../constants";
+
 type TableData = {
     key: number | null;
     value: string | null;
@@ -22,15 +25,50 @@ const data = [
     { key: 5, value: "vmnlske" },
 ];
 
+const readTable = async (filename: string) => {
+    const res = await readTextFile(`${MAIN_DATA_DIR}/${filename}`, { dir: BaseDirectory.AppData });
+    return res;
+};
+
 export const Workbench: FC = () => {
     const { workingTable } = useContext(AppContext);
 
     const [activeViewButton, setActiveViewButton] = useState(0);
 
-    const sceletonData = new Array<TableData>(30).fill({
-        key: null,
-        value: null,
-    });
+    const [data, setData] = useState<TableData[]>([]);
+
+    const prevTable = useRef<FileEntry | undefined>(undefined);
+    useEffect(() => {
+        if (!workingTable.value) return;
+
+        if (prevTable.current === undefined) {
+            prevTable.current = {
+                name: "?",
+                path: "",
+            };
+        }
+
+        const tname = workingTable.value?.name;
+        const prevtname = prevTable.current?.name;
+
+        if (tname && prevtname && tname !== prevtname) {
+            setData([]);
+            readTable(tname).then((res) => {
+                res.split("\n").map((d) => {
+                    if (!d) return setData([]);
+
+                    const [dk, dv] = d.split(",");
+                    const obj = {
+                        key: parseInt(dk),
+                        value: dv,
+                    };
+                    setData((prev) => [...prev, obj]);
+                });
+            });
+        }
+
+        prevTable.current = workingTable.value;
+    }, [workingTable.value]);
 
     const templateInputRowRef = useRef<HTMLInputElement>(null);
     const [templateInputRow, setTemplateInputRow] = useState([-1, -1]);
@@ -48,6 +86,11 @@ export const Workbench: FC = () => {
         if (e.key === "Escape") {
             input.blur();
         }
+
+        // if (e.key === "Tab" && templateInputRow[0] === 0) {
+        //     input.blur();
+        //     setTemplateInputRow([1, idx]);
+        // }
 
         let val = input.value;
         if (e.key === "Enter") {
@@ -162,7 +205,7 @@ export const Workbench: FC = () => {
                                 </Button>
                             </div>
                             <div className={styles.info}>
-                                <span>~{sceletonData.length} rows</span>
+                                <span>~{data.length} rows</span>
                             </div>
                             <div className={styles.rowsEdit}>
                                 <Button
@@ -179,6 +222,9 @@ export const Workbench: FC = () => {
                                         color: variables.systemTertiaryDark,
                                         alpha: 32,
                                     }}
+                                    onClick={() => {
+                                        data.push({} as TableData);
+                                    }}
                                 >
                                     <AddIconThin size={20} fill={variables.systemSecondaryDark} />
                                     Row
@@ -187,6 +233,7 @@ export const Workbench: FC = () => {
                         </div>
                     </>
                 ) : (
+                    // renders: when no table selected
                     <h4 className={styles.workbenchEmpty}>Select a table</h4>
                 )}
             </div>
