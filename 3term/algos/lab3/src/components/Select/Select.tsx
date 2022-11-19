@@ -171,17 +171,6 @@ export const Select = () => {
                     {tableEntries.length || tableCreatingTemplate ? (
                         // renders: when there are saved tables and return select list of them
                         <>
-                            {tableCreatingTemplate && (
-                                <SelectItem disabled>
-                                    <input
-                                        type="text"
-                                        className={styles.templateInput}
-                                        ref={tableCreatingTemplateInputRef}
-                                        onBlur={resetTemplate}
-                                        onKeyDown={handleInputEnd}
-                                    />
-                                </SelectItem>
-                            )}
                             <ul ref={tablesListRef}>
                                 {tableEntries.map((table, idx) => {
                                     return (
@@ -228,6 +217,17 @@ export const Select = () => {
                                     );
                                 })}
                             </ul>
+                            {tableCreatingTemplate && (
+                                <SelectItem disabled>
+                                    <input
+                                        type="text"
+                                        className={styles.templateInput}
+                                        ref={tableCreatingTemplateInputRef}
+                                        onBlur={resetTemplate}
+                                        onKeyDown={handleInputEnd}
+                                    />
+                                </SelectItem>
+                            )}
                         </>
                     ) : (
                         // -- Add Table Button --
