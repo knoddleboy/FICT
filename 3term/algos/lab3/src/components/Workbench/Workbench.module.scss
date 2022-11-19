@@ -131,10 +131,16 @@ $table-inner-padding: 10px;
         }
 
         &:nth-last-of-type(1) {
+            border-bottom: 1px solid lighten($system-tertiary-dark, 29%);
+
             input {
                 height: calc(100% - 3px);
             }
         }
+    }
+
+    .dataRowSelected {
+        background-color: lighten($system-tertiary-dark, 20%) !important;
     }
 
     .dataKeyField {

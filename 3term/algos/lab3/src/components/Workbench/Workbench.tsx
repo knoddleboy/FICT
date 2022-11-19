@@ -10,6 +10,8 @@ import Button from "../Button";
 
 import { readTextFile, BaseDirectory, FileEntry } from "@tauri-apps/api/fs";
 import { MAIN_DATA_DIR } from "../../constants";
+import { effect, signal } from "@preact/signals";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 type TableData = {
     key: number | null;
@@ -43,7 +45,7 @@ export const Workbench: FC = () => {
 
         if (prevTable.current === undefined) {
             prevTable.current = {
-                name: "?",
+                name: "?", // just arbitrary value to satisfy if below
                 path: "",
             };
         }
@@ -110,6 +112,52 @@ export const Workbench: FC = () => {
         }
     };
 
+    const [invokeAddRow, setInvokeAddRow] = useState(false);
+
+    // display input after adding new row (so user can begin inputing)
+    useEffect(() => {
+        if (data && invokeAddRow) {
+            setTemplateInputRow([0, data.length - 1]);
+            setInvokeAddRow(false);
+        }
+    }, [data, invokeAddRow]);
+
+    const [invokeDeleteRow, setInvokeDeleteRow] = useState(false);
+    const [rowClicked, setRowClicked] = useState<Set<number>>(new Set());
+
+    const deleteRows = (rows: Set<number>) => {
+        if (!rows.size) return;
+
+        // remove rows from disk ...
+        // rows.forEach((r) => {
+        //     removeFile(`${MAIN_DATA_DIR}/${tableEntries[r].name}`, { dir: BaseDirectory.AppData });
+        //     if (tableEntries[t] === workingTable.value) {
+        //         workingTable.value = undefined;
+        //         setCurrentTable("");
+        //     }
+        // });
+
+        // .. as well as from enties
+        setData((prev) => [...prev].filter((_, i) => !rows.has(i)));
+
+        setRowClicked(new Set()); // remove selection
+        setInvokeDeleteRow(false); // reset delete invoke
+    };
+
+    const deleteButtonRef = useRef<HTMLButtonElement>(null);
+    const rowsListRef = useRef<HTMLUListElement>(null);
+
+    useOnClickOutside(
+        deleteButtonRef,
+        () => {
+            console.log(214);
+
+            setInvokeDeleteRow(false); // reset invoke
+            setRowClicked(new Set()); // remove selection from rows
+        },
+        [rowsListRef]
+    );
+
     return (
         <>
             <div className={styles.workbenchRoot}>
@@ -127,9 +175,29 @@ export const Workbench: FC = () => {
                             <div className={styles.dataKeyField}>id</div>
                             <div className={styles.dataValueField}>value</div>
                         </div>
-                        <div className={styles.displayTableRoot}>
+                        <ul className={styles.displayTableRoot} ref={rowsListRef}>
                             {data.map((d, idx) => (
-                                <div className={styles.dataRow} key={idx}>
+                                <li
+                                    className={`${styles.dataRow} ${
+                                        rowClicked.has(idx) ? styles.dataRowSelected : ""
+                                    }`}
+                                    key={idx}
+                                    onClick={() => {
+                                        if (invokeDeleteRow) {
+                                            // if `idx` table was already clicked, remove its index ...
+                                            if (rowClicked.has(idx)) {
+                                                setRowClicked(
+                                                    (prev) =>
+                                                        new Set([...prev].filter((i) => i !== idx))
+                                                );
+                                                // ... otherwise add its index
+                                            } else {
+                                                setRowClicked((prev) => new Set(prev.add(idx)));
+                                            }
+                                            return;
+                                        }
+                                    }}
+                                >
                                     <div
                                         className={styles.dataKeyField}
                                         onDblClick={() => setTemplateInputRow([0, idx])}
@@ -164,9 +232,9 @@ export const Workbench: FC = () => {
                                             <span>{d.value}</span>
                                         )}
                                     </div>
-                                </div>
+                                </li>
                             ))}
-                        </div>
+                        </ul>
                         <div className={styles.bottomPanel}>
                             <div className={styles.dataView}>
                                 <Button
@@ -213,6 +281,25 @@ export const Workbench: FC = () => {
                                         color: variables.systemTertiaryDark,
                                         alpha: 32,
                                     }}
+                                    onClick={() => {
+                                        //  no need to delete when there are no rows
+                                        if (!data.length) {
+                                            return;
+                                        }
+
+                                        // on second click: delete selected rows (if any)
+                                        if (invokeDeleteRow && rowClicked.size) {
+                                            deleteRows(rowClicked);
+                                            return;
+                                        }
+
+                                        setInvokeDeleteRow(true);
+
+                                        // set false to ensure that when deleting rows,
+                                        // creation does not occur
+                                        setInvokeAddRow(false);
+                                    }}
+                                    buttonRef={deleteButtonRef}
                                 >
                                     <RemoveIcon size={20} fill={variables.systemSecondaryDark} />
                                     Row
@@ -223,7 +310,9 @@ export const Workbench: FC = () => {
                                         alpha: 32,
                                     }}
                                     onClick={() => {
-                                        data.push({} as TableData);
+                                        if (invokeDeleteRow) return;
+                                        setData((prev) => [...prev, { key: null, value: null }]);
+                                        setInvokeAddRow(true);
                                     }}
                                 >
                                     <AddIconThin size={20} fill={variables.systemSecondaryDark} />

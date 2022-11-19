@@ -55,8 +55,6 @@ export const Select = () => {
 
     const deleteButtonRef = useRef<HTMLButtonElement>(null);
 
-    const editButtonRef = useRef<HTMLButtonElement>(null);
-
     /********************
      *     FUNCTIONS    *
      ********************/
@@ -254,7 +252,6 @@ export const Select = () => {
                             alpha: 28,
                         }}
                         onClick={() => {
-                            // TODO: display deletion msg (?)
                             //  no need to delete when there are no tables
                             if (!tableEntries.length) {
                                 return;
