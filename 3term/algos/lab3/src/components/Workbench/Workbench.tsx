@@ -10,8 +10,18 @@ import Button from "../Button";
 
 import { readTextFile, BaseDirectory, FileEntry } from "@tauri-apps/api/fs";
 import { MAIN_DATA_DIR } from "../../constants";
-import { effect, signal } from "@preact/signals";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
+
+import { register, unregister } from "@tauri-apps/api/globalShortcut";
+
+const invokeCtrlA = async (reg: boolean, callback?: () => void) => {
+    if (reg) {
+        await register("CommandOrControl+A", callback || (() => {}));
+        return;
+    }
+
+    await unregister("CommandOrControl+A");
+};
 
 type TableData = {
     key: number | null;
@@ -89,11 +99,6 @@ export const Workbench: FC = () => {
             input.blur();
         }
 
-        // if (e.key === "Tab" && templateInputRow[0] === 0) {
-        //     input.blur();
-        //     setTemplateInputRow([1, idx]);
-        // }
-
         let val = input.value;
         if (e.key === "Enter") {
             if (column === 0) {
@@ -125,19 +130,19 @@ export const Workbench: FC = () => {
     const [invokeDeleteRow, setInvokeDeleteRow] = useState(false);
     const [rowClicked, setRowClicked] = useState<Set<number>>(new Set());
 
+    useEffect(() => {
+        if (invokeDeleteRow) {
+            invokeCtrlA(true, () => {
+                setRowClicked(new Set(data.map((d) => d.key || 0)));
+            });
+        } else {
+            invokeCtrlA(false);
+        }
+    }, [invokeDeleteRow]);
+
     const deleteRows = (rows: Set<number>) => {
         if (!rows.size) return;
 
-        // remove rows from disk ...
-        // rows.forEach((r) => {
-        //     removeFile(`${MAIN_DATA_DIR}/${tableEntries[r].name}`, { dir: BaseDirectory.AppData });
-        //     if (tableEntries[t] === workingTable.value) {
-        //         workingTable.value = undefined;
-        //         setCurrentTable("");
-        //     }
-        // });
-
-        // .. as well as from enties
         setData((prev) => [...prev].filter((_, i) => !rows.has(i)));
 
         setRowClicked(new Set()); // remove selection
@@ -150,8 +155,6 @@ export const Workbench: FC = () => {
     useOnClickOutside(
         deleteButtonRef,
         () => {
-            console.log(214);
-
             setInvokeDeleteRow(false); // reset invoke
             setRowClicked(new Set()); // remove selection from rows
         },
@@ -273,7 +276,13 @@ export const Workbench: FC = () => {
                                 </Button>
                             </div>
                             <div className={styles.info}>
-                                <span>~{data.length} rows</span>
+                                <span>
+                                    {invokeDeleteRow ? (
+                                        <span style={{ fontWeight: 500 }}>SELECT ROWS</span>
+                                    ) : (
+                                        `~${data.length} rows`
+                                    )}
+                                </span>
                             </div>
                             <div className={styles.rowsEdit}>
                                 <Button

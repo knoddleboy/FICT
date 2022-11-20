@@ -15,6 +15,9 @@
             "fs": {
                 "all": true,
                 "scope": ["$APPDATA/*"]
+            },
+            "globalShortcut": {
+                "all": true
             }
         },
         "bundle": {

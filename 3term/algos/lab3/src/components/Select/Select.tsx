@@ -13,6 +13,17 @@ import { AddIcon, AddIconThin, RemoveIcon } from "../../assets/svg";
 import styles from "./Select.module.scss";
 import variables from "../../styles/variables.module.scss";
 
+import { register, unregister } from "@tauri-apps/api/globalShortcut";
+
+const invokeCtrlA = async (reg: boolean, callback?: () => void) => {
+    if (reg) {
+        await register("CommandOrControl+A", callback || (() => {}));
+        return;
+    }
+
+    await unregister("CommandOrControl+A");
+};
+
 // Get tables on open
 const initalTableEntries = await readDir(MAIN_DATA_DIR, {
     dir: BaseDirectory.AppData,
@@ -148,6 +159,16 @@ export const Select = () => {
             setTableCreatingTemplate(true);
         }
     }, [invokeCreateTable]);
+
+    useEffect(() => {
+        if (invokeDeleteTable) {
+            invokeCtrlA(true, () => {
+                setTableClicked(new Set(tableEntries.map((_, idx) => idx)));
+            });
+        } else {
+            invokeCtrlA(false);
+        }
+    }, [invokeDeleteTable]);
 
     useOnClickOutside(
         deleteButtonRef,
