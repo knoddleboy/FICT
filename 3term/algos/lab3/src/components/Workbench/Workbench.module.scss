@@ -5,13 +5,13 @@ $accent-border-color: lighten($system-tertiary-dark, 28%);
 $table-padding: 20px;
 
 $search-height: 12%;
+$table-head-height: 32px;
 $table-row-height: 34px;
-$bottom-panel-height: 42px;
 
 $table-inner-padding: 10px;
 
 .workbenchRoot {
-    width: 100%;
+    width: 74%;
     height: 100vh;
     position: relative;
     border-left: 1px solid $accent-border-color;
@@ -70,7 +70,7 @@ $table-inner-padding: 10px;
 
 .dataRowHead {
     width: 100%;
-    height: 32px;
+    height: $table-head-height;
     font-weight: 600;
     background-color: $accent-bg-color;
     border-bottom: 2px solid $accent-border-color;
@@ -97,7 +97,7 @@ $table-inner-padding: 10px;
 
 .displayTableRoot {
     width: 100%;
-    height: calc(100% - ($search-height + $table-row-height + $bottom-panel-height));
+    height: calc(100% - ($search-height + $table-head-height + $panel-height - 1px)); // 1px as bottom border
     overflow-y: scroll;
 
     h4 {
@@ -160,8 +160,9 @@ $table-inner-padding: 10px;
         }
 
         span {
+            width: 100%;
+            display: inline-block;
             margin-left: $table-inner-padding;
-            text-align: start;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -170,6 +171,7 @@ $table-inner-padding: 10px;
 
     .dataValueField {
         width: 80%;
+        min-width: 0;
         height: 100%;
         padding-right: $table-padding;
         display: inline-flex;
@@ -183,18 +185,24 @@ $table-inner-padding: 10px;
         }
 
         span {
+            width: 100%;
+            display: inline-block;
             margin-left: $table-inner-padding;
-            text-align: start;
+            // overflow-x: scroll;
+            // scrollbar-width: thin;
+            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
         }
     }
 }
 
 .bottomPanel {
     width: 100%;
-    max-height: 42px;
+    height: $panel-height;
+    position: absolute;
+    left: 0;
+    bottom: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -230,10 +238,15 @@ $table-inner-padding: 10px;
             border: 1px solid $accent-border-color;
             border-radius: 5px;
             font-weight: 500;
+        }
 
-            &:nth-of-type(1) {
-                margin-right: 10px;
-            }
+        button:not(.actionButton) {
+            padding: 1px 4px;
+            margin-right: 10px;
+        }
+
+        .actionButton {
+            padding: 0 4px;
         }
     }
 }

@@ -2,7 +2,7 @@ import { FunctionalComponent as FC } from "preact";
 import styles from "./Workbench.module.scss";
 import variables from "../../styles/variables.module.scss";
 
-import { AddIconThin, RemoveIcon, SearchIcon } from "../../assets/svg";
+import { AddIconThin, RemoveIcon, SearchIcon, SettingsIcon } from "../../assets/svg";
 
 import { AppContext } from "../../App";
 import { useContext, useEffect, useRef, useState } from "preact/hooks";
@@ -28,44 +28,32 @@ type TableData = {
     value: string | null;
 };
 
-const data = [
-    { key: 927358934684283, value: "hlmcalwjet" },
-    { key: 1, value: "ljhdvn" },
-    { key: 2, value: "rghtop" },
-    { key: 3, value: "ehrth" },
-    { key: 4, value: "drthrth" },
-    { key: 5, value: "vmnlske" },
-];
-
 const readTable = async (filename: string) => {
     const res = await readTextFile(`${MAIN_DATA_DIR}/${filename}`, { dir: BaseDirectory.AppData });
     return res;
 };
 
+import { invoke } from "@tauri-apps/api";
+
 export const Workbench: FC = () => {
     const { workingTable } = useContext(AppContext);
+
+    useEffect(() => {
+        if (!workingTable.value) return;
+        invoke("set_working_table", { path: workingTable.value.path });
+    }, [workingTable.value]);
 
     const [activeViewButton, setActiveViewButton] = useState(0);
 
     const [data, setData] = useState<TableData[]>([]);
 
-    const prevTable = useRef<FileEntry | undefined>(undefined);
-    useEffect(() => {
-        if (!workingTable.value) return;
+    const parseTable = (tname: string) => {
+        setData([]);
 
-        if (prevTable.current === undefined) {
-            prevTable.current = {
-                name: "?", // just arbitrary value to satisfy if below
-                path: "",
-            };
-        }
+        const temp_table: TableData[] = [];
 
-        const tname = workingTable.value?.name;
-        const prevtname = prevTable.current?.name;
-
-        if (tname && prevtname && tname !== prevtname) {
-            setData([]);
-            readTable(tname).then((res) => {
+        readTable(tname)
+            .then((res) => {
                 res.split("\n").map((d) => {
                     if (!d) return setData([]);
 
@@ -74,9 +62,31 @@ export const Workbench: FC = () => {
                         key: parseInt(dk),
                         value: dv,
                     };
-                    setData((prev) => [...prev, obj]);
+                    // setData((prev) => [...prev, obj]);
+                    temp_table.push(obj);
                 });
+            })
+            .then(() => {
+                setData(temp_table);
             });
+    };
+
+    const prevTable = useRef<FileEntry | undefined>(undefined);
+    useEffect(() => {
+        if (!workingTable.value) return;
+
+        if (prevTable.current === undefined) {
+            prevTable.current = {
+                name: "?", // just arbitrary value to satisfy if stmt below
+                path: "",
+            };
+        }
+
+        const tname = workingTable.value?.name;
+        const prevtname = prevTable.current?.name;
+
+        if (tname && prevtname && tname !== prevtname) {
+            parseTable(tname);
         }
 
         prevTable.current = workingTable.value;
@@ -102,15 +112,27 @@ export const Workbench: FC = () => {
         let val = input.value;
         if (e.key === "Enter") {
             if (column === 0) {
-                if (!val) {
+                const parsedVal = parseInt(val);
+
+                if (isNaN(parsedVal)) {
                     input.style.border = "1px solid red";
                     input.style.backgroundColor = "#ffe6e6";
                     return;
                 }
 
-                data[idx].key = parseInt(val);
+                setData((prev) => {
+                    let item = { ...prev[idx] };
+                    item.key = parseInt(val);
+                    prev[idx] = item;
+                    return prev;
+                });
             } else if (column === 1) {
-                data[idx].value = val;
+                setData((prev) => {
+                    let item = { ...prev[idx] };
+                    item.value = val;
+                    prev[idx] = item;
+                    return prev;
+                });
             }
 
             input.blur();
@@ -326,6 +348,27 @@ export const Workbench: FC = () => {
                                 >
                                     <AddIconThin size={20} fill={variables.systemSecondaryDark} />
                                     Row
+                                </Button>
+                                <Button
+                                    background={{
+                                        color: variables.systemTertiaryDark,
+                                        alpha: 32,
+                                    }}
+                                    className={styles.actionButton}
+                                    onClick={() => {
+                                        const t = workingTable.value;
+                                        if (!t) return;
+
+                                        invoke("generate_table", { path: t.path }).then((res) => {
+                                            if (res && t.name) {
+                                                console.log("here we go");
+
+                                                parseTable(t.name);
+                                            }
+                                        });
+                                    }}
+                                >
+                                    <SettingsIcon fill={variables.systemSecondaryDark} />
                                 </Button>
                             </div>
                         </div>
