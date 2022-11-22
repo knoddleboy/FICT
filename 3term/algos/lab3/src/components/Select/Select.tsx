@@ -14,6 +14,7 @@ import styles from "./Select.module.scss";
 import variables from "../../styles/variables.module.scss";
 
 import { register, unregister } from "@tauri-apps/api/globalShortcut";
+import { invoke } from "@tauri-apps/api";
 
 const invokeCtrlA = async (reg: boolean, callback?: () => void) => {
     if (reg) {
@@ -124,7 +125,8 @@ export const Select = () => {
 
         // remove tables from disk ...
         tables.forEach((t) => {
-            removeFile(`${MAIN_DATA_DIR}/${tableEntries[t].name}`, { dir: BaseDirectory.AppData });
+            invoke("remove_table", { path: tableEntries[t].path });
+
             if (tableEntries[t] === workingTable.value) {
                 workingTable.value = undefined;
                 setCurrentTable("");

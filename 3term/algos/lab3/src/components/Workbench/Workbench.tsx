@@ -167,6 +167,8 @@ export const Workbench: FC = () => {
 
         setData((prev) => [...prev].filter((_, i) => !rows.has(i)));
 
+        invoke("remove_rows", { keys: Array.from(rows) });
+
         setRowClicked(new Set()); // remove selection
         setInvokeDeleteRow(false); // reset delete invoke
     };
@@ -361,8 +363,6 @@ export const Workbench: FC = () => {
 
                                         invoke("generate_table", { path: t.path }).then((res) => {
                                             if (res && t.name) {
-                                                console.log("here we go");
-
                                                 parseTable(t.name);
                                             }
                                         });
