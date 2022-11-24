@@ -36,17 +36,54 @@ const readTable = async (filename: string) => {
 import { invoke } from "@tauri-apps/api";
 
 export const Workbench: FC = () => {
+    /********************
+     *      CONTEXT     *
+     ********************/
+
     const { workingTable } = useContext(AppContext);
 
-    useEffect(() => {
-        if (!workingTable.value) return;
-        invoke("set_working_table", { path: workingTable.value.path });
-    }, [workingTable.value]);
+    /********************
+     *      STATES      *
+     ********************/
 
+    // change table data display look: tabular or treelike
     const [activeViewButton, setActiveViewButton] = useState(0);
 
+    // actual data from a table
     const [data, setData] = useState<TableData[]>([]);
 
+    // parser optimization
+    const prevTable = useRef<FileEntry | undefined>(undefined);
+
+    const [templateInputRow, setTemplateInputRow] = useState<[number, TableData | null]>([
+        -1,
+        null,
+    ]);
+
+    // row action: insert or modify
+    const [actionRow, setActionRow] = useState<(TableData & { prev_key: number | null }) | null>(
+        null
+    );
+
+    // holds all clicked rows when deleting
+    const [rowClicked, setRowClicked] = useState<Set<TableData>>(new Set());
+
+    const [invokeAddRow, setInvokeAddRow] = useState(false);
+    const [invokeDeleteRow, setInvokeDeleteRow] = useState(false);
+
+    /********************
+     *       REFS       *
+     ********************/
+
+    const templateInputRowRef = useRef<HTMLInputElement>(null);
+    const deleteButtonRef = useRef<HTMLButtonElement>(null);
+    const rowsListRef = useRef<HTMLUListElement>(null);
+
+    /********************
+     *     FUNCTIONS    *
+     ********************/
+
+    // parse table from file to array
     const parseTable = (tname: string) => {
         setData([]);
 
@@ -62,7 +99,6 @@ export const Workbench: FC = () => {
                         key: parseInt(dk),
                         value: dv,
                     };
-                    // setData((prev) => [...prev, obj]);
                     temp_table.push(obj);
                 });
             })
@@ -71,7 +107,77 @@ export const Workbench: FC = () => {
             });
     };
 
-    const prevTable = useRef<FileEntry | undefined>(undefined);
+    const handleInputEnd = (e: KeyboardEvent, idx: TableData, column: number) => {
+        const input = templateInputRowRef.current;
+        if (!input) return;
+
+        if (e.key === "Escape") {
+            input.blur();
+        }
+
+        let val = input.value;
+        if (e.key === "Enter") {
+            if (column === 0) {
+                const parsedVal = parseInt(val);
+
+                if (isNaN(parsedVal)) {
+                    input.style.border = "1px solid red";
+                    input.style.backgroundColor = "#ffe6e6";
+                    return;
+                }
+
+                setActionRow({
+                    prev_key: idx.key,
+                    key: parsedVal,
+                    value: idx.value,
+                });
+
+                setData((prev) => {
+                    let item = idx;
+                    item.key = parsedVal;
+                    prev[prev.indexOf(idx)] = item;
+                    return prev;
+                });
+            } else if (column === 1) {
+                setActionRow({
+                    prev_key: idx.key,
+                    key: idx.key,
+                    value: val,
+                });
+
+                setData((prev) => {
+                    let item = idx;
+                    item.value = val;
+                    prev[prev.indexOf(idx)] = item;
+                    return prev;
+                });
+            }
+
+            input.blur();
+        }
+    };
+
+    const deleteRows = (rows: Set<TableData>) => {
+        if (!rows.size) return;
+
+        setData((prev) => [...prev].filter((i) => !rows.has(i)));
+
+        invoke("remove_rows", { keys: [...rows].map((t) => t.key) });
+
+        setRowClicked(new Set()); // remove selection
+        setInvokeDeleteRow(false); // reset delete invoke
+    };
+
+    /********************
+     *      EFFECTS     *
+     ********************/
+
+    // update current working table (also used in saving avl tree)
+    useEffect(() => {
+        invoke("set_working_table", { path: workingTable.value?.path || "" });
+    }, [workingTable.value]);
+
+    // prevent from parsing the same table as previous
     useEffect(() => {
         if (!workingTable.value) return;
 
@@ -92,89 +198,57 @@ export const Workbench: FC = () => {
         prevTable.current = workingTable.value;
     }, [workingTable.value]);
 
-    const templateInputRowRef = useRef<HTMLInputElement>(null);
-    const [templateInputRow, setTemplateInputRow] = useState([-1, -1]);
-
+    // focus input on a clicked row
     useEffect(() => {
-        if (templateInputRow[1] > -1) {
+        if (templateInputRow[1]) {
             templateInputRowRef.current?.focus();
         }
     }, [templateInputRow]);
 
-    const handleInputEnd = (e: KeyboardEvent, idx: number, column: number) => {
-        const input = templateInputRowRef.current;
-        if (!input) return;
+    // update avl tree when a row modified
+    useEffect(() => {
+        if (!actionRow) return;
 
-        if (e.key === "Escape") {
-            input.blur();
+        if (actionRow.prev_key !== null) {
+            invoke("modify_row", {
+                prevKey: actionRow.prev_key,
+                key: actionRow.key,
+                value: actionRow.value,
+            });
+
+            setActionRow(null);
+
+            return;
         }
 
-        let val = input.value;
-        if (e.key === "Enter") {
-            if (column === 0) {
-                const parsedVal = parseInt(val);
+        if (actionRow.key !== null) {
+            invoke("insert_row", {
+                key: actionRow.key,
+                value: actionRow.value ?? "",
+            });
 
-                if (isNaN(parsedVal)) {
-                    input.style.border = "1px solid red";
-                    input.style.backgroundColor = "#ffe6e6";
-                    return;
-                }
-
-                setData((prev) => {
-                    let item = { ...prev[idx] };
-                    item.key = parseInt(val);
-                    prev[idx] = item;
-                    return prev;
-                });
-            } else if (column === 1) {
-                setData((prev) => {
-                    let item = { ...prev[idx] };
-                    item.value = val;
-                    prev[idx] = item;
-                    return prev;
-                });
-            }
-
-            input.blur();
+            setActionRow(null);
         }
-    };
-
-    const [invokeAddRow, setInvokeAddRow] = useState(false);
+    }, [actionRow]);
 
     // display input after adding new row (so user can begin inputing)
     useEffect(() => {
         if (data && invokeAddRow) {
-            setTemplateInputRow([0, data.length - 1]);
+            setTemplateInputRow([0, data.at(-1)!]);
             setInvokeAddRow(false);
         }
     }, [data, invokeAddRow]);
 
-    const [invokeDeleteRow, setInvokeDeleteRow] = useState(false);
-    const [rowClicked, setRowClicked] = useState<Set<number>>(new Set());
-
+    // register select all for rows
     useEffect(() => {
         if (invokeDeleteRow) {
             invokeCtrlA(true, () => {
-                setRowClicked(new Set(data.map((d) => d.key || 0)));
+                setRowClicked(new Set(data.map((d) => d)));
             });
         } else {
             invokeCtrlA(false);
         }
     }, [invokeDeleteRow]);
-
-    const deleteRows = (rows: Set<number>) => {
-        if (!rows.size) return;
-
-        setData((prev) => [...prev].filter((_, i) => !rows.has(i)));
-
-        invoke("remove_rows", { keys: Array.from(rows) });
-
-        setRowClicked(new Set()); // remove selection
-        setInvokeDeleteRow(false); // reset delete invoke
-    };
-
-    const deleteButtonRef = useRef<HTMLButtonElement>(null);
-    const rowsListRef = useRef<HTMLUListElement>(null);
 
     useOnClickOutside(
         deleteButtonRef,
@@ -203,64 +277,69 @@ export const Workbench: FC = () => {
                             <div className={styles.dataValueField}>value</div>
                         </div>
                         <ul className={styles.displayTableRoot} ref={rowsListRef}>
-                            {data.map((d, idx) => (
-                                <li
-                                    className={`${styles.dataRow} ${
-                                        rowClicked.has(idx) ? styles.dataRowSelected : ""
-                                    }`}
-                                    key={idx}
-                                    onClick={() => {
-                                        if (invokeDeleteRow) {
-                                            // if `idx` table was already clicked, remove its index ...
-                                            if (rowClicked.has(idx)) {
-                                                setRowClicked(
-                                                    (prev) =>
-                                                        new Set([...prev].filter((i) => i !== idx))
-                                                );
-                                                // ... otherwise add its index
-                                            } else {
-                                                setRowClicked((prev) => new Set(prev.add(idx)));
+                            {data.map((d) => {
+                                const idx = d;
+                                return (
+                                    <li
+                                        className={`${styles.dataRow} ${
+                                            rowClicked.has(idx) ? styles.dataRowSelected : ""
+                                        }`}
+                                        key={idx}
+                                        onClick={() => {
+                                            if (invokeDeleteRow) {
+                                                // if `idx` table was already clicked, remove its index ...
+                                                if (rowClicked.has(idx)) {
+                                                    setRowClicked(
+                                                        (prev) =>
+                                                            new Set(
+                                                                [...prev].filter((i) => i !== idx)
+                                                            )
+                                                    );
+                                                    // ... otherwise add its index
+                                                } else {
+                                                    setRowClicked((prev) => new Set(prev.add(idx)));
+                                                }
+                                                return;
                                             }
-                                            return;
-                                        }
-                                    }}
-                                >
-                                    <div
-                                        className={styles.dataKeyField}
-                                        onDblClick={() => setTemplateInputRow([0, idx])}
+                                        }}
                                     >
-                                        {templateInputRow[0] === 0 &&
-                                        templateInputRow[1] === idx ? (
-                                            <input
-                                                type="text"
-                                                value={d.key ?? ""}
-                                                onBlur={() => setTemplateInputRow([-1, -1])}
-                                                ref={templateInputRowRef}
-                                                onKeyDown={(e) => handleInputEnd(e, idx, 0)}
-                                            />
-                                        ) : (
-                                            <span>{d.key}</span>
-                                        )}
-                                    </div>
-                                    <div
-                                        className={styles.dataValueField}
-                                        onDblClick={() => setTemplateInputRow([1, idx])}
-                                    >
-                                        {templateInputRow[0] === 1 &&
-                                        templateInputRow[1] === idx ? (
-                                            <input
-                                                type="text"
-                                                value={d.value ?? ""}
-                                                onBlur={() => setTemplateInputRow([-1, -1])}
-                                                ref={templateInputRowRef}
-                                                onKeyDown={(e) => handleInputEnd(e, idx, 1)}
-                                            />
-                                        ) : (
-                                            <span>{d.value}</span>
-                                        )}
-                                    </div>
-                                </li>
-                            ))}
+                                        <div
+                                            className={styles.dataKeyField}
+                                            onDblClick={() => setTemplateInputRow([0, idx])}
+                                        >
+                                            {templateInputRow[0] === 0 &&
+                                            templateInputRow[1] === idx ? (
+                                                <input
+                                                    type="text"
+                                                    value={d.key ?? ""}
+                                                    onBlur={() => setTemplateInputRow([-1, null])}
+                                                    ref={templateInputRowRef}
+                                                    onKeyDown={(e) => handleInputEnd(e, idx, 0)}
+                                                />
+                                            ) : (
+                                                <span>{d.key}</span>
+                                            )}
+                                        </div>
+                                        <div
+                                            className={styles.dataValueField}
+                                            onDblClick={() => setTemplateInputRow([1, idx])}
+                                        >
+                                            {templateInputRow[0] === 1 &&
+                                            templateInputRow[1] === idx ? (
+                                                <input
+                                                    type="text"
+                                                    value={d.value ?? ""}
+                                                    onBlur={() => setTemplateInputRow([-1, null])}
+                                                    ref={templateInputRowRef}
+                                                    onKeyDown={(e) => handleInputEnd(e, idx, 1)}
+                                                />
+                                            ) : (
+                                                <span>{d.value}</span>
+                                            )}
+                                        </div>
+                                    </li>
+                                );
+                            })}
                         </ul>
                         <div className={styles.bottomPanel}>
                             <div className={styles.dataView}>
@@ -294,6 +373,9 @@ export const Workbench: FC = () => {
                                     }}
                                     onClick={() => {
                                         setActiveViewButton(1);
+                                        invoke("get_avl").then((res) => {
+                                            console.log(res);
+                                        });
                                     }}
                                 >
                                     Treelike
