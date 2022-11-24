@@ -57,6 +57,8 @@ export const Select = () => {
     // current working table. holds `string` aka file name
     const [currentTable, setCurrentTable] = useState<string>("");
 
+    const [registerDelete, setRegisterDelete] = useState(false);
+
     /********************
      *       REFS       *
      ********************/
@@ -123,17 +125,19 @@ export const Select = () => {
     const deleteTables = (tables: Set<number>) => {
         if (!tables.size) return;
 
-        // remove tables from disk ...
+        setRegisterDelete(false);
+
+        // remove tables from disk and from entries
         tables.forEach((t) => {
             invoke("remove_table", { path: tableEntries[t].path });
 
+            // unset workbench if delete current table
             if (tableEntries[t] === workingTable.value) {
                 workingTable.value = undefined;
                 setCurrentTable("");
             }
         });
 
-        // .. as well as from enties
         setTableEntries((prev) => [...prev].filter((_, i) => !tables.has(i)));
 
         setTableClicked(new Set()); // remove selection
@@ -181,6 +185,20 @@ export const Select = () => {
         [tablesListRef]
     );
 
+    useEffect(() => {
+        if (!registerDelete) return;
+
+        const handleDelete = (e: KeyboardEvent) => {
+            if (e.key === "Backspace" || e.key === "Delete") {
+                deleteTables(tableClicked);
+            }
+        };
+
+        document.addEventListener("keydown", handleDelete);
+
+        return () => document.removeEventListener("keydown", handleDelete);
+    }, [registerDelete, tableClicked]);
+
     return (
         <>
             <div className={styles.selectRoot}>
@@ -193,50 +211,52 @@ export const Select = () => {
                         // renders: when there are saved tables and return select list of them
                         <>
                             <ul ref={tablesListRef}>
-                                {tableEntries.map((table, idx) => {
-                                    return (
-                                        <li key={idx}>
-                                            <SelectItem
-                                                toRemove={tableClicked.has(idx)}
-                                                selected={currentTable === table.name}
-                                                onClick={() => {
-                                                    if (invokeDeleteTable) {
-                                                        // if `idx` table was already clicked, remove its index ...
-                                                        if (tableClicked.has(idx)) {
-                                                            setTableClicked(
-                                                                (prev) =>
-                                                                    new Set(
-                                                                        [...prev].filter(
-                                                                            (i) => i !== idx
+                                {tableEntries
+                                    .sort((a, b) => (a.name ?? "")?.localeCompare(b.name ?? ""))
+                                    .map((table, idx) => {
+                                        return (
+                                            <li key={idx}>
+                                                <SelectItem
+                                                    toRemove={tableClicked.has(idx)}
+                                                    selected={currentTable === table.name}
+                                                    onClick={() => {
+                                                        if (invokeDeleteTable) {
+                                                            // if `idx` table was already clicked, remove its index ...
+                                                            if (tableClicked.has(idx)) {
+                                                                setTableClicked(
+                                                                    (prev) =>
+                                                                        new Set(
+                                                                            [...prev].filter(
+                                                                                (i) => i !== idx
+                                                                            )
                                                                         )
-                                                                    )
-                                                            );
-                                                            // ... otherwise add its index
-                                                        } else {
-                                                            setTableClicked(
-                                                                (prev) => new Set(prev.add(idx))
-                                                            );
+                                                                );
+                                                                // ... otherwise add its index
+                                                            } else {
+                                                                setTableClicked(
+                                                                    (prev) => new Set(prev.add(idx))
+                                                                );
+                                                            }
+                                                            return;
                                                         }
-                                                        return;
-                                                    }
 
-                                                    if (
-                                                        !workingTable.value ||
-                                                        workingTable.value !== tableEntries[idx]
-                                                    ) {
-                                                        setCurrentTable(table.name!);
-                                                        workingTable.value = tableEntries[idx];
-                                                    } else {
-                                                        setCurrentTable("");
-                                                        workingTable.value = undefined;
-                                                    }
-                                                }}
-                                            >
-                                                {removeExtension(table.name)}
-                                            </SelectItem>
-                                        </li>
-                                    );
-                                })}
+                                                        if (
+                                                            !workingTable.value ||
+                                                            workingTable.value !== tableEntries[idx]
+                                                        ) {
+                                                            setCurrentTable(table.name!);
+                                                            workingTable.value = tableEntries[idx];
+                                                        } else {
+                                                            setCurrentTable("");
+                                                            workingTable.value = undefined;
+                                                        }
+                                                    }}
+                                                >
+                                                    {removeExtension(table.name)}
+                                                </SelectItem>
+                                            </li>
+                                        );
+                                    })}
                             </ul>
                             {tableCreatingTemplate && (
                                 <SelectItem disabled>
@@ -285,6 +305,8 @@ export const Select = () => {
                                 deleteTables(tableClicked);
                                 return;
                             }
+
+                            setRegisterDelete(true);
 
                             setInvokeDeleteTable(true);
 
