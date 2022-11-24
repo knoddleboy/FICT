@@ -1,18 +1,32 @@
-import { FunctionalComponent as FC } from "preact";
+import { readTextFile, BaseDirectory, FileEntry } from "@tauri-apps/api/fs";
+import { register, unregister } from "@tauri-apps/api/globalShortcut";
+import { invoke } from "@tauri-apps/api";
+import { useContext, useEffect, useRef, useState } from "preact/hooks";
+
+import useOnClickOutside from "../../hooks/useOnClickOutside";
+import { MAIN_DATA_DIR } from "../../constants";
+import { AppContext } from "../../App";
+
+import Button from "../Button";
+import { AddIconThin, RemoveIcon, SearchIcon, SettingsIcon } from "../../assets/svg";
+
 import styles from "./Workbench.module.scss";
 import variables from "../../styles/variables.module.scss";
 
-import { AddIconThin, RemoveIcon, SearchIcon, SettingsIcon } from "../../assets/svg";
+/********************
+ *      GLOBALS     *
+ ********************/
 
-import { AppContext } from "../../App";
-import { useContext, useEffect, useRef, useState } from "preact/hooks";
-import Button from "../Button";
+type TableData = {
+    key: number | null;
+    value: string | null;
+};
 
-import { readTextFile, BaseDirectory, FileEntry } from "@tauri-apps/api/fs";
-import { MAIN_DATA_DIR } from "../../constants";
-import useOnClickOutside from "../../hooks/useOnClickOutside";
-
-import { register, unregister } from "@tauri-apps/api/globalShortcut";
+enum TColumn {
+    Key = "Key",
+    Value = "Value",
+    NA = "NA",
+}
 
 const invokeCtrlA = async (reg: boolean, callback?: () => void) => {
     if (reg) {
@@ -23,19 +37,12 @@ const invokeCtrlA = async (reg: boolean, callback?: () => void) => {
     await unregister("CommandOrControl+A");
 };
 
-type TableData = {
-    key: number | null;
-    value: string | null;
-};
-
 const readTable = async (filename: string) => {
     const res = await readTextFile(`${MAIN_DATA_DIR}/${filename}`, { dir: BaseDirectory.AppData });
     return res;
 };
 
-import { invoke } from "@tauri-apps/api";
-
-export const Workbench: FC = () => {
+export const Workbench = () => {
     /********************
      *      CONTEXT     *
      ********************/
@@ -55,8 +62,8 @@ export const Workbench: FC = () => {
     // parser optimization
     const prevTable = useRef<FileEntry | undefined>(undefined);
 
-    const [templateInputRow, setTemplateInputRow] = useState<[number, TableData | null]>([
-        -1,
+    const [templateInputRow, setTemplateInputRow] = useState<[TColumn, TableData | null]>([
+        TColumn.NA,
         null,
     ]);
 
@@ -70,6 +77,8 @@ export const Workbench: FC = () => {
 
     const [invokeAddRow, setInvokeAddRow] = useState(false);
     const [invokeDeleteRow, setInvokeDeleteRow] = useState(false);
+
+    const [registerDelete, setRegisterDelete] = useState(false);
 
     /********************
      *       REFS       *
@@ -160,6 +169,8 @@ export const Workbench: FC = () => {
     const deleteRows = (rows: Set<TableData>) => {
         if (!rows.size) return;
 
+        setRegisterDelete(false);
+
         setData((prev) => [...prev].filter((i) => !rows.has(i)));
 
         invoke("remove_rows", { keys: [...rows].map((t) => t.key) });
@@ -234,7 +245,7 @@ export const Workbench: FC = () => {
     // display input after adding new row (so user can begin inputing)
     useEffect(() => {
         if (data && invokeAddRow) {
-            setTemplateInputRow([0, data.at(-1)!]);
+            setTemplateInputRow([TColumn.Key, data.at(-1)!]);
             setInvokeAddRow(false);
         }
     }, [data, invokeAddRow]);
@@ -258,6 +269,20 @@ export const Workbench: FC = () => {
         },
         [rowsListRef]
     );
+
+    useEffect(() => {
+        if (!registerDelete) return;
+
+        const handleDelete = (e: KeyboardEvent) => {
+            if (e.key === "Backspace" || e.key === "Delete") {
+                deleteRows(rowClicked);
+            }
+        };
+
+        document.addEventListener("keydown", handleDelete);
+
+        return () => document.removeEventListener("keydown", handleDelete);
+    }, [registerDelete, rowClicked]);
 
     return (
         <>
@@ -305,14 +330,18 @@ export const Workbench: FC = () => {
                                     >
                                         <div
                                             className={styles.dataKeyField}
-                                            onDblClick={() => setTemplateInputRow([0, idx])}
+                                            onDblClick={() =>
+                                                setTemplateInputRow([TColumn.Key, idx])
+                                            }
                                         >
-                                            {templateInputRow[0] === 0 &&
+                                            {templateInputRow[0] === TColumn.Key &&
                                             templateInputRow[1] === idx ? (
                                                 <input
                                                     type="text"
                                                     value={d.key ?? ""}
-                                                    onBlur={() => setTemplateInputRow([-1, null])}
+                                                    onBlur={() =>
+                                                        setTemplateInputRow([TColumn.NA, null])
+                                                    }
                                                     ref={templateInputRowRef}
                                                     onKeyDown={(e) => handleInputEnd(e, idx, 0)}
                                                 />
@@ -322,14 +351,18 @@ export const Workbench: FC = () => {
                                         </div>
                                         <div
                                             className={styles.dataValueField}
-                                            onDblClick={() => setTemplateInputRow([1, idx])}
+                                            onDblClick={() =>
+                                                setTemplateInputRow([TColumn.Value, idx])
+                                            }
                                         >
-                                            {templateInputRow[0] === 1 &&
+                                            {templateInputRow[0] === TColumn.Value &&
                                             templateInputRow[1] === idx ? (
                                                 <input
                                                     type="text"
                                                     value={d.value ?? ""}
-                                                    onBlur={() => setTemplateInputRow([-1, null])}
+                                                    onBlur={() =>
+                                                        setTemplateInputRow([TColumn.NA, null])
+                                                    }
                                                     ref={templateInputRowRef}
                                                     onKeyDown={(e) => handleInputEnd(e, idx, 1)}
                                                 />
@@ -407,6 +440,8 @@ export const Workbench: FC = () => {
                                             deleteRows(rowClicked);
                                             return;
                                         }
+
+                                        setRegisterDelete(true);
 
                                         setInvokeDeleteRow(true);
 

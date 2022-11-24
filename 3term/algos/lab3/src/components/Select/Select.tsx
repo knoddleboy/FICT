@@ -1,4 +1,4 @@
-import { writeTextFile, removeFile, readDir, FileEntry, BaseDirectory } from "@tauri-apps/api/fs";
+import { writeTextFile, readDir, FileEntry, BaseDirectory } from "@tauri-apps/api/fs";
 import { useState, useRef, useEffect, useContext } from "preact/hooks";
 import filenamify from "filenamify";
 
@@ -15,6 +15,10 @@ import variables from "../../styles/variables.module.scss";
 
 import { register, unregister } from "@tauri-apps/api/globalShortcut";
 import { invoke } from "@tauri-apps/api";
+
+/********************
+ *      GLOBALS     *
+ ********************/
 
 const invokeCtrlA = async (reg: boolean, callback?: () => void) => {
     if (reg) {
