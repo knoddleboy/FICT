@@ -85,6 +85,7 @@ export const Workbench = () => {
      ********************/
 
     const templateInputRowRef = useRef<HTMLInputElement>(null);
+    const searchFieldRef = useRef<HTMLInputElement>(null);
     const deleteButtonRef = useRef<HTMLButtonElement>(null);
     const rowsListRef = useRef<HTMLUListElement>(null);
 
@@ -135,17 +136,24 @@ export const Workbench = () => {
                     return;
                 }
 
-                setActionRow({
-                    prev_key: idx.key,
-                    key: parsedVal,
-                    value: idx.value,
-                });
+                // ensure entered key is not already in the tree
+                invoke<boolean>("contains_item", { key: parsedVal }).then((res) => {
+                    if (res) {
+                        alert(`Item with key ${parsedVal} already exists.`);
+                    } else {
+                        setActionRow({
+                            prev_key: idx.key,
+                            key: parsedVal,
+                            value: idx.value,
+                        });
 
-                setData((prev) => {
-                    let item = idx;
-                    item.key = parsedVal;
-                    prev[prev.indexOf(idx)] = item;
-                    return prev;
+                        setData((prev) => {
+                            let item = idx;
+                            item.key = parsedVal;
+                            prev[prev.indexOf(idx)] = item;
+                            return prev;
+                        });
+                    }
                 });
             } else if (column === 1) {
                 setActionRow({
@@ -177,6 +185,26 @@ export const Workbench = () => {
 
         setRowClicked(new Set()); // remove selection
         setInvokeDeleteRow(false); // reset delete invoke
+    };
+
+    const handleSearch = (e: KeyboardEvent) => {
+        const input = searchFieldRef.current;
+        if (!input || e.key !== "Enter") return;
+
+        let val = parseInt(input.value);
+
+        if (!val && val !== 0) {
+            alert("Incorrect key.");
+            return;
+        }
+
+        invoke<TableData>("search_item", { key: val }).then((res) => {
+            if (res) {
+                alert(`Found item with:\n[key]\n${res.key}\n\n[value]\n${res.value}`);
+            } else {
+                alert("Item not found.");
+            }
+        });
     };
 
     /********************
@@ -294,7 +322,13 @@ export const Workbench = () => {
                                 <label for={"searchTable"}>
                                     <SearchIcon size={20} fill={variables.systemSecondaryDark} />
                                 </label>
-                                <input id={"searchTable"} type="text" placeholder={"Search"} />
+                                <input
+                                    id={"searchTable"}
+                                    type="text"
+                                    placeholder={"Search"}
+                                    onKeyDown={handleSearch}
+                                    ref={searchFieldRef}
+                                />
                             </div>
                         </div>
                         <div className={styles.dataRowHead}>
