@@ -1,5 +1,5 @@
 [package]
-name = "avl-db"
+name = "app"
 version = "0.1.0"
 description = "A simple database using avl-tree"
 authors = ["you"]
@@ -17,7 +17,9 @@ tauri-build = { version = "1.2.0", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.2.0", features = ["fs-all", "global-shortcut-all"] }
+tauri = { version = "1.2.0", features = ["dialog-message", "fs-all", "global-shortcut-all", "window-close"] }
+rand = "0.8.5"
+fake = "2.5.0"
 
 [features]
 # by default Tauri runs in production mode

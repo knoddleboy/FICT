@@ -18,6 +18,12 @@
             },
             "globalShortcut": {
                 "all": true
+            },
+            "window": {
+                "close": true
+            },
+            "dialog": {
+                "message": true
             }
         },
         "bundle": {
