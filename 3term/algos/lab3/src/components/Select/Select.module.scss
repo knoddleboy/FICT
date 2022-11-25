@@ -16,7 +16,7 @@
 .selectRoot {
     width: 26%;
     height: 100vh;
-    padding: 12px;
+    padding: 12px 0;
     position: relative;
     background-color: lighten($system-tertiary-dark, 32%);
     color: $system-secondary-dark;
@@ -30,6 +30,10 @@
     .tablesContainer {
         height: calc(100% - 44px);
         overflow-y: scroll;
+
+        ul li {
+            padding: 0 12px;
+        }
     }
 
     .editPanel {
