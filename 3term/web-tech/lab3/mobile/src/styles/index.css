@@ -162,6 +162,12 @@ a {
     }
 }
 
+@media screen and (min-width: 640px) {
+    .aside {
+        width: 60%;
+    }
+}
+
 .aside section:first-of-type {
     padding: calc(var(--mainMargin) / 2);
 }
