@@ -91,10 +91,10 @@ a {
 
 @media screen and (max-width: 767px) {
     .aside {
-        width: 60%;
-        height: inherit;
+        width: 70%;
+        height: calc(100% - var(--blockHeight) + 1px);
         margin-top: calc(var(--blockHeight) - 1px);
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         -webkit-font-smoothing: antialiased;
@@ -102,6 +102,7 @@ a {
         transform-origin: 0% 0%;
         transform: translateX(-100%);
         transition: transform 350ms var(--timing-fn);
+        overflow-y: scroll;
     }
 
     #aside-folder {
@@ -161,12 +162,12 @@ a {
     }
 }
 
-.aside section {
+.aside section:first-of-type {
     padding: calc(var(--mainMargin) / 2);
 }
 
-.aside__news {
-    flex: 1;
+.aside section:last-of-type {
+    padding: calc(var(--blockHeight) / 2 - 12px) calc(var(--mainMargin) / 2);
 }
 
 .news__title {
@@ -189,10 +190,6 @@ a {
 .aside__news .news__card:not(:last-of-type) .card__footer {
     padding-bottom: var(--aside-news-gap);
     border-bottom: 1px solid rgb(0 0 0 / 20%);
-}
-
-.aside section:last-of-type {
-    padding: 10px;
 }
 
 .aside__marquee {
@@ -247,6 +244,12 @@ header {
         -1px 2px var(--redish),
         -2px 1px var(--light-redish),
         -2px 3px var(--redish);
+}
+
+@media screen and (max-width: 350px) {
+    .nav__logo h1 {
+        font-size: small;
+    }
 }
 
 .nav__navbar {
@@ -356,6 +359,17 @@ header {
     }
 }
 
+@media screen and (max-width: 300px) {
+    .nav__navbar {
+        padding: 30px 50px;
+    }
+
+    .nav__navbar li {
+        margin: 12px 0;
+        font-size: 1rem;
+    }
+}
+
 .nav__navbar li {
     text-transform: uppercase;
     position: relative;
@@ -395,6 +409,12 @@ header {
 @media screen and (max-width: 767px) {
     .marticle {
         margin-top: var(--blockHeight);
+    }
+}
+
+@media screen and (max-width: 250px) {
+    .marticle {
+        padding: 4px;
     }
 }
 
@@ -470,6 +490,42 @@ header {
     transition: fill 150ms ease;
 }
 
+@media screen and (max-width: 767px) {
+    .footer h4 {
+        font-size: small;
+    }
+
+    .footer__socials {
+        padding: 5px;
+    }
+
+    .footer__socials a {
+        margin: 0 5px;
+    }
+
+    .footer__socials a svg {
+        width: 26px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .footer h4 {
+        font-size: x-small;
+    }
+
+    .footer__socials {
+        padding: 1px;
+    }
+
+    .footer__socials a {
+        margin: 0 3px;
+    }
+
+    .footer__socials a svg {
+        width: 24px;
+    }
+}
+
 .footer__socials a:nth-of-type(1):hover svg {
     fill: #1F4690;
 }
@@ -505,8 +561,6 @@ header {
 .text--upper {
     text-transform: uppercase;
 }
-
-/* MEDIA */
 
 @media screen and (min-width: 1024px) {
     :root {
