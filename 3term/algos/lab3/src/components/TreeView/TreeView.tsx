@@ -46,10 +46,6 @@ const TreeViewRenderer: FC<{ tree: Tree; depth?: number }> = ({ tree, depth = 0 
                 <div data-attr="key">{tree.data.key}:</div>
                 <div data-attr="value">{tree.data.value}</div>
             </StylesDataNode>
-            {/* <div style={{ marginLeft: 40 * depth + "px" }} className={styles.treeDataNode}>
-                <div data-attr="key">{tree.data.key}:</div>
-                <div data-attr="value">{tree.data.value}</div>
-            </div> */}
             <div>{<TreeViewRenderer tree={tree.left} depth={depth + 1} />}</div>
             <div>{<TreeViewRenderer tree={tree.right} depth={depth + 1} />}</div>
         </>

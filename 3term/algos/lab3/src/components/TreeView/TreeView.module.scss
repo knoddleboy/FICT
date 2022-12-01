@@ -40,8 +40,9 @@ $node-gap: 12px;
     }
 
     div[data-attr="value"] {
-        max-width: 12ch;
+        max-width: 15ch;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
+        white-space: nowrap;
     }
 }
