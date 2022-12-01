@@ -199,6 +199,39 @@ impl<'a> AvlTreeSet {
         None
     }
 
+    pub fn modify(&mut self, key: &u32, value: &String) -> bool {
+        let mut current_tree = &mut self.root;
+
+        while let Some(current_node) = current_tree.as_mut() {
+            match current_node.data.key.cmp(&key) {
+                Ordering::Less => {
+                    current_tree = &mut current_node.right;
+                }
+                Ordering::Equal => {
+                    let cl = current_node.clone();
+                    let bx = Box::new(AvlNode {
+                        data: AvlNodeData {
+                            key: key.to_owned(),
+                            value: value.to_owned(),
+                        },
+                        left: cl.left,
+                        right: cl.right,
+                        height: cl.height,
+                    });
+
+                    _ = replace(current_node, bx);
+
+                    return true;
+                }
+                Ordering::Greater => {
+                    current_tree = &mut current_node.left;
+                }
+            };
+        }
+
+        false
+    }
+
     pub fn clear(&mut self) {
         self.root.take();
     }

@@ -136,12 +136,16 @@ fn insert_row(key: u32, value: String, set: State<GlobalAvl>) {
 fn modify_row(prev_key: u32, key: u32, value: Option<String>, set: State<GlobalAvl>) {
     let mut avl = set.0.lock().unwrap();
 
-    avl.take(&prev_key);
+    if prev_key != key {
+        avl.take(&prev_key);
 
-    avl.insert(AvlNodeData {
-        key,
-        value: value.unwrap_or("".to_string()),
-    });
+        avl.insert(AvlNodeData {
+            key,
+            value: value.unwrap_or("".to_string()),
+        });
+    } else {
+        avl.modify(&key, &value.unwrap_or("".to_string()));
+    }
 }
 
 #[tauri::command]
