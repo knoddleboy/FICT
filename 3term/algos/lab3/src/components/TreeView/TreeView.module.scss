@@ -16,8 +16,9 @@ $node-gap: 12px;
     background-color: lighten($system-tertiary-dark, 32%);
     border-radius: 6px;
 
-    &::before {
-        border: 0.5px dashed lighten($system-tertiary-dark, 26%);
+    &::before,
+    &::after {
+        background-color: lighten($system-tertiary-dark, 28%);
     }
 
     display: flex;
@@ -36,6 +37,15 @@ $node-gap: 12px;
 
         &:not(:last-of-type) {
             margin-right: 12px;
+        }
+    }
+
+    div[data-attr="key"] {
+        b {
+            font-size: x-small;
+            text-transform: uppercase;
+            opacity: .28;
+            margin-right: calc($node-gap / 2);
         }
     }
 
