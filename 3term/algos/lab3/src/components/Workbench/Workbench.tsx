@@ -9,10 +9,12 @@ import { AppContext } from "../../App";
 
 import Button from "../Button";
 import TreeView from "../TreeView";
-import { AddIconThin, RemoveIcon, SearchIcon, SettingsIcon } from "../../assets/svg";
+import { AddIconThin, RemoveIcon, SearchIcon, ActionIcon } from "../../assets/svg";
 
 import styles from "./Workbench.module.scss";
 import variables from "../../styles/variables.module.scss";
+
+import VirtualList from "../VirtualList";
 
 /********************
  *      GLOBALS     *
@@ -93,6 +95,8 @@ export const Workbench = () => {
 
     const [registerDelete, setRegisterDelete] = useState(false);
 
+    const [showActionButtonInput, setShowActionButtonInput] = useState(false);
+
     /********************
      *       REFS       *
      ********************/
@@ -101,7 +105,9 @@ export const Workbench = () => {
     const templateInputRowRef = useRef<HTMLInputElement>(null);
     const searchFieldRef = useRef<HTMLInputElement>(null);
     const deleteButtonRef = useRef<HTMLButtonElement>(null);
-    const rowsListRef = useRef<HTMLUListElement>(null);
+    const rowsListRef = useRef<HTMLDivElement>(null);
+    const actionButtonInputRef = useRef<HTMLInputElement>(null);
+    const actionButtonRef = useRef<HTMLButtonElement>(null);
 
     /********************
      *     FUNCTIONS    *
@@ -235,13 +241,13 @@ export const Workbench = () => {
         }
     };
 
-    const handleGenerateTable = () => {
+    const handleGenerateTable = (val: number) => {
         const t = workingTable.value;
-        if (!t) return;
+        if (!t || !t.name) return;
 
-        invoke("generate_table", { path: t.path }).then((res) => {
-            if (res && t.name) {
-                parseTable(t.name);
+        invoke("generate_table", { rows: val }).then((res) => {
+            if (res) {
+                parseTable(t.name!);
             }
         });
     };
@@ -369,10 +375,24 @@ export const Workbench = () => {
     useOnClickOutside(
         deleteButtonRef,
         () => {
+            if (!invokeDeleteRow) return;
             setInvokeDeleteRow(false); // reset invoke
             setRowClicked(new Set()); // remove selection from rows
         },
         [rowsListRef]
+    );
+
+    useEffect(() => {
+        actionButtonInputRef.current?.focus();
+    }, [showActionButtonInput]);
+
+    useOnClickOutside(
+        actionButtonInputRef,
+        () => {
+            if (!showActionButtonInput) return;
+            setShowActionButtonInput(false);
+        },
+        [actionButtonRef]
     );
 
     useEffect(() => {
@@ -414,63 +434,73 @@ export const Workbench = () => {
                         </div>
 
                         {activeViewButton === DataDisplay.Tabular ? (
-                            <ul className={styles.displayTableRoot} ref={rowsListRef}>
-                                {data.map((d) => {
-                                    const idx = d;
+                            <VirtualList
+                                rootRef={rowsListRef}
+                                className={styles.displayTableRoot}
+                                numItems={data.length}
+                                itemHeight={34}
+                                renderItem={({ index, style }) => {
+                                    const item = data[index];
                                     return (
                                         <li
                                             className={`${styles.dataRow} ${
-                                                rowClicked.has(idx) ? styles.dataRowSelected : ""
+                                                rowClicked.has(item) ? styles.dataRowSelected : ""
                                             }`}
-                                            key={idx}
-                                            onClick={() => handleDeleteRows(idx)}
+                                            key={item?.key}
+                                            onClick={() => handleDeleteRows(item)}
+                                            color-field={index % 2}
+                                            style={style}
                                         >
                                             <div
                                                 className={styles.dataKeyField}
                                                 onDblClick={() =>
-                                                    setTemplateInputRow([TColumn.Key, idx])
+                                                    setTemplateInputRow([TColumn.Key, item])
                                                 }
                                             >
                                                 {templateInputRow[0] === TColumn.Key &&
-                                                templateInputRow[1] === idx ? (
+                                                templateInputRow[1] === item ? (
                                                     <input
                                                         type="text"
-                                                        value={d.key ?? ""}
+                                                        value={item?.key ?? ""}
                                                         onBlur={() =>
                                                             setTemplateInputRow([TColumn.NA, null])
                                                         }
                                                         ref={templateInputRowRef}
-                                                        onKeyDown={(e) => handleInputEnd(e, idx, 0)}
+                                                        onKeyDown={(e) =>
+                                                            handleInputEnd(e, item, 0)
+                                                        }
                                                     />
                                                 ) : (
-                                                    <span>{d.key}</span>
+                                                    <span>{item?.key}</span>
                                                 )}
                                             </div>
                                             <div
                                                 className={styles.dataValueField}
                                                 onDblClick={() =>
-                                                    setTemplateInputRow([TColumn.Value, idx])
+                                                    setTemplateInputRow([TColumn.Value, item])
                                                 }
                                             >
                                                 {templateInputRow[0] === TColumn.Value &&
-                                                templateInputRow[1] === idx ? (
+                                                templateInputRow[1] === item ? (
                                                     <input
                                                         type="text"
-                                                        value={d.value ?? ""}
+                                                        value={item?.value ?? ""}
                                                         onBlur={() =>
                                                             setTemplateInputRow([TColumn.NA, null])
                                                         }
                                                         ref={templateInputRowRef}
-                                                        onKeyDown={(e) => handleInputEnd(e, idx, 1)}
+                                                        onKeyDown={(e) =>
+                                                            handleInputEnd(e, item, 1)
+                                                        }
                                                     />
                                                 ) : (
-                                                    <span>{d.value}</span>
+                                                    <span>{item?.value}</span>
                                                 )}
                                             </div>
                                         </li>
                                     );
-                                })}
-                            </ul>
+                                }}
+                            />
                         ) : (
                             <TreeView tree={dataObject} />
                         )}
@@ -549,15 +579,35 @@ export const Workbench = () => {
                                     <AddIconThin size={20} fill={variables.systemSecondaryDark} />
                                     Row
                                 </Button>
+                                {showActionButtonInput && (
+                                    <input
+                                        type="number"
+                                        className={styles.actionButtonDialog}
+                                        ref={actionButtonInputRef}
+                                        min={1}
+                                        max={1_000_000}
+                                        onKeyDown={(e) => {
+                                            if (e.key !== "Enter" || !actionButtonInputRef) return;
+                                            if (!actionButtonInputRef.current) return;
+
+                                            const val = parseInt(
+                                                actionButtonInputRef.current.value
+                                            );
+                                            handleGenerateTable(val);
+                                            setShowActionButtonInput(false);
+                                        }}
+                                    />
+                                )}
                                 <Button
                                     background={{
                                         color: variables.systemTertiaryDark,
                                         alpha: 32,
                                     }}
                                     className={styles.actionButton}
-                                    onClick={handleGenerateTable}
+                                    onClick={() => setShowActionButtonInput((prev) => !prev)}
+                                    buttonRef={actionButtonRef}
                                 >
-                                    <SettingsIcon fill={variables.systemSecondaryDark} />
+                                    <ActionIcon fill={variables.systemSecondaryDark} />
                                 </Button>
                             </div>
                         </div>

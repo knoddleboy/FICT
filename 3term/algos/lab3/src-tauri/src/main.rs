@@ -90,7 +90,7 @@ fn set_working_table(path: String, wt: State<WorkingTable>, set: State<GlobalAvl
 }
 
 #[tauri::command]
-fn generate_table(wt: State<WorkingTable>, set: State<GlobalAvl>) -> bool {
+fn generate_table(rows: u32, wt: State<WorkingTable>, set: State<GlobalAvl>) -> bool {
     let wtable = wt.0.lock().unwrap();
     let mut avl = set.0.lock().unwrap();
 
@@ -98,7 +98,7 @@ fn generate_table(wt: State<WorkingTable>, set: State<GlobalAvl>) -> bool {
 
     let mut file = File::create(wtable.as_str()).unwrap();
 
-    let mut rand_rng = (0..10_000).collect::<Vec<u32>>();
+    let mut rand_rng = (0..rows).collect::<Vec<u32>>();
     rand_rng.shuffle(&mut thread_rng());
 
     for key in rand_rng {

@@ -97,7 +97,7 @@ $table-inner-padding: 10px;
 
 .displayTableRoot {
     width: 100%;
-    height: calc(100% - ($search-height + $table-head-height + $panel-height - 1px)); // 1px as bottom border
+    height: calc(100% - ($search-height + $table-head-height + $panel-height - 1px));
     overflow-y: scroll;
 
     h4 {
@@ -111,7 +111,7 @@ $table-inner-padding: 10px;
         align-items: center;
         transition: background-color 50ms cubic-bezier(0, 0, 0.5, 1);
 
-        &:nth-of-type(2n) {
+        &[color-field="1"] {
             background-color: lighten($system-tertiary-dark, 32%);
         }
 
@@ -209,6 +209,7 @@ $table-inner-padding: 10px;
     padding: $panel-padding 20px;
     border-top: 2px solid $accent-border-color;
     font-size: small;
+    background-color: white;
 
     .dataView {
         display: flex;
@@ -232,6 +233,7 @@ $table-inner-padding: 10px;
 
     .rowsEdit {
         display: flex;
+        position: relative;
 
         button {
             padding: 1px 4px;
@@ -247,6 +249,18 @@ $table-inner-padding: 10px;
 
         .actionButton {
             padding: 0 4px;
+        }
+
+        .actionButtonDialog {
+            width: 70%;
+            position: absolute;
+            top: -210%;
+            right: 0;
+            padding: 8px;
+            background-color: lighten($system-tertiary-dark, 27%);
+            border: 1px solid lighten($system-tertiary-dark, 21%);
+            border-radius: 5px;
+            font-size: 1rem;
         }
     }
 }
