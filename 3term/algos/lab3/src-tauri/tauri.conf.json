@@ -13,7 +13,10 @@
     "tauri": {
         "allowlist": {
             "fs": {
-                "all": true,
+                "createDir": true,
+                "readDir": true,
+                "writeFile": true,
+                "readFile": true,
                 "scope": ["$APPDATA/*"]
             },
             "globalShortcut": {
