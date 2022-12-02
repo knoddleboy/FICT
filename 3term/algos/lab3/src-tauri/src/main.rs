@@ -98,7 +98,7 @@ fn generate_table(wt: State<WorkingTable>, set: State<GlobalAvl>) -> bool {
 
     let mut file = File::create(wtable.as_str()).unwrap();
 
-    let mut rand_rng = (0..30).collect::<Vec<u32>>();
+    let mut rand_rng = (0..10_000).collect::<Vec<u32>>();
     rand_rng.shuffle(&mut thread_rng());
 
     for key in rand_rng {

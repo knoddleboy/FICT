@@ -412,9 +412,10 @@ export const Workbench = () => {
                             <div className={styles.dataKeyField}>id</div>
                             <div className={styles.dataValueField}>value</div>
                         </div>
-                        <ul className={styles.displayTableRoot} ref={rowsListRef}>
-                            {activeViewButton === DataDisplay.Tabular ? (
-                                data.map((d) => {
+
+                        {activeViewButton === DataDisplay.Tabular ? (
+                            <ul className={styles.displayTableRoot} ref={rowsListRef}>
+                                {data.map((d) => {
                                     const idx = d;
                                     return (
                                         <li
@@ -468,11 +469,11 @@ export const Workbench = () => {
                                             </div>
                                         </li>
                                     );
-                                })
-                            ) : (
-                                <TreeView tree={dataObject} />
-                            )}
-                        </ul>
+                                })}
+                            </ul>
+                        ) : (
+                            <TreeView tree={dataObject} />
+                        )}
                         <div className={styles.bottomPanel}>
                             <div className={styles.dataView}>
                                 <Button
