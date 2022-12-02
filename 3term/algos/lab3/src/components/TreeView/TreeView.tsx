@@ -1,3 +1,7 @@
+/*
+THIS COMPONENT IS UNOPTIMIZED FOR LARGE BUNDLES OF DATA
+*/
+
 import { FunctionalComponent as FC } from "preact";
 import styled from "styled-components";
 import styles from "./TreeView.module.scss";
@@ -56,27 +60,21 @@ const TreeViewRenderer: FC<{ tree: Tree; depth?: number; label: "l" | "r" }> = (
 }) => {
     if (!tree) return null;
 
-    function getSuccessors(tree: Tree) {
+    // heavy shit goes here...
+    function getChilds(tree: Tree) {
         if (!tree) return 1;
 
-        // a variable to store the visited nodes
         let result = 0;
-        // helper function -- accepts a node
         function traverse(node: Tree) {
-            // if node has left, recursion to find the leftest leaf node
             if (node.left) traverse(node.left);
-            // push the node to the result
             result += 1;
-            // if node has right, recurstion to find the rightest leaf node
             if (node.right) traverse(node.right);
         }
-        // invoke the helper function with the root
+
         traverse(tree);
-        // return the final result
+
         return result;
     }
-
-    console.log(tree.data.key, getSuccessors(tree.left));
 
     return (
         <>
@@ -84,7 +82,7 @@ const TreeViewRenderer: FC<{ tree: Tree; depth?: number; label: "l" | "r" }> = (
                 style={{ marginLeft: 40 * depth + "px" }}
                 className={styles.treeDataNode}
                 isLeaf={tree.left === null && tree.right === null}
-                height={getSuccessors(tree.left) + (tree.right ? 1 : 0)}
+                height={getChilds(tree.left) + (tree.left && tree.right ? 1 : 0)}
             >
                 <div data-attr="key">
                     <b>{label}</b>

@@ -42,10 +42,6 @@ export const VirtualList: FC<IVirtualList> = ({
         return () => window.removeEventListener("resize", handleSize);
     });
 
-    useEffect(() => {
-        console.log(rootHeight);
-    }, [rootHeight]);
-
     const [scrollTop, setScrollTop] = useState(0);
 
     const innerHeight = numItems * itemHeight;
