@@ -429,7 +429,7 @@ export const Workbench = () => {
                             </div>
                         </div>
                         <div className={styles.dataRowHead}>
-                            <div className={styles.dataKeyField}>id</div>
+                            <div className={styles.dataKeyField}>key</div>
                             <div className={styles.dataValueField}>value</div>
                         </div>
 
