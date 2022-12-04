@@ -182,12 +182,18 @@ impl<'a> AvlTreeSet {
     pub fn get(&self, key: &u32) -> Option<&AvlNodeData> {
         let mut current_tree = &self.root;
 
+        println!("Searching for {}...", key);
+        let mut copms: u32 = 0;
+
         while let Some(current_node) = current_tree {
+            copms += 1;
+
             match current_node.data.key.cmp(&key) {
                 Ordering::Less => {
                     current_tree = &current_node.right;
                 }
                 Ordering::Equal => {
+                    println!(" - Found with total comparisons: {}.", copms);
                     return Some(&current_node.data);
                 }
                 Ordering::Greater => {
@@ -195,6 +201,8 @@ impl<'a> AvlTreeSet {
                 }
             };
         }
+
+        println!(" - Not found.");
 
         None
     }
