@@ -169,3 +169,53 @@ saveAlignmentForm.addEventListener("submit", saveAlignment);
  *         web page leads to the display of the list in place of the initial content
  *         of the block.
  */
+
+const __LOCAL_STORAGE_LIST__ = "listItems";
+
+const list = document.querySelector(".list");
+const listAddButton = document.querySelector(".list-add");
+const listSaveButton = document.querySelector(".list-button-save");
+const listDeleteButton = document.querySelector(".list-button-delete");
+
+const savedList = JSON.parse(window.localStorage.getItem(__LOCAL_STORAGE_LIST__));
+
+function createListItem(e, value = null) {
+    const item = document.createElement("li");
+    const itemInput = document.createElement("input");
+    itemInput.setAttribute("type", "text");
+    itemInput.setAttribute("class", "list-item");
+
+    if (value) {
+        itemInput.setAttribute("value", value);
+    }
+
+    item.appendChild(itemInput);
+    list.append(item);
+}
+
+if (savedList) {
+    for (const li in savedList) {
+        if (savedList.hasOwnProperty(li)) {
+            createListItem(null, savedList[li]);
+        }
+    }
+}
+
+listAddButton.addEventListener("click", createListItem);
+
+function saveListToLocalStorage() {
+    const itemValues = {};
+    Array.from(list.children).forEach((it, idx) => {
+        const val = it.children[0].value;
+        itemValues[idx] = val;
+    });
+
+    window.localStorage.setItem(__LOCAL_STORAGE_LIST__, JSON.stringify(itemValues));
+}
+
+listSaveButton.addEventListener("click", saveListToLocalStorage);
+
+listDeleteButton.addEventListener("click", () => {
+    window.localStorage.removeItem(__LOCAL_STORAGE_LIST__);
+    list.replaceChildren();
+});

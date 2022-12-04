@@ -14,6 +14,7 @@
     --mainMargin: calc(var(--blockHeight) / 2);
 
     --grid-gap: 40px;
+    --list-gap: 4px;
 
     --red: rgb(235, 194, 182);
     --redish: rgb(235, 73, 51);
@@ -378,7 +379,12 @@ header {
 
 @media screen and (max-width: 767px) {
     .article__container {
+        width: 100%;
         flex-direction: column;
+    }
+
+    .article__container>* {
+        margin: 0 !important;
     }
 
     .article__list {
@@ -419,11 +425,43 @@ header {
 }
 
 .article__list {
-    width: 120px;
+    width: 180px;
 }
 
-.article__list .list-buttons button {
+@media screen and (max-width: 767px) {
+    .article__forms {
+        width: 100%;
+    }
+
+    .article__list {
+        width: 100%;
+    }
+}
+
+.list__header {
+    margin-bottom: var(--list-gap);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-add {
+    padding: 2px 12px;
+}
+
+.list-item {
+    width: 100%;
+    padding: 4px;
+    margin: var(--list-gap) 0;
+}
+
+.list-buttons {
+    margin-top: var(--list-gap);
+}
+
+.list-buttons button {
     width: 48%;
+    padding: 2px 0;
 }
 
 .footer {
