@@ -1,9 +1,10 @@
 use crate::graph::Graph;
 
+#[derive(Clone)]
 pub struct Section<'a> {
-    graph: &'a Graph,
-    coloring: Vec<u32>,
-    colors_used: u32,
+    pub graph: &'a Graph,
+    pub coloring: Vec<u32>,
+    pub colors_used: u32,
 }
 
 impl<'a> Section<'a> {

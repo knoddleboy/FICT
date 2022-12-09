@@ -15,12 +15,10 @@ impl Graph {
 
     /// Generate a random adjacency matrix.
     pub fn gen(&mut self) {
-        let vtx = self.adj_matrix.len();
-
-        for i in 0..vtx {
+        for i in 0..VERTICES {
             let mut max_degree = rand::thread_rng().gen_range(1..=4);
 
-            for k in 0..vtx {
+            for k in 0..VERTICES {
                 if self.adj_matrix[i][k] == 1 && max_degree > 0 {
                     max_degree -= 1;
                 }
@@ -31,7 +29,7 @@ impl Graph {
                     continue;
                 }
 
-                let rand_v = rand::thread_rng().gen_range(0..vtx);
+                let rand_v = rand::thread_rng().gen_range(0..VERTICES);
 
                 if i != rand_v {
                     self.adj_matrix[i][rand_v] = 1;
@@ -39,6 +37,14 @@ impl Graph {
                 }
             }
         }
+    }
+
+    pub fn get_degrees(&mut self) -> Vec<u32> {
+        self.adj_matrix
+            .iter()
+            .cloned()
+            .map(|v| v.iter().sum())
+            .collect()
     }
 
     pub fn get_connected_vertices(&mut self, v: usize) -> Vec<u32> {
@@ -49,6 +55,10 @@ impl Graph {
             .filter(|&(_, el)| el == 1)
             .map(|(i, _)| i as u32)
             .collect()
+    }
+
+    pub fn get_no_vertices(&self) -> usize {
+        self.adj_matrix.len()
     }
 }
 
