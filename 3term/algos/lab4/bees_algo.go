@@ -18,74 +18,74 @@ func (b *BeeAlgorithm) Start() {
 	b.generateSections()
 
 	for iteration := 0; iteration < ITERS_MAX; iteration++ {
+
 		if iteration%20 == 0 {
 			min := math.MaxInt32
 
 			for _, section := range b.sections {
 				if section != nil {
-					min = int(math.Min(float64(min), float64(section.colorsUsed)))
+					min = Min(min, section.colorsUsed)
 				}
 			}
 
 			fmt.Printf("%d: %d\n", iteration, min)
 		}
 
-		sections := b.getRandomSections()
+		randSections := b.getRandomSections()
 
-		sumOfColorsUsed := 0.0
-		for _, section := range sections {
-			sumOfColorsUsed += float64(section.colorsUsed)
+		totalColorsUsed := 0.0
+		for _, s := range randSections {
+			totalColorsUsed += float64(s.colorsUsed)
 		}
 
-		for _, section := range sections {
-			workBees := int(float64(b.foragers) * (1 - float64(section.colorsUsed)/sumOfColorsUsed))
-			usedVertexes := make([]bool, b.graph.getNOVertices())
+		for _, s := range randSections {
+			foragers := int(float64(b.foragers) * (1 - float64(s.colorsUsed)/totalColorsUsed))
+			usedVertices := make([]bool, b.graph.getNOVertices())
 
-			for workBees > 0 {
-				unused := b.graph.getUnused(usedVertexes)
+			for foragers > 0 {
+				unused := b.graph.getUnused(usedVertices)
 
 				if len(unused) == 0 {
 					break
 				}
 
 				maxVertex := unused[rand.Intn(len(unused))]
-				usedVertexes[maxVertex] = true
+				usedVertices[maxVertex] = true
 
 				for _, connectedVertex := range b.graph.getConnectedVertices(maxVertex) {
-					if workBees <= 0 {
+					if foragers <= 0 {
 						break
 					}
 
-					section.coloring[maxVertex], section.coloring[connectedVertex] = section.coloring[connectedVertex], section.coloring[maxVertex]
+					s.coloring[maxVertex], s.coloring[connectedVertex] = s.coloring[connectedVertex], s.coloring[maxVertex]
 
-					if section.isValidColoring() {
-						workBees--
-						currentColor := section.coloring[connectedVertex]
+					if s.isValidColoring() {
+						foragers--
+						currentColor := s.coloring[connectedVertex]
 
 						for i := 1; i < currentColor; i++ {
-							section.coloring[connectedVertex] = i
+							s.coloring[connectedVertex] = i
 
-							if !section.isValidColoring() {
-								section.coloring[connectedVertex] = currentColor
+							if !s.isValidColoring() {
+								s.coloring[connectedVertex] = currentColor
 							} else {
 								break
 							}
 						}
 					} else {
-						section.coloring[maxVertex], section.coloring[connectedVertex] = section.coloring[connectedVertex], section.coloring[maxVertex]
+						s.coloring[maxVertex], s.coloring[connectedVertex] = s.coloring[connectedVertex], s.coloring[maxVertex]
 					}
 				}
 			}
 
-			section.colorsUsed = section.getNOColorsUsed()
+			s.colorsUsed = s.getNOColorsUsed()
 		}
 	}
 
 	min := math.MaxInt32
-
 	for _, section := range b.sections {
 		if section != nil {
-			min = int(math.Min(float64(min), float64(section.colorsUsed)))
+			min = Min(min, section.colorsUsed)
 		}
 	}
 
@@ -96,7 +96,7 @@ func (b *BeeAlgorithm) getRandomSections() []*Section {
 	var sections []*Section
 	selected := make(map[int]bool)
 
-	for i := 0; i < int(math.Min(float64(b.scouts), float64(b.graph.getNOVertices()))); i++ {
+	for i := 0; i < Min(b.scouts, b.graph.getNOVertices()); i++ {
 		for {
 			index := rand.Intn(len(b.sections))
 
@@ -140,7 +140,7 @@ func dfs(v, color int, visited []bool, section *Section) {
 }
 
 func (b *BeeAlgorithm) generateSections() {
-	for i := 0; i < int(math.Min(float64(len(b.sections)), float64(b.graph.getNOVertices()))); i++ {
+	for i := 0; i < Min(len(b.sections), b.graph.getNOVertices()); i++ {
 		visited := make([]bool, b.graph.getNOVertices())
 		section := &Section{
 			graph:      b.graph,

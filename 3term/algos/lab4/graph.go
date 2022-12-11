@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 type Graph struct {
@@ -81,10 +80,9 @@ func genGraph(size int) *Graph {
 			vertexDegree += v
 		}
 
-		degree := int(
-			math.Min(
-				float64(RandRng(V_DEGREE_MIN, V_DEGREE_MAX)-vertexDegree),
-				float64(size-vertex-1)))
+		degree := Min(
+			RandRng(V_DEGREE_MIN, V_DEGREE_MAX)-vertexDegree,
+			size-vertex-1)
 
 		for i := 0; i < degree; i++ {
 			notConnected := true
