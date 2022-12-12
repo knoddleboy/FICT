@@ -7,14 +7,14 @@ import (
 	"time"
 )
 
-type BeeAlgorithm struct {
+type BeesAlgorithm struct {
 	graph    *Graph
 	sections []*Section
 	foragers int
 	scouts   int
 }
 
-func (b *BeeAlgorithm) Start() {
+func (b *BeesAlgorithm) Start() {
 	b.generateSections()
 
 	for iteration := 0; iteration < ITERS_MAX; iteration++ {
@@ -31,14 +31,14 @@ func (b *BeeAlgorithm) Start() {
 			fmt.Printf("%d: %d\n", iteration, min)
 		}
 
-		randSections := b.getRandomSections()
+		randomSections := b.getRandomSections()
 
 		totalColorsUsed := 0.0
-		for _, s := range randSections {
+		for _, s := range randomSections {
 			totalColorsUsed += float64(s.colorsUsed)
 		}
 
-		for _, s := range randSections {
+		for _, s := range randomSections {
 			foragers := int(float64(b.foragers) * (1 - float64(s.colorsUsed)/totalColorsUsed))
 			usedVertices := make([]bool, b.graph.getNOVertices())
 
@@ -92,7 +92,7 @@ func (b *BeeAlgorithm) Start() {
 	fmt.Printf("%d: %d\n", ITERS_MAX, min)
 }
 
-func (b *BeeAlgorithm) getRandomSections() []*Section {
+func (b *BeesAlgorithm) getRandomSections() []*Section {
 	var sections []*Section
 	selected := make(map[int]bool)
 
@@ -139,7 +139,7 @@ func dfs(v, color int, visited []bool, section *Section) {
 	}
 }
 
-func (b *BeeAlgorithm) generateSections() {
+func (b *BeesAlgorithm) generateSections() {
 	for i := 0; i < Min(len(b.sections), b.graph.getNOVertices()); i++ {
 		visited := make([]bool, b.graph.getNOVertices())
 		section := &Section{
@@ -155,11 +155,11 @@ func (b *BeeAlgorithm) generateSections() {
 	}
 }
 
-func NewBeeAlgorithm() *BeeAlgorithm {
+func NewBeesAlgorithm() *BeesAlgorithm {
 	rand.Seed(time.Now().Unix())
 	graph := genGraph(VERTICES)
 
-	return &BeeAlgorithm{
+	return &BeesAlgorithm{
 		graph:    graph,
 		sections: make([]*Section, SCOUTS*4),
 		foragers: FORAGERS,
