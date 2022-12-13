@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LAB 6 | Var 15 | Web Technologies</title>
+    <link rel="stylesheet" href="./src/index.css" />
+    <link rel="stylesheet" href="./src/dist/glitch.css" />
+    <link rel="icon" type="image/x-icon" href="./assets/star-solid.svg">
+
+    <script type="module" src="./src/index.js" defer></script>
+</head>
+
+<body>
+    <input id="aside-folder" type="checkbox">
+    <label for="aside-folder"></label>
+    <aside class="aside">
+        <section class="aside__upper center--flex d-col">
+            To increasing allows and its on me his if snapped with morals, and village latter are, his recommended.
+            It is time, that at brief. Evaluated our frame. On she alarm legs their mountains, what temple shall,
+            opposite and the will class.<br>Now overcome chime could and the good homeless, at extended phase he any
+            state let him himself space shown the his interaction advantage original by behind what text of odd for
+            to has have a propitiously muff a and simple, rational with on and as asking in clock, client he looked
+            most feel we bright for carpeting essential and.
+        </section>
+        <section class="aside__lower center--flex">
+            3
+        </section>
+    </aside>
+    <main>
+        <header>
+            <nav class="nav">
+                <a href="" class="field-box center--flex">
+                    <span>Header logo sample</span>
+                </a>
+                <div id="toggleableMenu">
+                    <!-- 
+                        A fake / hidden checkbox is used as click reciever, 
+                        so one can use the :checked selector on it.
+                     -->
+                    <input type="checkbox">
+
+                    <!-- Hamburger -->
+                    <span id="hamburger"></span>
+                    <span id="hamburger"></span>
+                    <span id="hamburger"></span>
+
+                    <!-- Menu -->
+                    <div class="nav__navbar">
+                        Interesting with just my never in it what tone her and as his of else school, view where the
+                        earnestly to writers, did of eminent some simple, half a not that to was latter on for pros
+                        hours. Effort I mountains, of word of statement each prosecution tones. Queen's what.
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <article class="article">
+            <div class="article__container">
+                <div class="glitch-wrapper">
+                    <h1 id="glitch">Glitch</h1>
+                </div>
+                <ul class="panel">
+                    <li>
+                        <label for="gl-color1">Color 1</label>
+                        <input type="color" value="#ff0000" id="gl-color1">
+                    </li>
+                    <li>
+                        <label for="gl-color2">Color 2</label>
+                        <input type="color" value="#0000ff" id="gl-color2">
+                    </li>
+                    <li>
+                        <label for="gl-duration">Duration</label>
+                        <input type="number" min="0" max="30" value="2" id="gl-duration">
+                    </li>
+                    <li>
+                        <label for="gl-shift">Shift</label>
+                        <input type="number" min="0" max="10" value="2" id="gl-shift">
+                    </li>
+                    <li>
+                        <label for="gl-content">Text</label>
+                        <input type="text" value="Glitch" maxlength="20" id="gl-content">
+                    </li>
+                </ul>
+            </div>
+        </article>
+        <footer class="footer">
+            <h4>© 2022 Web Technologies | Lab #6</h4>
+            <div class="field-box">
+                Footer sample text
+            </div>
+        </footer>
+    </main>
+</body>
+
+</html>
