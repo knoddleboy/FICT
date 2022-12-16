@@ -2,9 +2,11 @@ lockfileVersion: 5.4
 
 specifiers:
   sass: ^1.56.2
+  sql.js-httpvfs: ^0.8.12
 
 dependencies:
   sass: 1.56.2
+  sql.js-httpvfs: 0.8.12
 
 packages:
 
@@ -41,6 +43,10 @@ packages:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.2
+    dev: false
+
+  /comlink/4.3.1:
+    resolution: {integrity: sha512-+YbhUdNrpBZggBAHWcgQMLPLH1KDF3wJpeqrCKieWQ8RL7atmgsgTQko1XEBK6PsecfopWNntopJ+ByYG1lRaA==}
     dev: false
 
   /fill-range/7.0.1:
@@ -123,6 +129,12 @@ packages:
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
+    dev: false
+
+  /sql.js-httpvfs/0.8.12:
+    resolution: {integrity: sha512-lcEBc2q0psFRfdCx8Di22oUIkkv5MUIaVO/fGCj/Jjx6YQDKVylQEcjd7NSSbmINHTRwVkm/vWP8uuevT7Rkkw==}
+    dependencies:
+      comlink: 4.3.1
     dev: false
 
   /to-regex-range/5.0.1:

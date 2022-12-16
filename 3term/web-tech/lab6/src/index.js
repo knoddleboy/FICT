@@ -1,5 +1,3 @@
-"use strict";
-
 const r = document.querySelector(":root");
 
 const glColor1 = document.querySelector("#gl-color1");
