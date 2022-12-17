@@ -22,13 +22,29 @@ const animBlock = {
     },
 };
 
+let circles = [];
+
+function isCollide(c1, c2) {
+    if (c1 === c2) return;
+
+    const c1Rect = c1.el.getBoundingClientRect();
+    const c2Rect = c2.el.getBoundingClientRect();
+
+    return !(
+        c1Rect.top + c1Rect.height <= c2Rect.top ||
+        c1Rect.top >= c2Rect.top + c2Rect.height ||
+        c1Rect.left + c1Rect.width <= c2Rect.left ||
+        c1Rect.left >= c2Rect.left + c2Rect.width
+    );
+}
+
 class Circle {
     constructor(color, dx, dy) {
         this.dx = dx || 0;
         this.dy = dy || 0;
 
-        this.width = 20;
-        this.height = 20;
+        this.width = 100;
+        this.height = 100;
 
         this.el = document.createElement("div");
 
@@ -66,11 +82,16 @@ class Circle {
         }
     }
 
-    drawFromCurrentPosition(parent) {
+    getXY(parent = animBlock.el) {
         const parentRect = parent.getBoundingClientRect();
         const elRect = this.el.getBoundingClientRect();
         const offsetY = elRect.top - parentRect.top;
         const offsetX = elRect.left - parentRect.left;
+        return [offsetX, offsetY];
+    }
+
+    drawFromCurrentPosition(parent) {
+        const [offsetX, offsetY] = this.getXY(parent);
 
         this.draw(offsetX, offsetY);
     }
@@ -79,6 +100,10 @@ class Circle {
         this.#moveTo(x, y);
         const ball = this;
         setTimeout(function () {
+            if (isCollide(circles[0], circles[1])) {
+                reloadAnimation();
+                return;
+            }
             ball.#changeDirectionIfNecessary(x, y);
             ball.draw(x + ball.dx * 0.6, y + ball.dy * 0.4);
         }, 1000 / 240);
@@ -97,17 +122,33 @@ function createCircles() {
     return [c1, c2];
 }
 
-let circles = [];
+function reloadAnimation() {
+    circlesStartButton.innerHTML = "Reload";
+    circlesStartButton.removeAttribute("disabled");
+}
 
 playButton.addEventListener("click", () => {
     workBlock.el.style.display = "initial";
-    circles = createCircles();
+
+    if (!circles.length) {
+        circles = createCircles();
+    }
 });
 closeButton.addEventListener("click", () => {
     workBlock.el.style.display = "none";
 });
 
 circlesStartButton.addEventListener("click", () => {
+    if (circlesStartButton.innerHTML === "Reload") {
+        circlesStartButton.innerHTML = "Start";
+
+        animBlock.el.replaceChildren();
+        circles = createCircles();
+
+        return;
+    }
+
     circles[0].drawFromCurrentPosition(animBlock.el);
     circles[1].drawFromCurrentPosition(animBlock.el);
+    circlesStartButton.setAttribute("disabled", true);
 });
