@@ -427,11 +427,79 @@ header {
         align-items: center;
         padding: 10px;
 
-        button {
-            cursor: pointer;
+        .controls-btns {
+            width: 30%;
+            margin-left: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-            &:not(:last-of-type) {
-                margin-right: 15px;
+            button {
+                width: 50%;
+                padding: 4px 0;
+                cursor: pointer;
+
+                &:not(:last-of-type) {
+                    margin-right: 15px;
+                }
+
+                &:disabled {
+                    cursor: default;
+                }
+            }
+        }
+
+        .console {
+            flex: 1;
+            height: 100%;
+            padding-left: 30px;
+            display: flex;
+            align-items: center;
+
+            @media screen and (max-width: 420px) {
+                font-size: small;
+                padding-left: 15px;
+            }
+
+            div {
+                width: 50%;
+                display: flex;
+                justify-content: flex-start;
+            }
+
+            .console-output {
+                $anim-time: 300ms;
+                $anim-fn: ease-out;
+
+                span {
+                    transition: transform $anim-time $anim-fn, opacity $anim-time $anim-fn;
+                    animation: dropdown $anim-time $anim-fn forwards;
+
+                    @keyframes dropdown {
+                        0% {
+                            transform: translateY(-10px);
+                        }
+
+                        100% {
+                            transform: translateY(0);
+                        }
+                    }
+                }
+
+                .console--out {
+                    animation: dropdown-out $anim-time $anim-fn forwards;
+
+                    @keyframes dropdown-out {
+                        0% {
+                            transform: translateY(0);
+                        }
+
+                        100% {
+                            transform: translateY(20px);
+                            opacity: 0;
+                        }
+                    }
+                }
             }
         }
     }
