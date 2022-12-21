@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LAB 7 | Var 15 | Web Technologies</title>
+    <link rel="icon" type="image/x-icon" href="./public/assets/star-solid.svg">
+    <link rel="stylesheet" href="./dist/styles/index.css" />
+
+    <script type="module" src="./src/index.js" defer></script>
+    <script type="module" src="./src/utils.js" defer></script>
+    <script type="module" src="./src/constants.js" defer></script>
+</head>
+
+<body>
+    <input id="aside-folder" type="checkbox">
+    <label for="aside-folder"></label>
+    <aside class="aside">
+        <section class="aside__upper center--flex">
+            <div class="aside__upper-container">
+                <ul class="aside__upper-wrapper">
+                    <li>
+                        <i>Canvas Version</i><br><br>
+                        Click "Play" to begin.<br><br>After you clicked the button the work field should show up (if
+                        wasn't
+                        displayed
+                        before) as well as two circles of red and yellow colors. Then you click "Start" button and these
+                        circles
+                        begin to bound from one wall to another (old DVD times...) until the collide, after which allows
+                        you
+                        to
+                        reset the animation field with "Reload" button and start the animation again.<br><br>Have fun.
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section class="aside__lower center--flex">
+            <button class="play-btn">Play</button>
+        </section>
+    </aside>
+    <main>
+        <header>
+            <nav class="nav">
+                <div class="field-box header-box center--flex">
+                    -- timer --
+                </div>
+                <div id="toggleableMenu">
+                    <!-- 
+                        A fake / hidden checkbox is used as click reciever, 
+                        so one can use the :checked selector on it.
+                     -->
+                    <input type="checkbox">
+
+                    <!-- Hamburger -->
+                    <span id="hamburger"></span>
+                    <span id="hamburger"></span>
+                    <span id="hamburger"></span>
+
+                    <!-- Menu -->
+                    <div class="nav__navbar">
+                        Animation will run for 60 seconds, after which it will stop.
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <article class="article">
+            <div class="work">
+                <div class="controls">
+                    <div class="controls-btns">
+                        <button class="close-btn">Close</button>
+                        <button class="circles-start-btn">Start</button>
+                    </div>
+                    <div class="console">
+                        <div class="console-output"></div>
+                        <div class="fast-console-output"></div>
+                    </div>
+                </div>
+                <div class="anim"></div>
+            </div>
+        </article>
+        <footer class="footer">
+            <h4>© 2022 Web Technologies | Lab #7</h4>
+            <div class="field-box">
+                <button onclick="window.open('???', '_black')">Default</button>
+            </div>
+        </footer>
+    </main>
+</body>
+
+</html>
