@@ -1,5 +1,5 @@
 import { isCollide, outputConsole, _queue } from "./utils.js";
-import { ENUM__ROLES, ENUM__SWITCH, timeouts, __LOCALSTORAGE_LOGGED__ } from "./constants.js";
+import { ENUM__ROLES, timeouts, __LOCALSTORAGE_LOGGED__ } from "./constants.js";
 import {
     playButton,
     closeButton,
@@ -7,9 +7,8 @@ import {
     fastConsoleField,
     asideUpper,
     headerBox,
-    animSwitch,
 } from "./constants.js";
-import { workBlock, animBlock, canvasBlock, isCanvasMode } from "./constants.js";
+import { workBlock, animBlock } from "./constants.js";
 
 let circles = [];
 
@@ -100,7 +99,7 @@ class Circle {
 
             ball.#changeDirectionIfNecessary(x, y);
             ball.draw(x + ball.dx * 0.6, y + ball.dy * 0.4);
-        }, 1000 / 1000); // 240
+        }, 1000 / 240);
     }
 }
 
@@ -191,18 +190,4 @@ startButton.addEventListener("click", () => {
     })();
 
     outputConsole("click: <b>start</b> button");
-});
-
-animSwitch.addEventListener("click", () => {
-    if (isCanvasMode()) {
-        animSwitch.innerHTML = ENUM__SWITCH.Default;
-        animBlock.el.replaceChildren();
-
-        const canvas = document.createElement("canvas");
-        canvas.setAttribute("class", "canvas");
-        animBlock.el.appendChild(canvas);
-    } else {
-        animSwitch.innerHTML = ENUM__SWITCH.Canvas;
-        animBlock.el.replaceChildren();
-    }
 });
