@@ -152,6 +152,10 @@ a {
         overflow-y: scroll;
         z-index: 18;
 
+        .aside__upper {
+            max-height: calc(100% - var(--blockHeight));
+        }
+
         #aside-folder {
             display: block;
             width: 30px;
@@ -530,6 +534,11 @@ header {
         border: 5px solid green;
         background-image: url("../../../public/assets/texture.webp");
         position: relative;
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
     }
 
     @media screen and (max-width: 767px) {
@@ -555,6 +564,17 @@ header {
     @media screen and (max-width: 300px) {
         h4 {
             font-size: x-small;
+        }
+    }
+
+    .anim-switch {
+        width: 80%;
+        height: 70%;
+        cursor: pointer;
+
+        &::before {
+            content: "👉";
+            margin-right: 6px;
         }
     }
 }

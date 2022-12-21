@@ -1,33 +1,15 @@
 import { isCollide, outputConsole, _queue } from "./utils.js";
-import { ENUM__ROLES, timeouts, __LOCALSTORAGE_LOGGED__ } from "./constants.js";
+import { ENUM__ROLES, ENUM__SWITCH, timeouts, __LOCALSTORAGE_LOGGED__ } from "./constants.js";
 import {
     playButton,
     closeButton,
     startButton,
     fastConsoleField,
     asideUpper,
-    footerBox,
+    headerBox,
+    animSwitch,
 } from "./constants.js";
-
-const workBlock = {
-    el: document.querySelector(".work"),
-    get width() {
-        return this.el.clientWidth;
-    },
-    get height() {
-        return this.el.clientHeight;
-    },
-};
-
-const animBlock = {
-    el: document.querySelector(".anim"),
-    get width() {
-        return this.el.clientWidth;
-    },
-    get height() {
-        return this.el.clientHeight;
-    },
-};
+import { workBlock, animBlock, canvasBlock, isCanvasMode } from "./constants.js";
 
 let circles = [];
 
@@ -118,7 +100,7 @@ class Circle {
 
             ball.#changeDirectionIfNecessary(x, y);
             ball.draw(x + ball.dx * 0.6, y + ball.dy * 0.4);
-        }, 1000 / 1000);
+        }, 1000 / 1000); // 240
     }
 }
 
@@ -182,7 +164,7 @@ startButton.addEventListener("click", () => {
 
         animBlock.el.replaceChildren();
         fastConsoleField.replaceChildren();
-        footerBox.innerHTML = "0s";
+        headerBox.innerHTML = "0s";
 
         _queue.length = 0;
 
@@ -201,12 +183,26 @@ startButton.addEventListener("click", () => {
 
     (() => {
         playTimerValue = 1;
-        footerBox.innerHTML = "0s";
+        headerBox.innerHTML = "0s";
         playTimer = setInterval(() => {
-            footerBox.innerHTML = `${playTimerValue}s`;
+            headerBox.innerHTML = `${playTimerValue}s`;
             playTimerValue++;
         }, 1000);
     })();
 
     outputConsole("click: <b>start</b> button");
+});
+
+animSwitch.addEventListener("click", () => {
+    if (isCanvasMode()) {
+        animSwitch.innerHTML = ENUM__SWITCH.Default;
+        animBlock.el.replaceChildren();
+
+        const canvas = document.createElement("canvas");
+        canvas.setAttribute("class", "canvas");
+        animBlock.el.appendChild(canvas);
+    } else {
+        animSwitch.innerHTML = ENUM__SWITCH.Canvas;
+        animBlock.el.replaceChildren();
+    }
 });

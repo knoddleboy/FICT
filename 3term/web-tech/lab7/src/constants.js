@@ -3,6 +3,10 @@ export const ENUM__ROLES = {
     WARN: "WARN",
     FAST: "FAST",
 };
+export const ENUM__SWITCH = {
+    Canvas: "Canvas",
+    Default: "Default",
+};
 
 export const __LOCALSTORAGE_LOGGED__ = "logged";
 
@@ -12,6 +16,44 @@ export const startButton = document.querySelector(".circles-start-btn");
 export const consoleField = document.querySelector(".console-output");
 export const fastConsoleField = document.querySelector(".fast-console-output");
 export const asideUpper = document.querySelector(".aside__upper-wrapper");
-export const footerBox = document.querySelector(".footer-box"); // for timer
+export const headerBox = document.querySelector(".header-box"); // for timer
+export const animSwitch = document.querySelector(".anim-switch");
+
+export const workBlock = {
+    el: document.querySelector(".work"),
+    get width() {
+        return this.el.clientWidth;
+    },
+    get height() {
+        return this.el.clientHeight;
+    },
+};
+
+export const animBlock = {
+    el: document.querySelector(".anim"),
+    get width() {
+        return this.el.clientWidth;
+    },
+    get height() {
+        return this.el.clientHeight;
+    },
+};
+
+export const canvasBlock = {
+    el: document.querySelector(".canvas"),
+    get ctx() {
+        return this.el.getContext();
+    },
+    get width() {
+        return this.el.clientWidth;
+    },
+    get height() {
+        return this.el.clientHeight;
+    },
+};
 
 export const timeouts = [];
+
+export function isCanvasMode() {
+    return animBlock.el.innerHTML === ENUM__SWITCH.Canvas;
+}
