@@ -1,10 +1,13 @@
-const playButton = document.querySelector(".play-btn");
-const closeButton = document.querySelector(".close-btn");
-const startButton = document.querySelector(".circles-start-btn");
-const consoleField = document.querySelector(".console-output");
-const fastConsoleField = document.querySelector(".fast-console-output");
-
-const footerBox = document.querySelector(".footer-box");
+import { isCollide, outputConsole, _queue } from "./utils.js";
+import { ENUM__ROLES, timeouts, __LOCALSTORAGE_LOGGED__ } from "./constants.js";
+import {
+    playButton,
+    closeButton,
+    startButton,
+    fastConsoleField,
+    asideUpper,
+    footerBox,
+} from "./constants.js";
 
 const workBlock = {
     el: document.querySelector(".work"),
@@ -26,89 +29,7 @@ const animBlock = {
     },
 };
 
-const timeouts = [];
-
-const ENUM__ROLES = {
-    INFO: "INFO",
-    WARN: "WARN",
-    FAST: "FAST",
-};
-
-function outputConsole(msg, role = ENUM__ROLES.INFO) {
-    const parent = role === ENUM__ROLES.FAST ? fastConsoleField : consoleField;
-
-    switch (role) {
-        case ENUM__ROLES.INFO: // default info
-            msg = `&#8505;&#65039; ${msg}`;
-            break;
-        case ENUM__ROLES.WARN: // warning
-            msg = `&#9888;&#65039; ${msg}`;
-            break;
-        case ENUM__ROLES.FAST:
-            msg = `&#127921; ${msg}`;
-            break;
-    }
-
-    function addMsgEl() {
-        const msgSpan = document.createElement("span");
-        msgSpan.innerHTML = msg;
-
-        parent.appendChild(msgSpan);
-    }
-
-    function outAnimation(timeout = 2500, callback) {
-        const last = parent.lastChild;
-
-        if (timeouts.length) {
-            timeouts.forEach((t) => clearTimeout(t));
-        }
-
-        const t1 = setTimeout(() => {
-            last.classList.add("console--out");
-
-            const t2 = setTimeout(() => {
-                parent.removeChild(last);
-
-                if (callback) callback();
-            }, 300);
-
-            timeouts.push(t2);
-        }, timeout);
-
-        timeouts.push(t1);
-    }
-
-    if (parent.children.length) {
-        if (role !== ENUM__ROLES.FAST) {
-            outAnimation(0, () => {
-                addMsgEl();
-                // outAnimation();
-            });
-        } else {
-            parent.replaceChildren();
-            addMsgEl();
-        }
-    } else {
-        addMsgEl();
-        // if (role !== ENUM__ROLES.FAST) outAnimation();
-    }
-}
-
 let circles = [];
-
-function isCollide(c1, c2) {
-    if (c1 === c2) return;
-
-    const c1Rect = c1.el.getBoundingClientRect();
-    const c2Rect = c2.el.getBoundingClientRect();
-
-    return !(
-        c1Rect.top + c1Rect.height <= c2Rect.top ||
-        c1Rect.top >= c2Rect.top + c2Rect.height ||
-        c1Rect.left + c1Rect.width <= c2Rect.left ||
-        c1Rect.left >= c2Rect.left + c2Rect.width
-    );
-}
 
 class Circle {
     constructor(color, dx, dy) {
@@ -116,8 +37,8 @@ class Circle {
         this.dx = dx || 0;
         this.dy = dy || 0;
 
-        this.width = 20;
-        this.height = 20;
+        this.width = 10; // 20
+        this.height = 10; // 20
 
         this.el = document.createElement("div");
 
@@ -197,7 +118,7 @@ class Circle {
 
             ball.#changeDirectionIfNecessary(x, y);
             ball.draw(x + ball.dx * 0.6, y + ball.dy * 0.4);
-        }, 1000 / 240);
+        }, 1000 / 1000);
     }
 }
 
@@ -221,6 +142,8 @@ function reloadAnimation() {
 playButton.addEventListener("click", () => {
     workBlock.el.style.display = "initial";
 
+    window.localStorage.setItem(__LOCALSTORAGE_LOGGED__, "");
+
     if (!circles.length) {
         circles = createCircles();
     }
@@ -230,6 +153,16 @@ playButton.addEventListener("click", () => {
 
 closeButton.addEventListener("click", () => {
     workBlock.el.style.display = "none";
+
+    const logged = window.localStorage.getItem(__LOCALSTORAGE_LOGGED__);
+    if (logged) {
+        asideUpper.replaceChildren();
+        JSON.parse(logged).forEach((l) => {
+            const li = document.createElement("li");
+            li.innerHTML = l;
+            asideUpper.appendChild(li);
+        });
+    }
 
     timeouts.forEach((t) => clearTimeout(t));
 });
@@ -250,6 +183,8 @@ startButton.addEventListener("click", () => {
         animBlock.el.replaceChildren();
         fastConsoleField.replaceChildren();
         footerBox.innerHTML = "0s";
+
+        _queue.length = 0;
 
         circles = createCircles();
 

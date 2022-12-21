@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="./dist/styles/index.css" />
 
     <script type="module" src="./src/index.js" defer></script>
+    <script type="module" src="./src/utils.js" defer></script>
+    <script type="module" src="./src/constants.js" defer></script>
 </head>
 
 <body>
@@ -17,11 +19,21 @@
     <label for="aside-folder"></label>
     <aside class="aside">
         <section class="aside__upper center--flex">
-            Click "Play" to begin.<br><br>After you clicked the button the work field should show up (if wasn't
-            displayed
-            before) as well as two circles of red and yellow colors. Then you click "Start" button and these circles
-            begin to bound from one wall to another (old DVD times...) until the collide after which allows you to reset
-            the animation field with "Reload" button and start the animation again.<br><br>Have fun.
+            <div class="aside__upper-container">
+                <ul class="aside__upper-wrapper">
+                    <li>
+                        Click "Play" to begin.<br><br>After you clicked the button the work field should show up (if
+                        wasn't
+                        displayed
+                        before) as well as two circles of red and yellow colors. Then you click "Start" button and these
+                        circles
+                        begin to bound from one wall to another (old DVD times...) until the collide, after which allows
+                        you
+                        to
+                        reset the animation field with "Reload" button and start the animation again.<br><br>Have fun.
+                    </li>
+                </ul>
+            </div>
         </section>
         <section class="aside__lower center--flex">
             <button class="play-btn">Play</button>
@@ -31,7 +43,7 @@
         <header>
             <nav class="nav">
                 <a href="" class="field-box center--flex">
-                    <span>Header logo sample</span>
+                    <span>Logo</span>
                 </a>
                 <div id="toggleableMenu">
                     <!-- 
@@ -47,7 +59,7 @@
 
                     <!-- Menu -->
                     <div class="nav__navbar">
-                        Just some text to fill up the space...
+                        Animation will run for 60 seconds after which it will stop.
                     </div>
                 </div>
             </nav>
