@@ -3,24 +3,24 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
+                test: /\.ts$/,
                 use: "ts-loader",
                 exclude: /node_modules/,
             },
         ],
     },
     resolve: {
-        extensions: [".tsx", ".ts", ".js"],
+        extensions: [".ts", ".js"],
     },
     output: {
         filename: "sql-httpvfs.js",
         library: {
-            type: "module", // output a JavaScript module
+            type: "module",
         },
-        module: true, // truly
+        module: true,
     },
     experiments: {
-        outputModule: true, // yes, we really want one
+        outputModule: true,
     },
     optimization: {
         minimize: true,
