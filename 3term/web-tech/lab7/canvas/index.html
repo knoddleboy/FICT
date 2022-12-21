@@ -87,6 +87,32 @@
             </div>
         </footer>
     </main>
+
+    <script type="module">
+        import { load } from "./dist/sql-httpvfs.js";
+        import { animBlock, circlesParams } from "./src/constants.js";
+
+        window.loadDB = load;
+        const db_worker = await loadDB("/public/db.sqlite3");
+
+        async function loadTexture() {
+            const assets = await db_worker.db.query("select * from assets");
+
+            const assetb64 = btoa(String.fromCharCode.apply(null, assets[0].content));
+            animBlock.setAttribute("style", `background-image: url(data:image/webp;base64,${assetb64})`);
+        }
+
+        async function loadCirclesParams() {
+            const circles = await db_worker.db.query("select * from circles");
+
+            circles.forEach(circle => {
+                circlesParams.push({ color: circle.color, size: circle.size });
+            });
+        }
+
+        loadTexture();
+        loadCirclesParams();
+    </script>
 </body>
 
 </html>

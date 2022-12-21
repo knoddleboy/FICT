@@ -18,3 +18,4 @@ export const workBlock = document.querySelector(".work");
 export const animBlock = document.querySelector(".anim");
 
 export const timeouts = [];
+export const circlesParams = [];

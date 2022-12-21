@@ -1,5 +1,5 @@
 import { outputConsole, _queue, randRng } from "./utils.js";
-import { ENUM__ROLES, timeouts, __LOCALSTORAGE_LOGGED__ } from "./constants.js";
+import { ENUM__ROLES, timeouts, __LOCALSTORAGE_LOGGED__, circlesParams } from "./constants.js";
 import {
     playButton,
     closeButton,
@@ -24,8 +24,6 @@ let playTimer;
 let playTimerValue;
 
 const circles = [];
-
-const circlesColors = ["red", "yellow"];
 
 class Circle {
     constructor(x, y, velX, velY, color, size = 20) {
@@ -121,13 +119,13 @@ function loop() {
     }
 }
 
-function createCircles(colors) {
+function createCircles(colorsParams) {
     const width = canvasBlock.width;
     const height = canvasBlock.height;
 
-    const size = 20;
+    // const size = 20;
 
-    colors.forEach((color) => {
+    colorsParams.forEach(({ color, size }) => {
         const circle = new Circle(
             randRng(0 + size, width - size),
             randRng(0 + size, height - size),
@@ -169,7 +167,7 @@ function resetParams() {
 
     headerBox.style.color = "black";
 
-    stopSignal = false;
+    stopSignal = true;
     circles.length = 0;
     _queue.length = 0;
 
@@ -190,7 +188,7 @@ playButton.addEventListener("click", () => {
     }
 
     if (!circles.length) {
-        createCircles(circlesColors);
+        createCircles(circlesParams);
     }
 
     window.localStorage.setItem(__LOCALSTORAGE_LOGGED__, "");
@@ -220,10 +218,12 @@ startButton.addEventListener("click", () => {
         return;
     }
 
+    stopSignal = false;
+
     // actual reload click
     if (startButton.innerHTML === "Reload") {
         resetParams();
-        createCircles(circlesColors);
+        createCircles(circlesParams);
 
         outputConsole("click: <b>reload</b> button");
         return;
