@@ -534,11 +534,6 @@ header {
         border: 5px solid green;
         background-image: url("../../../public/assets/texture.webp");
         position: relative;
-
-        canvas {
-            width: 100%;
-            height: 100%;
-        }
     }
 
     @media screen and (max-width: 767px) {
