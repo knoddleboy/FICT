@@ -93,7 +93,7 @@
         import { animBlock, circlesParams } from "./src/constants.js";
 
         window.loadDB = load;
-        const db_worker = await loadDB("/public/db.sqlite3");
+        const db_worker = await loadDB("/db/db.sqlite3");
 
         async function loadTexture() {
             const assets = await db_worker.db.query("select * from assets");
