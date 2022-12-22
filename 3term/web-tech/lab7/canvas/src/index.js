@@ -125,12 +125,12 @@ function createCircles(colorsParams) {
 
     // const size = 20;
 
-    colorsParams.forEach(({ color, size }) => {
+    colorsParams.forEach(({ color, size, velX, velY }) => {
         const circle = new Circle(
             randRng(0 + size, width - size),
             randRng(0 + size, height - size),
-            randRng(-8, 8) || 2,
-            randRng(-8, 8) || 2,
+            velX,
+            velY,
             color,
             size
         );

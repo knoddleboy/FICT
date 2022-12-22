@@ -103,10 +103,10 @@
         }
 
         async function loadCirclesParams() {
-            const circles = await db_worker.db.query("select * from circles");
+            const circles = await db_worker.db.query("select color, size, velX, velY from circles inner join vels on circles.id = vels.circle_id");
 
-            circles.forEach(circle => {
-                circlesParams.push({ color: circle.color, size: circle.size });
+            circles.forEach(({ color, size, velX, velY }) => {
+                circlesParams.push({ color, size, velX, velY });
             });
         }
 
