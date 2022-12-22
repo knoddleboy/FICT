@@ -18,8 +18,6 @@ export const canvasBlock = {
     height: null,
 };
 
-let stopSignal = false;
-
 let playTimer;
 let playTimerValue;
 
@@ -80,8 +78,6 @@ class Circle {
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
                 if (distance < this.size + circles[i].size) {
-                    stopSignal = true;
-
                     reloadAnimation();
                     clearInterval(playTimer);
 
@@ -95,6 +91,8 @@ class Circle {
 function loop() {
     canvasBlock.ctx.clearRect(0, 0, canvasBlock.width, canvasBlock.height);
 
+    console.log(1);
+
     for (let i = 0; i < circles.length; i++) {
         circles[i].draw();
         circles[i].update();
@@ -106,15 +104,13 @@ function loop() {
     }
 
     if (playTimerValue > 60) {
-        stopSignal = true;
-
         reloadAnimation();
         clearInterval(playTimer);
 
         outputConsole("animation <b>time out</b>");
     }
 
-    if (!stopSignal) {
+    if (circles.length) {
         requestAnimationFrame(loop);
     }
 }
@@ -167,7 +163,6 @@ function resetParams() {
 
     headerBox.style.color = "black";
 
-    stopSignal = true;
     circles.length = 0;
     _queue.length = 0;
 
@@ -217,8 +212,6 @@ startButton.addEventListener("click", () => {
         outputConsole("first create circles: click <b>play</b> button", ENUM__ROLES.WARN);
         return;
     }
-
-    stopSignal = false;
 
     // actual reload click
     if (startButton.innerHTML === "Reload") {
