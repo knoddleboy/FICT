@@ -35,3 +35,5 @@ export const animBlock = {
 };
 
 export const timeouts = [];
+
+export const circlesParams = [];

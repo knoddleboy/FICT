@@ -1,5 +1,5 @@
 import { isCollide, outputConsole, _queue } from "./utils.js";
-import { ENUM__ROLES, timeouts, __LOCALSTORAGE_LOGGED__ } from "./constants.js";
+import { ENUM__ROLES, timeouts, __LOCALSTORAGE_LOGGED__, circlesParams } from "./constants.js";
 import {
     playButton,
     closeButton,
@@ -13,13 +13,13 @@ import { workBlock, animBlock } from "./constants.js";
 let circles = [];
 
 class Circle {
-    constructor(color, dx, dy) {
+    constructor(color, size, dx, dy) {
         this.color = color;
         this.dx = dx || 0;
         this.dy = dy || 0;
 
-        this.width = 10; // 20
-        this.height = 10; // 20
+        this.width = size;
+        this.height = size;
 
         this.el = document.createElement("div");
 
@@ -76,6 +76,10 @@ class Circle {
     }
 
     draw(x, y) {
+        if (!circles.length) {
+            return;
+        }
+
         this.#moveTo(x, y);
 
         const ball = this;
@@ -106,13 +110,27 @@ class Circle {
 function createCircles() {
     const { width, height } = animBlock;
 
-    const c1 = new Circle("yellow", 4, 3);
-    const c2 = new Circle("red", 2, 6);
+    circlesParams.forEach(({ color, size, dx, dy }) => {
+        const c = new Circle(color, size, dx, dy);
+        c.placeRandomly(width, height);
 
-    c1.placeRandomly(width, height);
-    c2.placeRandomly(width, height);
+        circles.push(c);
+    });
+}
 
-    return [c1, c2];
+function resetParams() {
+    animBlock.el.replaceChildren();
+    fastConsoleField.replaceChildren();
+    headerBox.innerHTML = "0s";
+
+    startButton.innerHTML = "Start";
+    startButton.removeAttribute("disabled");
+
+    circles.length = 0;
+    _queue.length = 0;
+
+    timeouts.forEach((t) => clearTimeout(t));
+    clearInterval(playTimer);
 }
 
 function reloadAnimation() {
@@ -126,7 +144,7 @@ playButton.addEventListener("click", () => {
     window.localStorage.setItem(__LOCALSTORAGE_LOGGED__, "");
 
     if (!circles.length) {
-        circles = createCircles();
+        createCircles();
     }
 
     outputConsole("click: <b>play</b> button");
@@ -146,6 +164,8 @@ closeButton.addEventListener("click", () => {
     }
 
     timeouts.forEach((t) => clearTimeout(t));
+
+    resetParams();
 });
 
 let playTimer;
@@ -159,18 +179,10 @@ startButton.addEventListener("click", () => {
 
     // actual reload click
     if (startButton.innerHTML === "Reload") {
-        startButton.innerHTML = "Start";
-
-        animBlock.el.replaceChildren();
-        fastConsoleField.replaceChildren();
-        headerBox.innerHTML = "0s";
-
-        _queue.length = 0;
-
-        circles = createCircles();
+        resetParams();
+        createCircles();
 
         outputConsole("click: <b>reload</b> button");
-
         return;
     }
 
