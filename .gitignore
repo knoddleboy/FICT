@@ -107,12 +107,6 @@ cover/
 *.mo
 *.pot
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
 # Flask stuff:
 instance/
 .webassets-cache
@@ -220,7 +214,7 @@ Cargo.lock
 assets/
 .vscode
 *.dSYM/
-db/
+databases/
 
 # Reports
 *.doc[x]
