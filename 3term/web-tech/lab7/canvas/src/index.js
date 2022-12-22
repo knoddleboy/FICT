@@ -18,6 +18,8 @@ export const canvasBlock = {
     height: null,
 };
 
+let stopSignal = false;
+
 let playTimer;
 let playTimerValue;
 
@@ -81,6 +83,8 @@ class Circle {
                     reloadAnimation();
                     clearInterval(playTimer);
 
+                    stopSignal = true;
+
                     outputConsole(`<b>${this.color}</b> and <b>${circles[i].color}</b> collided`);
                 }
             }
@@ -90,8 +94,6 @@ class Circle {
 
 function loop() {
     canvasBlock.ctx.clearRect(0, 0, canvasBlock.width, canvasBlock.height);
-
-    console.log(1);
 
     for (let i = 0; i < circles.length; i++) {
         circles[i].draw();
@@ -110,7 +112,7 @@ function loop() {
         outputConsole("animation <b>time out</b>");
     }
 
-    if (circles.length) {
+    if (circles.length && !stopSignal) {
         requestAnimationFrame(loop);
     }
 }
@@ -221,6 +223,8 @@ startButton.addEventListener("click", () => {
         outputConsole("click: <b>reload</b> button");
         return;
     }
+
+    stopSignal = false;
 
     loop();
 
