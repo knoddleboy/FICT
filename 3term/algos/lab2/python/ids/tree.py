@@ -29,6 +29,9 @@ class NQueens:
         self.iter += 1
         self.last_node = deepcopy(node)
 
+        print("Last:")
+        node.board.print()
+
         if (node.is_solved()):
             NQLogger.info("** IDS Solved **")
 
@@ -40,6 +43,9 @@ class NQueens:
             print(f"  :- limit: {limit}\n")
 
             return True
+
+        for i in range(self.size + 2):
+            print('\033[1A', end='\x1b[2K')
 
         if node.depth < limit:
             NQLogger.info(f"#{self.iter}: Expand with {len(node.children)} child nodes")

@@ -28,6 +28,9 @@ class NQueens:
         while not opened.empty():
             top = opened.get()
 
+            print("Last:")
+            top.board.print()
+
             if top.is_solved():
                 NQLogger.info("** A* Solved **")
 
@@ -39,6 +42,9 @@ class NQueens:
 
                 self.info()
                 break
+
+            for i in range(self.size + 2):
+                print('\033[1A', end='\x1b[2K')
 
             closed.add(top.board)
 
