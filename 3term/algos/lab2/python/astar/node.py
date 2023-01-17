@@ -25,6 +25,7 @@ class Node:
             self.board.generate_board()
             self.children = [None] * (self.board.size * (self.board.size - 1))
 
+    # heuristics
     @property
     def cost(self):
         _g = self.depth

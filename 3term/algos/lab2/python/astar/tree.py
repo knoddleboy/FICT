@@ -22,6 +22,7 @@ class NQueens:
         opened: PriorityQueue[Node] = PriorityQueue()
         closed: set[Board] = set()
 
+        # put with heuristics
         opened.put(self.root)
         NQLogger.info("Put root into queue")
 
