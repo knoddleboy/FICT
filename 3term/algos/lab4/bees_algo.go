@@ -125,6 +125,7 @@ func dfs(v, color int, visited []bool, section *Section) {
 			continue
 		}
 
+		// 10 as a starting chromatic number
 		for j := 10; ; j++ {
 			section.coloring[i] = j
 
@@ -142,6 +143,7 @@ func dfs(v, color int, visited []bool, section *Section) {
 func (b *BeesAlgorithm) generateSections() {
 	for i := 0; i < Min(len(b.sections), b.graph.getNOVertices()); i++ {
 		visited := make([]bool, b.graph.getNOVertices())
+
 		section := &Section{
 			graph:      b.graph,
 			coloring:   make([]int, b.graph.getNOVertices()),
@@ -153,6 +155,13 @@ func (b *BeesAlgorithm) generateSections() {
 		section.colorsUsed = section.getNOColorsUsed()
 		b.sections[i] = section
 	}
+
+	avg := 0
+	for _, section := range b.sections {
+		avg += section.getNOColorsUsed()
+	}
+
+	fmt.Printf("Avarage chromatic number (DFS): %d\n", avg/len(b.sections))
 }
 
 func NewBeesAlgorithm() *BeesAlgorithm {
