@@ -13,11 +13,11 @@ class NQueens:
         self.last_node: Node
         self.root = Node(queens=queens, other=board if board else None)
 
-    def LDFS(self):
-        NQLogger.info("** LDFS Algorithm **")
+    def IDS(self):
+        NQLogger.info("** IDS Algorithm **")
 
         limit = 1
-        while not self._IDS(self.root, limit):
+        while not self._DLS(self.root, limit):
             limit += 1
 
         # print info
@@ -25,7 +25,7 @@ class NQueens:
 
         return True
 
-    def _IDS(self, node: Node, limit: int):
+    def _DLS(self, node: Node, limit: int):
         self.iter += 1
         self.last_node = deepcopy(node)
 
@@ -33,7 +33,7 @@ class NQueens:
         node.board.print()
 
         if (node.is_solved()):
-            NQLogger.info("** LDFS Solved **")
+            NQLogger.info("** IDS Solved **")
 
             print("Solved board:")
             node.board.print()
@@ -55,7 +55,7 @@ class NQueens:
             self.total_states += len(node.children)
 
             for i in range(len(node.children)):
-                if self._IDS(node.children[i], limit):
+                if self._DLS(node.children[i], limit):
                     self.memory_states += len(node.children)
                     return True
 

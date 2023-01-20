@@ -27,7 +27,6 @@ class Board:
         self.conf = self.conflict_number()
 
     def generate_board(self):
-        # populate with random Q placement
         for i in range(self.size):
             j = randint(0, self.size - 1)
             self.matrix[i][j] = 1
