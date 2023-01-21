@@ -20,7 +20,7 @@ func (s *Section) getNOColorsUsed() int {
 
 func (s *Section) isValidColoring() bool {
 	for i, color := range s.coloring {
-		connectedVertexes := s.graph.getConnectedVertices(i)
+		connectedVertexes := s.graph.getAdjacentVertices(i)
 
 		for _, v := range connectedVertexes {
 			if s.coloring[v] == color && color != 0 {
