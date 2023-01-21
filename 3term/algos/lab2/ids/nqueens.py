@@ -58,7 +58,7 @@ if __name__ == "__main__":
     @timelim(30 * 60, time_failure_callback)    # 30 min
     def __solve():
         with Timer():
-            NQ.LDFS()
+            NQ.IDS()
 
     __solve()
 
