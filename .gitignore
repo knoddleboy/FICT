@@ -220,3 +220,4 @@ databases/
 *.doc[x]
 *.pages
 *.pdf
+*.log
