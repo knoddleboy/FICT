@@ -139,7 +139,7 @@ func dfs(v, color int, visited []bool, section *Section) {
 			continue
 		}
 
-		// 10 as a starting chromatic number
+		// 10 as a starting color number
 		for j := 10; ; j++ {
 			section.coloring[i] = j
 
