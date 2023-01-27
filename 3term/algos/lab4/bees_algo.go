@@ -184,7 +184,7 @@ func NewBeesAlgorithm() *BeesAlgorithm {
 
 	return &BeesAlgorithm{
 		graph:    graph,
-		sections: make([]*Section, 100),
+		sections: make([]*Section, 6), // 6 as the best number of sections examined in lab5
 		foragers: FORAGERS,
 		scouts:   SCOUTS,
 	}
