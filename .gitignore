@@ -209,6 +209,9 @@ Cargo.lock
 # Ignore code-workspaces
 *.code-workspace
 
+# Node
+node_modules/
+
 # Other
 .metadata
 assets/
