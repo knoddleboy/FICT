@@ -18,3 +18,23 @@ export function add(num?: number) {
 
     return accum;
 }
+
+/**
+ * Задача 2. Напишіть функцію, яка бере два рядки і повертає true,
+ * якщо вони є анаграмами одне одного.
+ */
+
+export function areAnagrams(s1: string, s2: string): boolean {
+    // false, if strings are different sizes
+    if (s1.length !== s2.length) {
+        return false;
+    }
+
+    const lS1 = s1.toLowerCase();
+    const lS2 = s2.toLowerCase();
+
+    const sortedS1 = lS1.split("").sort().join("");
+    const sortedS2 = lS2.split("").sort().join("");
+
+    return sortedS1 === sortedS2;
+}
