@@ -38,3 +38,53 @@ export function areAnagrams(s1: string, s2: string): boolean {
 
     return sortedS1 === sortedS2;
 }
+
+/**
+ * Задача 3. Напишіть функцію, яка глибоко клонує об'єкт, переданий їй параметром.
+ */
+
+export function deepClone<T extends Record<string, any>>(obj: T): T {
+    if (obj === null || typeof obj !== "object") {
+        return obj;
+    }
+
+    // in case an object's value is an array
+    if (Array.isArray(obj)) {
+        return obj.map((item) => deepClone(item)) as unknown as T;
+    }
+
+    const clone = {} as T;
+    for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            const value = obj[key];
+            clone[key] = deepClone(value);
+        }
+    }
+
+    return clone;
+}
+
+/**
+ * Задача 4. Напишіть функцію-обгортку, яка кешуватиме результат будь-якої
+ * іншої функції з довільною кількістю параметрів.
+ */
+
+type Fn<T> = (...args: any[]) => T;
+
+export function cacheWrapper<T>(fn: Fn<T>): Fn<T> {
+    const cache = new Map<string, T>();
+
+    return function (...args: any[]): T {
+        const cachedArgs = JSON.stringify(args);
+
+        // if exists, return cached result for args
+        if (cache.has(cachedArgs)) {
+            return cache.get(cachedArgs)!;
+        }
+
+        const result = fn(...args);
+        cache.set(cachedArgs, result); // save result for provided args
+
+        return result;
+    };
+}
