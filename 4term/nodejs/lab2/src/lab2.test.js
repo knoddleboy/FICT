@@ -1,5 +1,4 @@
-// @ts-nocheck
-import { add, areAnagrams } from "./lab2";
+import { add, areAnagrams, deepClone, cacheWrapper } from "./lab2";
 
 describe("add", () => {
     it("should return a function", () => {
@@ -84,7 +83,7 @@ describe("cacheWrapper", () => {
     });
 
     it("handles functions with different arguments", () => {
-        const concat = jest.fn((...args: string[]) => args.join(""));
+        const concat = jest.fn((...args) => args.join(""));
         const cachedConcat = cacheWrapper(concat);
 
         expect(cachedConcat("a", "b", "c")).toEqual("abc");

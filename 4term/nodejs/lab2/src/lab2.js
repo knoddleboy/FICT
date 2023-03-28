@@ -4,16 +4,16 @@
  * console.log(add(2)(5)(7)(1)(6)(5)(11)()); // 37
  */
 
-export function add(num?: number) {
+export function add(num) {
     let sum = num ?? 0;
 
-    function accum(next?: number) {
+    function accum(next) {
         if (next) {
             sum += next;
             return accum;
         }
 
-        return sum as number & (() => number);
+        return sum;
     }
 
     return accum;
@@ -24,7 +24,7 @@ export function add(num?: number) {
  * якщо вони є анаграмами одне одного.
  */
 
-export function areAnagrams(s1: string, s2: string): boolean {
+export function areAnagrams(s1, s2) {
     // false, if strings are different sizes
     if (s1.length !== s2.length) {
         return false;
@@ -43,17 +43,17 @@ export function areAnagrams(s1: string, s2: string): boolean {
  * Задача 3. Напишіть функцію, яка глибоко клонує об'єкт, переданий їй параметром.
  */
 
-export function deepClone<T extends Record<string, any>>(obj: T): T {
+export function deepClone(obj) {
     if (obj === null || typeof obj !== "object") {
         return obj;
     }
 
     // in case an object's value is an array
     if (Array.isArray(obj)) {
-        return obj.map((item) => deepClone(item)) as unknown as T;
+        return obj.map((item) => deepClone(item));
     }
 
-    const clone = {} as T;
+    const clone = {};
     for (const key in obj) {
         if (Object.prototype.hasOwnProperty.call(obj, key)) {
             const value = obj[key];
@@ -69,17 +69,15 @@ export function deepClone<T extends Record<string, any>>(obj: T): T {
  * іншої функції з довільною кількістю параметрів.
  */
 
-type Fn<T> = (...args: any[]) => T;
+export function cacheWrapper(fn) {
+    const cache = new Map();
 
-export function cacheWrapper<T>(fn: Fn<T>): Fn<T> {
-    const cache = new Map<string, T>();
-
-    return function (...args: any[]): T {
+    return function (...args) {
         const cachedArgs = JSON.stringify(args);
 
         // if exists, return cached result for args
         if (cache.has(cachedArgs)) {
-            return cache.get(cachedArgs)!;
+            return cache.get(cachedArgs);
         }
 
         const result = fn(...args);
