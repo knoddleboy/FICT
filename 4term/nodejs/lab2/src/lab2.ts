@@ -68,3 +68,23 @@ export function deepClone<T extends Record<string, any>>(obj: T): T {
  * Задача 4. Напишіть функцію-обгортку, яка кешуватиме результат будь-якої
  * іншої функції з довільною кількістю параметрів.
  */
+
+type Fn<T> = (...args: any[]) => T;
+
+export function cacheWrapper<T>(fn: Fn<T>): Fn<T> {
+    const cache = new Map<string, T>();
+
+    return function (...args: any[]): T {
+        const cachedArgs = JSON.stringify(args);
+
+        // if exists, return cached result for args
+        if (cache.has(cachedArgs)) {
+            return cache.get(cachedArgs)!;
+        }
+
+        const result = fn(...args);
+        cache.set(cachedArgs, result); // save result for provided args
+
+        return result;
+    };
+}

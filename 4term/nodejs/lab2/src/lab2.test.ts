@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { add, areAnagrams, deepClone } from "./lab2";
+import { add, areAnagrams, deepClone, cacheWrapper } from "./lab2";
 
 describe("add", () => {
     it("should return a function", () => {
@@ -62,5 +62,54 @@ describe("deepClone", () => {
         expect(clone.a).not.toBe(obj.a);
         expect(clone.b).not.toBe(obj.b);
         expect(clone.b[0]).not.toBe(obj.b[0]);
+    });
+});
+
+describe("cacheWrapper", () => {
+    it("caches the result of the function", () => {
+        const calc = jest.fn().mockReturnValue(7);
+        const cachedCalc = cacheWrapper(calc);
+
+        expect(cachedCalc(2, 2, 3)).toEqual(7);
+        expect(calc).toHaveBeenCalledTimes(1);
+
+        expect(cachedCalc(2, 2, 3)).toEqual(7);
+        expect(calc).toHaveBeenCalledTimes(1);
+
+        expect(cachedCalc(5, 8, 1)).toEqual(7);
+        expect(calc).toHaveBeenCalledTimes(2);
+
+        expect(cachedCalc(5, 8, 1)).toEqual(7);
+        expect(calc).toHaveBeenCalledTimes(2);
+    });
+
+    it("handles functions with different arguments", () => {
+        const concat = jest.fn((...args: string[]) => args.join(""));
+        const cachedConcat = cacheWrapper(concat);
+
+        expect(cachedConcat("a", "b", "c")).toEqual("abc");
+        expect(concat).toHaveBeenCalledTimes(1);
+
+        expect(cachedConcat("a", "b", "c")).toEqual("abc");
+        expect(concat).toHaveBeenCalledTimes(1);
+
+        expect(cachedConcat("d", "e")).toEqual("de");
+        expect(concat).toHaveBeenCalledTimes(2);
+
+        expect(cachedConcat("d", "e")).toEqual("de");
+        expect(concat).toHaveBeenCalledTimes(2);
+    });
+
+    it("handles functions with no arguments", () => {
+        const getTimestamp = jest.fn(() => Date.now());
+        const cachedTimestamp = cacheWrapper(getTimestamp);
+
+        const firstTimestamp = cachedTimestamp();
+        expect(firstTimestamp).toBeGreaterThan(0);
+        expect(getTimestamp).toHaveBeenCalledTimes(1);
+
+        const secondTimestamp = cachedTimestamp();
+        expect(secondTimestamp).toEqual(firstTimestamp);
+        expect(getTimestamp).toHaveBeenCalledTimes(1);
     });
 });
