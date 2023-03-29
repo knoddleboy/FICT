@@ -69,12 +69,12 @@ export function deepClone<T>(obj: T): T {
  * іншої функції з довільною кількістю параметрів.
  */
 
-type Fn<T> = (...args: any[]) => T;
+type Fn<T> = (...args: number[]) => T;
 
 export function cacheWrapper<T>(fn: Fn<T>): Fn<T> {
     const cache = new Map<string, T>();
 
-    return function (...args: any[]): T {
+    return function (...args: Parameters<Fn<T>>): T {
         const cachedArgs = JSON.stringify(args);
 
         // if exists, return cached result for args

@@ -82,23 +82,6 @@ describe("cacheWrapper", () => {
         expect(calc).toHaveBeenCalledTimes(2);
     });
 
-    it("handles functions with different arguments", () => {
-        const concat = jest.fn((...args: string[]) => args.join(""));
-        const cachedConcat = cacheWrapper(concat);
-
-        expect(cachedConcat("a", "b", "c")).toEqual("abc");
-        expect(concat).toHaveBeenCalledTimes(1);
-
-        expect(cachedConcat("a", "b", "c")).toEqual("abc");
-        expect(concat).toHaveBeenCalledTimes(1);
-
-        expect(cachedConcat("d", "e")).toEqual("de");
-        expect(concat).toHaveBeenCalledTimes(2);
-
-        expect(cachedConcat("d", "e")).toEqual("de");
-        expect(concat).toHaveBeenCalledTimes(2);
-    });
-
     it("handles functions with no arguments", () => {
         const getTimestamp = jest.fn(() => Date.now());
         const cachedTimestamp = cacheWrapper(getTimestamp);
