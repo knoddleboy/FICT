@@ -1,1 +1,1 @@
-## 🗑 University labs and other related projects
+## 🛒 University related stuff
