@@ -1,0 +1,384 @@
+openapi: 3.0.0
+
+info:
+    title: Text Editor API - Swagger
+    version: 1.0.0
+
+paths:
+    /users:
+        get:
+            summary: Get all users
+            responses:
+                200:
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/User"
+        post:
+            summary: Create a new user
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/NewUser"
+            responses:
+                201:
+                    description: User created successfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/User"
+                400:
+                    description: Invalid input data
+                409:
+                    description: User already exists
+
+    /users/{user_id}:
+        parameters:
+            - name: userId
+              in: path
+              description: ID of the user to get or update
+              required: true
+              schema:
+                  type: integer
+        get:
+            summary: Get a user by ID
+            responses:
+                200:
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/User"
+        put:
+            summary: Update a user by ID
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UpdateUser"
+            responses:
+                200:
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/User"
+        delete:
+            summary: Delete a user by ID
+            responses:
+                204:
+                    description: No Content
+
+    /documents:
+        get:
+            summary: Retrieve all documents
+            description: Retrieve a list of all documents.
+            responses:
+                200:
+                    description: A list of documents.
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Document"
+        post:
+            summary: Create a new document
+            description: Create a new document with the specified parameters.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentCreate"
+            responses:
+                201:
+                    description: The created document.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Document"
+                400:
+                    description: Invalid input.
+
+    /documents/{document_id}:
+        get:
+            summary: Retrieve a document by ID
+            description: Retrieve a document by ID.
+            parameters:
+                - name: document_id
+                  in: path
+                  description: ID of the document to retrieve.
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    description: The specified document.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Document"
+                404:
+                    description: Document not found.
+        patch:
+            summary: Update a document
+            description: Update the specified document.
+            parameters:
+                - name: document_id
+                  in: path
+                  description: ID of the document to update.
+                  required: true
+                  schema:
+                      type: integer
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentUpdate"
+            responses:
+                200:
+                    description: The updated document.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Document"
+                404:
+                    description: Document not found.
+        delete:
+            summary: Delete a document
+            description: Delete the specified document.
+            parameters:
+                - name: document_id
+                  in: path
+                  description: ID of the document to delete.
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                204:
+                    description: Document deleted successfully.
+                404:
+                    description: Document not found.
+
+    /documents/{document_id}/collaborators:
+        get:
+            summary: Get list of collaborators for a document
+            description: Returns a list of collaborators for a document
+            parameters:
+                - in: path
+                  name: document_id
+                  schema:
+                      type: string
+                  required: true
+                  description: ID of the document
+            responses:
+                200:
+                    description: A list of collaborators for the specified document
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Collaborator"
+                404:
+                    description: The specified document does not exist
+        post:
+            summary: Add a collaborator to a document
+            description: Adds a collaborator to a document
+            parameters:
+                - in: path
+                  name: document_id
+                  schema:
+                      type: string
+                  required: true
+                  description: ID of the document
+                - in: body
+                  name: collaborator
+                  schema:
+                      $ref: "#/components/schemas/Collaborator"
+                  required: true
+                  description: Collaborator to be added
+            responses:
+                200:
+                    description: The collaborator was added successfully
+                400:
+                    description: The request body was invalid
+                404:
+                    description: The specified document does not exist
+
+    /documents/{document_id}/collaborators/{collaborator_id}:
+        delete:
+            summary: Remove a collaborator from a document
+            description: Removes a collaborator from a document
+            parameters:
+                - in: path
+                  name: document_id
+                  schema:
+                      type: string
+                  required: true
+                  description: ID of the document
+                - in: path
+                  name: collaborator_id
+                  schema:
+                      type: string
+                  required: true
+                  description: ID of the collaborator to be removed
+            responses:
+                200:
+                    description: The collaborator was removed successfully
+                404:
+                    description: The specified document or collaborator does not exist
+
+    /auth/login:
+        post:
+            summary: Login to the application
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserLogin"
+            responses:
+                200:
+                    description: User logged in successfully
+                400:
+                    description: Invalid input data
+                401:
+                    description: Unauthorized access
+
+    /auth/logout:
+        post:
+            summary: Logs out a user
+            operationId: logoutUser
+            responses:
+                204:
+                    description: User logged out successfully
+                401:
+                    description: User is not logged in
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserNotLogged"
+
+components:
+    schemas:
+        User:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                username:
+                    type: string
+                email:
+                    type: string
+            required:
+                - id
+                - username
+                - email
+
+        NewUser:
+            type: object
+            properties:
+                username:
+                    type: string
+                email:
+                    type: string
+                password:
+                    type: string
+            required:
+                - username
+                - email
+                - password
+
+        UpdateUser:
+            type: object
+            properties:
+                username:
+                    type: string
+                email:
+                    type: string
+            required:
+                - username
+                - email
+
+        Document:
+            type: object
+            properties:
+                id:
+                    type: integer
+                title:
+                    type: string
+                content:
+                    type: string
+                created_at:
+                    type: string
+                    format: date-time
+                updated_at:
+                    type: string
+                    format: date-time
+            required:
+                - title
+                - content
+
+        DocumentCreate:
+            type: object
+            properties:
+                title:
+                    type: string
+                content:
+                    type: string
+            required:
+                - title
+                - content
+
+        DocumentUpdate:
+            type: object
+            properties:
+                title:
+                    type: string
+                content:
+                    type: string
+            required:
+                - title
+                - content
+
+        Collaborator:
+            type: object
+            required:
+                - id
+                - name
+            properties:
+                id:
+                    type: string
+                    description: ID of the collaborator
+                name:
+                    type: string
+                    description: Name of the collaborator
+
+        UserLogin:
+            type: object
+            properties:
+                email:
+                    type: string
+                    format: email
+                password:
+                    type: string
+                    format: password
+            required:
+                - email
+                - password
+
+        UserNotLogged:
+            type: object
+            properties:
+                error:
+                    type: string
