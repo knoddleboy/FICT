@@ -53,6 +53,16 @@ import * as fs from "fs";
 import * as path from "path";
 import * as https from "https";
 
+/**
+ * @example
+ * ```ts
+ *  const jsonFilePath = process.argv[2];
+ *  const downloader = new HTMLPageDownloader(jsonFilePath);
+ *  downloader.downloadPages().catch(error => {
+ *      console.error(`Error downloading pages: ${error}`);
+ *  });
+ * ```
+ */
 export class HTMLPageDownloader {
     private links: string[];
     private folderName: string;
