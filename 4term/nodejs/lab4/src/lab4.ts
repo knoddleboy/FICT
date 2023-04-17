@@ -18,3 +18,24 @@ export async function runSequent<T, R>(
 
     return results;
 }
+
+/**
+ * Задача 2. Напишіть функцію, яка приймає будь-який тип масиву та правило
+ * для видалення елементів масиву. Функція змінює переданий масив, а усі
+ * видалені елементи функція повертає окремим масивом такого ж типу. Усі
+ * типи мають застосовуватися автоматично (функція шаблону).
+ */
+
+export function arrayChangeDelete<T>(array: T[], predicate: (item: T) => boolean): T[] {
+    const deletedElems: T[] = [];
+
+    for (let i = 0; i < array.length; i++) {
+        if (predicate(array[i])) {
+            const deleted = array.splice(i, 1)[0];
+            deletedElems.push(deleted);
+            i--; // decrement since original array is modified
+        }
+    }
+
+    return deletedElems;
+}
