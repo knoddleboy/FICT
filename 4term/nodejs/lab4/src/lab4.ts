@@ -99,3 +99,110 @@ export class HTMLPageDownloader {
         });
     }
 }
+
+/**
+ * Задача 4. Напишіть скрипт, який отримує з командного рядка числовий параметр – частоту в секундах.
+ * Скрипт має виводити на кожному тику (визначеному частотою) наступну системну інформацію:
+ *  - operating system;
+ *  - architecture;
+ *  - current user name;
+ *  - cpu cores models;
+ *  - cpu temperature;
+ *  - graphic controllers vendors and models;
+ *  - total memory, used memory, free memory в GB;
+ *  - дані про батарею (charging, percent, remaining time).
+ */
+
+import * as os from "os";
+import * as si from "systeminformation";
+
+/**
+ * @example
+ * ```ts
+ *  const frequencyInSeconds = parseInt(process.argv[2]);
+ *  const systemInformation = new SystemInformation(frequencyInSeconds);
+ *  systemInformation.start();
+ * ```
+ */
+export class SystemInformation {
+    private frequencyInSeconds: number;
+    private interval: NodeJS.Timeout | undefined;
+
+    constructor(frequencyInSeconds: number) {
+        this.frequencyInSeconds = frequencyInSeconds;
+    }
+
+    public start() {
+        this.interval = setInterval(async () => {
+            const osType = os.type();
+            const osArch = os.arch();
+            const userName = os.userInfo().username;
+            const cpuInfo = await si.cpu();
+            const cpuTemp = await si.cpuTemperature();
+            const graphicsInfo = await si.graphics();
+            const memInfo = await si.mem();
+            const batteryInfo = await si.battery();
+
+            console.clear();
+
+            console.log(`Operating System:\t${osType} (${osArch})`);
+            console.log(`User Name:\t\t${userName}\n`);
+
+            console.log(`CPU Info:`);
+            console.log(` - Manufacturer:\t${cpuInfo.manufacturer}`);
+            console.log(` - Brand:\t\t${cpuInfo.brand}`);
+            console.log(
+                ` - Cores:\t\t${cpuInfo.physicalCores} physical / ${cpuInfo.cores} logical`
+            );
+            console.log(
+                ` - Clock Speed:\t\t${cpuInfo.speedMax} GHz (max) / ${cpuInfo.speed} GHz (current)`
+            );
+            console.log(` - Temperature:\t\t${cpuTemp.main}°C\n`);
+
+            console.log(`Graphics Info:`);
+            graphicsInfo.controllers.forEach((controller, idx) => {
+                console.log(` - Controller ${idx + 1}:`);
+                console.log(`    - Vendor:\t\t${controller.vendor}`);
+                console.log(`    - Model:\t\t${controller.model}\n`);
+            });
+
+            console.log(`Memory Info:`);
+            console.log(` - Total Memory:\t${this.toGB(memInfo.total)} GB`);
+            console.log(` - Used Memory:\t\t${this.toGB(memInfo.used)} GB`);
+            console.log(` - Free Memory:\t\t${this.toGB(memInfo.free)} GB\n`);
+
+            console.log(`Battery Info:`);
+            console.log(` - Charging:\t\t${batteryInfo.isCharging ? "Yes" : "No"}`);
+            console.log(` - Percentage:\t\t${batteryInfo.percent}%`);
+            console.log(
+                ` - Remaining Time:\t${
+                    batteryInfo.timeRemaining ? this.formatTime(batteryInfo.timeRemaining) : "N/A"
+                }\n`
+            );
+        }, this.frequencyInSeconds * 1000);
+
+        process.on("SIGINT", () => {
+            this.stop();
+        });
+    }
+
+    public stop() {
+        clearInterval(this.interval);
+        process.exit(0);
+    }
+
+    private toGB(b: number): string {
+        return (b / 1024 ** 3).toFixed(2);
+    }
+
+    private formatTime(seconds: number): string {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const remainingSeconds = seconds % 60;
+        return `${hours}:${this.padZeroes(minutes)}:${this.padZeroes(remainingSeconds)}`;
+    }
+
+    private padZeroes(num: number): string {
+        return num < 10 ? `0${num}` : `${num}`;
+    }
+}
