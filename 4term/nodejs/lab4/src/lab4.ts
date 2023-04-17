@@ -216,3 +216,30 @@ export class SystemInformation {
         return num < 10 ? `0${num}` : `${num}`;
     }
 }
+
+/**
+ * Задача 5. Напишіть власну реалізацію класу EventEmitter (Publisher/Subscriber),
+ * який поводитиметься так:
+ *  const emitter = new MyEventEmitter();
+ *  emitter.registerHandler('userUpdated', () => console.log('Обліковий запис користувача оновлено'));
+ *  emitter.emitEvent('userUpdated'); // Обліковий запис користувача оновлено
+ */
+
+type Handler = () => void;
+
+export class MyEventEmitter {
+    private handlers: Map<string, Handler[]> = new Map();
+
+    registerHandler(eventName: string, handler: Handler) {
+        const handlers = this.handlers.get(eventName) || [];
+        handlers.push(handler);
+        this.handlers.set(eventName, handlers);
+    }
+
+    emitEvent(eventName: string) {
+        const handlers = this.handlers.get(eventName);
+        if (handlers) {
+            handlers.forEach((handler) => handler());
+        }
+    }
+}

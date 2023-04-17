@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { runSequent, arrayChangeDelete, HTMLPageDownloader } from "./lab4";
+import { runSequent, arrayChangeDelete, HTMLPageDownloader, MyEventEmitter } from "./lab4";
 
 // task 1
 describe("runSequent", () => {
@@ -93,5 +93,58 @@ describe("HTMLPageDownloader", () => {
                 expect(fileContent).toMatch(/<title>Example Domain<\/title>/i);
             }
         });
+    });
+});
+
+// task 5
+describe("MyEventEmitter", () => {
+    let emitter: MyEventEmitter;
+
+    beforeEach(() => {
+        emitter = new MyEventEmitter();
+    });
+
+    it("should register and emit a single handler", () => {
+        const handler = jest.fn();
+        emitter.registerHandler("userUpdated", handler);
+        emitter.emitEvent("userUpdated");
+        expect(handler).toHaveBeenCalledTimes(1);
+    });
+
+    it("should register and emit multiple handlers", () => {
+        const handler1 = jest.fn();
+        const handler2 = jest.fn();
+        const handler3 = jest.fn();
+        emitter.registerHandler("userUpdated", handler1);
+        emitter.registerHandler("userUpdated", handler2);
+        emitter.registerHandler("orderPlaced", handler3);
+        emitter.emitEvent("userUpdated");
+        expect(handler1).toHaveBeenCalledTimes(1);
+        expect(handler2).toHaveBeenCalledTimes(1);
+        expect(handler3).toHaveBeenCalledTimes(0);
+    });
+
+    it("should not emit for unregistered event", () => {
+        const handler = jest.fn();
+        emitter.registerHandler("userUpdated", handler);
+        emitter.emitEvent("orderPlaced");
+        expect(handler).toHaveBeenCalledTimes(0);
+    });
+
+    it("should register and emit multiple events", () => {
+        const handler1 = jest.fn();
+        const handler2 = jest.fn();
+        const handler3 = jest.fn();
+        emitter.registerHandler("userUpdated", handler1);
+        emitter.registerHandler("orderPlaced", handler2);
+        emitter.registerHandler("orderPlaced", handler3);
+        emitter.emitEvent("userUpdated");
+        expect(handler1).toHaveBeenCalledTimes(1);
+        expect(handler2).toHaveBeenCalledTimes(0);
+        expect(handler3).toHaveBeenCalledTimes(0);
+        emitter.emitEvent("orderPlaced");
+        expect(handler1).toHaveBeenCalledTimes(1);
+        expect(handler2).toHaveBeenCalledTimes(1);
+        expect(handler3).toHaveBeenCalledTimes(1);
     });
 });
