@@ -1,5 +1,8 @@
-import { runSequent, arrayChangeDelete } from "./lab4";
+import * as fs from "fs";
+import * as path from "path";
+import { runSequent, arrayChangeDelete, HTMLPageDownloader } from "./lab4";
 
+// task 1
 describe("runSequent", () => {
     it("should return an empty array when given an empty array", async () => {
         const result = await runSequent([], async () => {});
@@ -26,6 +29,7 @@ describe("runSequent", () => {
     });
 });
 
+// task 2
 describe("arrayChangeDelete", () => {
     it("should remove even numbers from an array of numbers", () => {
         const array = [1, 2, 3, 6, 7, 9];
@@ -47,5 +51,47 @@ describe("arrayChangeDelete", () => {
 
         expect(array).toEqual(expectedArray);
         expect(deletedElements).toEqual(expectedDeletedElements);
+    });
+});
+
+// task 3
+const jsonFilePath = path.join(__dirname, "links.json");
+const expectedFolderName = "links_pages";
+const expectedFileNames = ["page_0.html", "page_1.html", "page_2.html"];
+
+describe("HTMLPageDownloader", () => {
+    let downloader: HTMLPageDownloader;
+
+    beforeEach(() => {
+        // Create a new instance of the downloader for each test
+        downloader = new HTMLPageDownloader(jsonFilePath);
+    });
+
+    afterEach(() => {
+        // Remove the test directory after each test
+        fs.rmdirSync(expectedFolderName, { recursive: true });
+    });
+
+    describe("constructor", () => {
+        it("should create the output directory", () => {
+            expect(fs.existsSync(expectedFolderName)).toBe(true);
+        });
+    });
+
+    describe("downloadPages", () => {
+        it("should download all pages and save them to files", async () => {
+            await downloader.downloadPages();
+
+            // Check that the files were created with the correct names and content
+            for (let i = 0; i < expectedFileNames.length; i++) {
+                const fileName = expectedFileNames[i];
+                const filePath = path.join(expectedFolderName, fileName);
+                expect(fs.existsSync(filePath)).toBe(true);
+
+                const fileContent = fs.readFileSync(filePath, "utf-8");
+                expect(fileContent).toMatch(/^<!doctype html>/i);
+                expect(fileContent).toMatch(/<title>Example Domain<\/title>/i);
+            }
+        });
     });
 });
