@@ -1,0 +1,15 @@
+{
+    "name": "lab6",
+    "version": "1.0.0",
+    "main": "src/lab6.ts",
+    "scripts": {
+        "start": "tsc && node dist/lab6.js"
+    },
+    "devDependencies": {
+        "@types/pg": "^8.6.6",
+        "typescript": "^5.0.2"
+    },
+    "dependencies": {
+        "pg": "^8.10.0"
+    }
+}
