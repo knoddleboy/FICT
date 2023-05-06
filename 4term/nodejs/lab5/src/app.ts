@@ -56,6 +56,20 @@ app.put("/users/:id", (req: Request<{ id: string }, {}, Omit<User, "id">>, res) 
     const id = parseInt(req.params.id);
     const { username, name } = req.body;
 
+    // Check if username is valid
+    if (!username || !/^[a-zA-Z0-9_]+$/.test(username)) {
+        res.status(400).json({
+            error: "Invalid username. Username can only contain letters, numbers and underscores",
+        });
+        return;
+    }
+
+    // Check if name is valid
+    if (!name || !/^[a-zA-Z ]+$/.test(name)) {
+        res.status(400).json({ error: "Invalid name. Name can only contain letters and spaces" });
+        return;
+    }
+
     const result = userDb.updateUser(id, username, name);
 
     if (result) {
