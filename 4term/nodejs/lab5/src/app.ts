@@ -24,7 +24,7 @@ app.post("/users", (req: Request<{}, {}, Omit<User, "id">>, res) => {
     const { username, name } = req.body;
 
     if (!username) {
-        res.status(400).send("Username is required");
+        res.status(400).json({ error: "Username is required" });
         return;
     }
 
@@ -39,7 +39,7 @@ app.get("/users/:id", (req, res) => {
     const user = userDb.getUserById(id);
 
     if (!user) {
-        res.status(404).send("User not found");
+        res.status(404).json({ error: "User not found" });
         return;
     }
 
@@ -59,9 +59,9 @@ app.put("/users/:id", (req: Request<{ id: string }, {}, Omit<User, "id">>, res) 
     const result = userDb.updateUser(id, username, name);
 
     if (result) {
-        res.status(201).send("User successfully updated");
+        res.status(201).json({ message: "User successfully updated" });
     } else {
-        res.status(400).send("User not found");
+        res.status(400).json({ error: "User not found" });
     }
 });
 
@@ -72,9 +72,9 @@ app.delete("/users/:id", (req, res) => {
     const result = userDb.deleteUser(id);
 
     if (result) {
-        res.status(201).send("User successfully deleted");
+        res.status(201).json({ message: "User successfully deleted" });
     } else {
-        res.status(400).send("User not found");
+        res.status(400).json({ error: "User not found" });
     }
 });
 
