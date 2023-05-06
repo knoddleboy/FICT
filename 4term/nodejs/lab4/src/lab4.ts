@@ -49,7 +49,7 @@ export function arrayChangeDelete<T>(array: T[], predicate: (item: T) => boolean
  * (list.json) прикріплений до цього практичного завдання нижче.
  */
 
-import * as fs from "fs";
+import * as fs from "fs/promises";
 import * as path from "path";
 import * as https from "https";
 
@@ -65,18 +65,30 @@ import * as https from "https";
  */
 export class HTMLPageDownloader {
     private links: string[];
-    private folderName: string;
+    private folderName?: string;
 
     constructor(jsonFilePath: string) {
-        const jsonFileContents = fs.readFileSync(jsonFilePath, "utf-8");
-        this.links = JSON.parse(jsonFileContents);
+        this.links = [];
 
-        // create folder `<JSON_filename>_pages`
-        this.folderName = path.basename(jsonFilePath, path.extname(jsonFilePath)) + "_pages";
-        fs.mkdirSync(this.folderName);
+        fs.readFile(jsonFilePath, "utf-8")
+            .then((jsonFileContents) => {
+                this.links = JSON.parse(jsonFileContents);
+
+                // create folder `<JSON_filename>_pages`
+                this.folderName =
+                    path.basename(jsonFilePath, path.extname(jsonFilePath)) + "_pages";
+                return fs.mkdir(this.folderName);
+            })
+            .catch((err) => {
+                console.error(`Error reading ${jsonFilePath}: ${err}`);
+            });
     }
 
     public async downloadPages(): Promise<void> {
+        if (!this.folderName) {
+            throw new Error("Folder name not initialized");
+        }
+
         for (let i = 0; i < this.links.length; i++) {
             const link = this.links[i];
             const fileName = path.join(this.folderName, `page_${i}.html`);
@@ -86,27 +98,23 @@ export class HTMLPageDownloader {
     }
 
     private async downloadAndSavePage(link: string, fileName: string): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            https
-                .get(link, (res) => {
-                    let data = "";
+        try {
+            const response = https.get(link);
+            let data = "";
 
-                    res.on("data", (chunk) => {
-                        data += chunk;
-                    });
+            response.on("data", (chunk) => {
+                data += chunk;
+            });
 
-                    res.on("end", () => {
-                        // Save the HTML content to the file
-                        fs.writeFileSync(fileName, data);
-                        console.log(`Saved ${link} to ${fileName}`);
-                        resolve();
-                    });
-                })
-                .on("error", (err) => {
-                    console.error(`Error getting ${link}: ${err}`);
-                    reject(err);
-                });
-        });
+            response.on("end", async () => {
+                // Save the HTML content to the file
+                await fs.writeFile(fileName, data);
+                console.log(`Saved ${link} to ${fileName}`);
+            });
+        } catch (err) {
+            console.error(`Error getting ${link}: ${err}`);
+            throw err;
+        }
     }
 }
 
