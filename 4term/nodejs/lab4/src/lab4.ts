@@ -155,11 +155,14 @@ export class SystemInformation {
             const osType = os.type();
             const osArch = os.arch();
             const userName = os.userInfo().username;
-            const cpuInfo = await si.cpu();
-            const cpuTemp = await si.cpuTemperature();
-            const graphicsInfo = await si.graphics();
-            const memInfo = await si.mem();
-            const batteryInfo = await si.battery();
+
+            const [cpuInfo, cpuTemp, graphicsInfo, memInfo, batteryInfo] = await Promise.all([
+                si.cpu(),
+                si.cpuTemperature(),
+                si.graphics(),
+                si.mem(),
+                si.battery(),
+            ]);
 
             console.clear();
 
