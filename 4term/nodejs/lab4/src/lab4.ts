@@ -11,10 +11,10 @@ export async function runSequent<T, R>(
 ): Promise<R[]> {
     const results: R[] = [];
 
-    array.forEach(async (elem, idx) => {
+    for (const [idx, elem] of array.entries()) {
         const result = await callback(elem, idx);
         results.push(result);
-    });
+    }
 
     return results;
 }
