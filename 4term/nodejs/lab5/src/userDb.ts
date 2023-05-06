@@ -20,14 +20,16 @@ export class UserDatabase {
         return this.users;
     }
 
-    updateUser(id: number, username: string, name?: string) {
+    updateUser(id: number, username?: string, name?: string) {
         const userIndex = this.users.findIndex((user) => user.id === id);
 
         if (userIndex !== -1) {
             return false;
         }
 
-        this.users[userIndex] = { id, username, name };
+        const prevUsername = this.users[userIndex].username;
+
+        this.users[userIndex] = { id, username: username || prevUsername, name };
         return true;
     }
 

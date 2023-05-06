@@ -52,12 +52,12 @@ app.get("/users", (req, res) => {
 });
 
 // Update User by ID endpoint
-app.put("/users/:id", (req: Request<{ id: string }, {}, Omit<User, "id">>, res) => {
+app.put("/users/:id", (req: Request<{ id: string }, {}, Partial<Omit<User, "id">>>, res) => {
     const id = parseInt(req.params.id);
     const { username, name } = req.body;
 
     // Check if username is valid
-    if (!username || !/^[a-zA-Z0-9_]+$/.test(username)) {
+    if (username && !/^[a-zA-Z0-9_]+$/.test(username)) {
         res.status(400).json({
             error: "Invalid username. Username can only contain letters, numbers and underscores",
         });
@@ -65,7 +65,7 @@ app.put("/users/:id", (req: Request<{ id: string }, {}, Omit<User, "id">>, res) 
     }
 
     // Check if name is valid
-    if (!name || !/^[a-zA-Z ]+$/.test(name)) {
+    if (name && !/^[a-zA-Z ]+$/.test(name)) {
         res.status(400).json({ error: "Invalid name. Name can only contain letters and spaces" });
         return;
     }
