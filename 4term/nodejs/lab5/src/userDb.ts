@@ -8,7 +8,7 @@ export class UserDatabase {
     private users: User[] = [];
 
     addUser(username: string, name?: string) {
-        const id = this.users.length;
+        const id = this.generateUniqueID();
         this.users.push({ id, username, name });
     }
 
@@ -42,5 +42,14 @@ export class UserDatabase {
 
         this.users.splice(userIndex, 1);
         return true;
+    }
+
+    private generateUniqueID() {
+        let id = this.users.length > 0 ? this.users[this.users.length - 1].id + 1 : 0;
+
+        // Check if the generated ID already exists
+        while (this.users.some((user) => user.id === id)) id++;
+
+        return id;
     }
 }
