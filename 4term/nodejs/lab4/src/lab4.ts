@@ -11,9 +11,8 @@ export async function runSequent<T, R>(
 ): Promise<R[]> {
     const results: R[] = [];
 
-    for (const [idx, elem] of array.entries()) {
-        const result = await callback(elem, idx);
-        results.push(result);
+    for await (const [idx, elem] of array.entries()) {
+        results.push(await callback(elem, idx));
     }
 
     return results;
