@@ -2,6 +2,7 @@
     "name": "lab6",
     "version": "1.0.0",
     "main": "src/lab6.ts",
+    "type": "module",
     "scripts": {
         "start": "tsc && node dist/lab6.js"
     },
