@@ -24,6 +24,7 @@ function run(q: string) {
 
 run(query.getUserChannelsSortedByCreationDate());
 run(query.getTopLikedVideos());
-run(query.getVideosByStephanieBulger());
-run(query.getChannelSubscribersById());
-run(query.getTopRatedVideosAfterDate());
+run(query.getVideosByName("Stephanie Bulger"));
+run(query.getChannelSubscribersById("79f6ce8f-ee0c-4ef5-9c36-da06b7f4cb76"));
+run(query.getTopRatedVideosAfterDate(10, "2021-09-01"));
+run(query.getSubscribedChannelsSortedByLevel("Ennis Haestier"));

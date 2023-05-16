@@ -17,7 +17,7 @@ export const getUserChannelsSortedByCreationDate = () => {
 };
 
 /** task 2 */
-export const getTopLikedVideos = () => {
+export const getTopLikedVideos = (lim = 5) => {
     return `
         select
             v.id as video_id,
@@ -30,12 +30,12 @@ export const getTopLikedVideos = () => {
             v.id
         order by
             likes_count desc
-        limit 5;
+        limit ${lim};
     `;
 };
 
 /** task 3 */
-export const getVideosByStephanieBulger = () => {
+export const getVideosByName = (name: string) => {
     return `
         select
             v.id as video_id,
@@ -48,14 +48,14 @@ export const getVideosByStephanieBulger = () => {
             inner join channels c on v.channel_id = c.id
             inner join users u on u.id = c.user_id
         where
-            u.name = 'Stephanie Bulger'
+            u.name = ${name}
         order by
             v.published_at desc;
     `;
 };
 
 /** task 4 */
-export const getChannelSubscribersById = () => {
+export const getChannelSubscribersById = (id: string) => {
     return `
         select
             c.id as channel_id,
@@ -66,14 +66,14 @@ export const getChannelSubscribersById = () => {
             channels c
             left join subscriptions s on c.id = s.channel_id
         where
-            c.id = '79f6ce8f-ee0c-4ef5-9c36-da06b7f4cb76'
+            c.id = ${id}
         group by
             c.id;
     `;
 };
 
 /** task 5 */
-export const getTopRatedVideosAfterDate = () => {
+export const getTopRatedVideosAfterDate = (lim = 5, date: string) => {
     return `
         select
             v.id as video_id,
@@ -84,19 +84,19 @@ export const getTopRatedVideosAfterDate = () => {
             videos v
             inner join likes l on v.id = l.video_id
         where
-            v.published_at >= '2021-09-01'
+            v.published_at >= ${date}
         group by
             v.id
         having
             count(case when l.positive then 1 end) > 4
         order
             by rating_count desc
-        limit 10;
+        limit ${lim};
     `;
 };
 
 /** task 6 */
-export const getEnnisHaestierSubscribedChannelsSortedByLevel = () => {
+export const getSubscribedChannelsSortedByLevel = (name: string) => {
     return `
         select
             u.name as channel_name,
@@ -110,7 +110,7 @@ export const getEnnisHaestierSubscribedChannelsSortedByLevel = () => {
             join users u on s.user_id = u.id
             join channels c on s.channel_id = c.id
         where
-            u.name = 'Ennis Haestier'
+            u.name = ${name}
         order by
             case s.level
                 when 'vip' then 1
