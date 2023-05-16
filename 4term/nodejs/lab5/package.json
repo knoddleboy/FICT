@@ -2,6 +2,7 @@
     "name": "lab5",
     "version": "1.0.0",
     "main": "src/app.ts",
+    "type": "module",
     "scripts": {
         "test": "jest"
     },
