@@ -50,7 +50,7 @@ export function arrayChangeDelete<T>(array: T[], predicate: (item: T) => boolean
 
 import * as fs from "fs/promises";
 import * as path from "path";
-import * as https from "https";
+import * as http from "http";
 
 /**
  * @example
@@ -98,18 +98,19 @@ export class HTMLPageDownloader {
 
     private async downloadAndSavePage(link: string, fileName: string): Promise<void> {
         try {
-            const response = https.get(link);
+            const response = await new Promise<http.IncomingMessage>((res, rej) => {
+                http.get(link, res).on("error", rej);
+            });
+
             let data = "";
 
-            response.on("data", (chunk) => {
+            for await (const chunk of response) {
                 data += chunk;
-            });
+            }
 
-            response.on("end", async () => {
-                // Save the HTML content to the file
-                await fs.writeFile(fileName, data);
-                console.log(`Saved ${link} to ${fileName}`);
-            });
+            // Save the HTML content to the file
+            await fs.writeFile(fileName, data);
+            console.log(`Saved ${link} to ${fileName}`);
         } catch (err) {
             console.error(`Error getting ${link}: ${err}`);
             throw err;
@@ -132,6 +133,7 @@ export class HTMLPageDownloader {
 
 import * as os from "os";
 import * as si from "systeminformation";
+import { ClientRequest } from "http";
 
 /**
  * @example
