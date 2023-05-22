@@ -48,8 +48,8 @@ export function arrayChangeDelete<T>(array: T[], predicate: (item: T) => boolean
  * (list.json) прикріплений до цього практичного завдання нижче.
  */
 
-import * as fs from "fs/promises";
-import * as path from "path";
+import * as fs from "node:fs/promises";
+import * as path from "node:path";
 import * as http from "http";
 
 /**
