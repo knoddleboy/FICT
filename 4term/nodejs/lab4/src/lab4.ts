@@ -30,8 +30,7 @@ export function arrayChangeDelete<T>(array: T[], predicate: (item: T) => boolean
 
     for (let i = 0; i < array.length; i++) {
         if (predicate(array[i])) {
-            const deleted = array.splice(i, 1)[0];
-            deletedElems.push(deleted);
+            deletedElems.push(array.splice(i, 1)[0]);
             i--; // decrement since original array is modified
         }
     }
