@@ -67,21 +67,21 @@ export class HTMLPageDownloader {
 
     constructor(jsonFilePath: string) {
         this.links = [];
+        this.init(jsonFilePath);
+    }
 
-        (async () => {
-            try {
-                const jsonFileContents = await fs.readFile(jsonFilePath, "utf-8");
-                this.links = JSON.parse(jsonFileContents);
+    private async init(jsonFilePath: string) {
+        try {
+            const jsonFileContents = await fs.readFile(jsonFilePath, "utf-8");
+            this.links = JSON.parse(jsonFileContents);
 
-                // create folder `<JSON_filename>_pages`
-                this.folderName =
-                    path.basename(jsonFilePath, path.extname(jsonFilePath)) + "_pages";
+            // create folder `<JSON_filename>_pages`
+            this.folderName = path.basename(jsonFilePath, path.extname(jsonFilePath)) + "_pages";
 
-                await fs.mkdir(this.folderName);
-            } catch (err) {
-                console.error(`Error reading ${jsonFilePath}: ${err}`);
-            }
-        })();
+            await fs.mkdir(this.folderName);
+        } catch (err) {
+            console.error(`Error reading ${jsonFilePath}: ${err}`);
+        }
     }
 
     public async downloadPages(): Promise<void> {
