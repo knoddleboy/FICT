@@ -89,12 +89,12 @@ export class HTMLPageDownloader {
             throw new Error("Folder name not initialized");
         }
 
-        for (let i = 0; i < this.links.length; i++) {
-            const link = this.links[i];
-            const fileName = path.join(this.folderName, `page_${i}.html`);
-
+        const downloadPromises = this.links.map(async (link, i) => {
+            const fileName = path.join(this.folderName!, `page_${i}.html`);
             await this.downloadAndSavePage(link, fileName);
-        }
+        });
+
+        await Promise.all(downloadPromises);
     }
 
     private async downloadAndSavePage(link: string, fileName: string): Promise<void> {
