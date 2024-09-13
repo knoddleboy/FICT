@@ -218,9 +218,20 @@ assets/
 .vscode
 *.dSYM/
 databases/
+.angular/cache
+.sass-cache/
+connect.lock
+coverage
+libpeerconnection.log
+testem.log
+typings
 
 # Reports
 *.doc[x]
 *.pages
 *.pdf
 *.log
+
+# System files
+.DS_Store
+Thumbs.db
