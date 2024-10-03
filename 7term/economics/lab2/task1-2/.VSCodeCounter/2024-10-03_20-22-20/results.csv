@@ -1,0 +1,306 @@
+"filename", "language", "YAML", "TypeScript", "Handlebars", "JSON with Comments", "JavaScript", "JSON", "Docker", "Markdown", "TypeScript JSX", "XML", "MS SQL", "CSS", "Ignore", "comment", "blank", "total"
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/.eslintrc.js", "JavaScript", 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/.prettierignore", "Ignore", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 2, 13
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/.prettierrc.js", "JavaScript", 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/README.md", "Markdown", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/.eslintrc.js", "JavaScript", 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/Dockerfile", "Docker", 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 6, 18, 56
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/README.md", "Markdown", 0, 0, 0, 0, 0, 0, 0, 51, 0, 0, 0, 0, 0, 2, 21, 74
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/nest-cli.json", "JSON", 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/package.json", "JSON", 0, 0, 0, 0, 0, 89, 0, 0, 0, 0, 0, 0, 0, 0, 1, 90
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/app.module.ts", "TypeScript", 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 35
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/auth.controller.ts", "TypeScript", 0, 98, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 114
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/auth.module.ts", "TypeScript", 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 28
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/auth.service.ts", "TypeScript", 0, 123, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 28, 152
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/guards/jwt.guard.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 6
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/guards/local.guard.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 6
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/guards/refresh.guard.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/password/password.module.ts", "TypeScript", 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 13
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/password/password.service.ts", "TypeScript", 0, 96, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 22, 123
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/strategy/jwt.strategy.ts", "TypeScript", 0, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 34
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/strategy/local.strategy.ts", "TypeScript", 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 20
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/strategy/refresh.strategy.ts", "TypeScript", 0, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 34
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/token/token.module.ts", "TypeScript", 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 15
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/token/token.service.ts", "TypeScript", 0, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 112
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/utils/cookie-options.factory.ts", "TypeScript", 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 31
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/auth/utils/type.ts", "TypeScript", 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 6
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/avatar/avatar.controller.ts", "TypeScript", 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 16
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/avatar/avatar.module.ts", "TypeScript", 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/avatar/avatar.service.ts", "TypeScript", 0, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 14, 65
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/config/config.module.ts", "TypeScript", 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 16
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/config/schema.ts", "TypeScript", 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 6, 25
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/document/document.controller.ts", "TypeScript", 0, 45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 55
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/document/document.module.ts", "TypeScript", 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/document/document.service.ts", "TypeScript", 0, 74, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 87
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/lib/crop-image.ts", "TypeScript", 0, 27, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 33
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/lib/services/hashing.service.ts", "TypeScript", 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 29
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/mail/mail-base.service.ts", "TypeScript", 0, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 51
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/mail/mail.module.ts", "TypeScript", 0, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 58
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/mail/mail.service.ts", "TypeScript", 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 42
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/mail/templates/forgot-password-email.hbs", "Handlebars", 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 9
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/mail/templates/verify-email.hbs", "Handlebars", 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 20
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/mail/types.ts", "TypeScript", 0, 27, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 31
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/main.ts", "TypeScript", 0, 38, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 13, 52
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/prisma/prisma.module.ts", "TypeScript", 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 34
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/search/search.controller.ts", "TypeScript", 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 20
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/search/search.module.ts", "TypeScript", 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/search/search.service.ts", "TypeScript", 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 42
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/user/decorators/user.decorator.ts", "TypeScript", 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/user/user.controller.ts", "TypeScript", 0, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 37
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/user/user.module.ts", "TypeScript", 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 19
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/src/user/user.service.ts", "TypeScript", 0, 93, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 20, 116
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/tsconfig.build.json", "JSON", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/api/tsconfig.json", "JSON with Comments", 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 14
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/.eslintrc.js", "JavaScript", 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/Dockerfile", "Docker", 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 8, 16, 56
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/README.md", "Markdown", 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 14, 37
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/(auth)/forgot-password/[requestId]/page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 58, 0, 0, 0, 0, 0, 7, 65
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/(auth)/forgot-password/page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 4, 12
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/(auth)/layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 17, 0, 0, 0, 0, 0, 4, 21
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/(auth)/login/page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 7, 29
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/(auth)/signup/page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 7, 29
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/(auth)/signup/verify-email/page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 4, 12
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/(workspace)/d/[documentId]/page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 3, 14
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/(workspace)/d/layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 1, 6, 31
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/(workspace)/d/page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 3, 16
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/(workspace)/layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 6, 28
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/(workspace)/settings/layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 5, 26
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/(workspace)/settings/page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 69, 0, 0, 0, 0, 0, 17, 86
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/fonts.ts", "TypeScript", 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 12
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 9, 44
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/metadata.ts", "TypeScript", 0, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 21
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 8, 38
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/app/robots.ts", "TypeScript", 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/document/api/document-api.ts", "TypeScript", 0, 67, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 83
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/document/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/document/model/document-model.ts", "TypeScript", 0, 74, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21, 95
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/editor/core/commands.ts", "TypeScript", 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 113
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/editor/core/constants.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 10
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/editor/core/helpers.ts", "TypeScript", 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/editor/core/index.ts", "TypeScript", 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 13
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/editor/core/keymap.ts", "TypeScript", 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 56
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/editor/core/queue/transaction-queue.ts", "TypeScript", 0, 56, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 12, 71
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/editor/core/schema.ts", "TypeScript", 0, 164, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 19, 202
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/editor/core/serializer/markdown-serializer.ts", "TypeScript", 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 14, 66
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/editor/core/use-prose-mirror.ts", "TypeScript", 0, 87, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 26, 115
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/editor/index.ts", "TypeScript", 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/editor/model/editor-model.ts", "TypeScript", 0, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 36
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/search/api/search-api.ts", "TypeScript", 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 27
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/search/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/search/model/search-model.ts", "TypeScript", 0, 37, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 47
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/session/api/session-api.ts", "TypeScript", 0, 109, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 29, 141
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/session/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/entities/session/model/session-model.ts", "TypeScript", 0, 37, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 48
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/api/login.ts", "TypeScript", 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 18
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/api/logout.ts", "TypeScript", 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 25
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/api/password-recovery.ts", "TypeScript", 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 26
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/api/signup.ts", "TypeScript", 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 19
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/forgot-password/forgot-password-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 105, 0, 0, 0, 0, 0, 11, 116
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/forgot-password/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/index.ts", "TypeScript", 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 16
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/login/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/login/login-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 104, 0, 0, 0, 0, 1, 13, 118
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/middlewares/auth-middleware.ts", "TypeScript", 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6, 26
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/middlewares/unauth-middleware.ts", "TypeScript", 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 17
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/reset-password/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/reset-password/reset-password-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, 0, 0, 12, 108
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/signup/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/signup/signup-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 115, 0, 0, 0, 0, 1, 13, 129
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/ui/form/change-password-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 93, 0, 0, 0, 0, 0, 10, 103
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/utils/is-auth.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 8
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/auth/verify-email/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 31, 0, 0, 0, 0, 0, 6, 37
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/editor/api/document.ts", "TypeScript", 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 15
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/editor/api/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/editor/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/editor/ui/editor-boundary.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 70, 0, 0, 0, 0, 1, 20, 91
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/editor/ui/editor-container.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 6, 18
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/editor/ui/editor.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 31, 0, 0, 0, 0, 0, 9, 40
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/editor/ui/prose-editor.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 5, 14
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/export/export.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 125, 0, 0, 0, 0, 0, 19, 144
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/export/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/export/lib/composer/base-composer.ts", "TypeScript", 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 32
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/export/lib/composer/composer.ts", "TypeScript", 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 24
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/export/lib/composer/markdown-composer.ts", "TypeScript", 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 21
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/export/lib/composer/plain-text-composer.ts", "TypeScript", 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 20
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/export/lib/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/header/go-back.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 8, 28
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/header/toggle-sidebar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 8, 29
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/search-menu/api/index.ts", "TypeScript", 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 18
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/search-menu/search-menu.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 0, 37, 230
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/search-menu/ui/search-bar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 3, 28
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/search-menu/ui/search-filters.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 92, 0, 0, 0, 0, 2, 12, 106
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/search-menu/ui/search-results.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 99, 0, 0, 0, 0, 0, 14, 113
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/settings/api/index.ts", "TypeScript", 0, 27, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 32
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/settings/avatar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, 0, 0, 18, 114
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/settings/delete.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 4, 41
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/settings/email.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 47, 0, 0, 0, 0, 0, 5, 52
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/settings/name.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 95, 0, 0, 0, 0, 4, 12, 111
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/settings/password.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 2, 4, 41
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/settings/ui/change-email-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 78, 0, 0, 0, 0, 0, 16, 94
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/settings/ui/delete-user-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 80, 0, 0, 0, 0, 0, 13, 93
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/settings/ui/setting-dialog.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 3, 17
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/settings/ui/setting-title.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 3, 14
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/settings/ui/setting.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 2, 16
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/sidebar/documents.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 123, 0, 0, 0, 0, 5, 30, 158
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/sidebar/lib/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/sidebar/lib/parser/base-parser.ts", "TypeScript", 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 17
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/sidebar/lib/parser/file-parser.ts", "TypeScript", 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 18
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/sidebar/lib/parser/markdown-parser.ts", "TypeScript", 0, 59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 73
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/sidebar/lib/parser/plain-text-parser.ts", "TypeScript", 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 35
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/sidebar/navigation.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 43, 0, 0, 0, 0, 6, 11, 60
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/sidebar/store/index.ts", "TypeScript", 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 14
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/sidebar/ui/create-document.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 49, 0, 0, 0, 0, 0, 11, 60
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/sidebar/ui/import-document.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 156, 0, 0, 0, 0, 7, 29, 192
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/sidebar/ui/navigation-item-menu.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 98, 0, 0, 0, 0, 0, 19, 117
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/sidebar/ui/navigation-item.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 159, 0, 0, 0, 0, 0, 26, 185
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/toolbar/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/toolbar/toolbar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 31, 0, 0, 0, 0, 0, 7, 38
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/toolbar/ui/alignment-formats.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 0, 1, 15, 80
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/toolbar/ui/block-type-select.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 163, 0, 0, 0, 0, 2, 30, 195
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/toolbar/ui/font-size-select.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 88, 0, 0, 0, 0, 2, 16, 106
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/toolbar/ui/index.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/toolbar/ui/line-spacing-select.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 98, 0, 0, 0, 0, 2, 16, 116
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/toolbar/ui/mark-formats.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 102, 0, 0, 0, 0, 1, 16, 119
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/toolbar/ui/mark-select.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 136, 0, 0, 0, 0, 2, 30, 168
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/user/avatar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 5, 46
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/user/profile-card.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 135, 0, 0, 0, 0, 8, 25, 168
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/features/user/user-dropdown.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 58, 0, 0, 0, 0, 1, 15, 74
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/middleware.ts", "TypeScript", 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 26
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/next.config.js", "JavaScript", 0, 0, 0, 0, 17, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 22
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/package.json", "JSON", 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 0, 0, 0, 1, 57
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/postcss.config.js", "JavaScript", 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/providers/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 2, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/providers/query-provider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 5, 14
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/providers/theme-provider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 4, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/public/avatar.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 1, 0, 12
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/public/site.webmanifest", "JSON", 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 1, 20
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/api/api-client.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 7
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/api/query-client.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/index.ts", "TypeScript", 0, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 23
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/lib/encode-uri-component.ts", "TypeScript", 0, 38, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 17, 8, 63
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/lib/extract-uri-hash.ts", "TypeScript", 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 17, 4, 24
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/lib/format-result-string.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 2, 22
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/lib/generate-document-url.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 3, 34
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/lib/to-base64.ts", "TypeScript", 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 9
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/lib/use-is-mounted.ts", "TypeScript", 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 16
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/middleware/middleware.ts", "TypeScript", 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 20
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/middleware/with-middleware.ts", "TypeScript", 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 27
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/types/file-format.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/types/mime-type.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/types/object-values.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/types/routes.ts", "TypeScript", 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 12
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/ui/link-or.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 5, 31
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/ui/theme-switch.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 6, 21
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/shared/util/is-mac.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/tailwind.config.js", "JavaScript", 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 7
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/tsconfig.json", "JSON with Comments", 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 20
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/widgets/layouts/header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 2, 12
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/widgets/layouts/landing/header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 28, 0, 0, 0, 0, 0, 5, 33
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/widgets/layouts/landing/nav.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 0, 10, 58
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/apps/web/widgets/layouts/sidebar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 153, 0, 0, 0, 0, 15, 37, 205
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/docker-compose.yml", "YAML", 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 30
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/package.json", "JSON", 0, 0, 0, 0, 0, 39, 0, 0, 0, 0, 0, 0, 0, 0, 1, 40
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/config/package.json", "JSON", 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1, 14
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/config/prettier.config.js", "JavaScript", 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 9, 1, 33
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/config/tailwind.config.js", "JavaScript", 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 15
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/eslint-config/base.js", "JavaScript", 0, 0, 0, 0, 42, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 44
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/eslint-config/nest.js", "JavaScript", 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 18
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/eslint-config/next.js", "JavaScript", 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 25
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/eslint-config/package.json", "JSON", 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 1, 25
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/constants.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 7
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/dto/auth.ts", "TypeScript", 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 23
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/dto/document.ts", "TypeScript", 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 17
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/dto/index.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/dto/search.ts", "TypeScript", 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 6
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/dto/user.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 8
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/error/hints.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 8
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/error/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/error/response-code.ts", "TypeScript", 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 15
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 10
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/package.json", "JSON", 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 1, 31
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/responses/auth/index.ts", "TypeScript", 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 12
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/responses/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/responses/messages/auth/index.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/responses/messages/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/auth/index.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 10
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/auth/jwt-payload.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 9
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/auth/password/change.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/auth/password/forgot.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 10
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/auth/password/reset.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/auth/user-auth/login.ts", "TypeScript", 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 19
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/auth/user-auth/signup.ts", "TypeScript", 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 17
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/auth/verification.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 6
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/document/create.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/document/delete.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 10
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/document/document.ts", "TypeScript", 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 13
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/document/get-document-data.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 8
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/document/index.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/document/update.ts", "TypeScript", 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 14
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/index.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/search/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/search/search-result.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/search/search.ts", "TypeScript", 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 16
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/shared/email.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 7
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/shared/id.ts", "TypeScript", 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 5
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/shared/index.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/shared/password.ts", "TypeScript", 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 17
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/shared/user-name.ts", "TypeScript", 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 12
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/user-schema/delete.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 8
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/user-schema/index.ts", "TypeScript", 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/user-schema/update.ts", "TypeScript", 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 12
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/schema/user-schema/user.ts", "TypeScript", 0, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 9, 27
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/tsconfig.json", "JSON with Comments", 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 12
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/utils.ts", "TypeScript", 0, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 22
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/validator/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/validator/is-password-valid.ts", "TypeScript", 0, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 5, 26
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/lib/validator/types.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 9
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/docker-compose.yml", "YAML", 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 18
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20231127204314_init/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 0, 3, 4, 19
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20231130195502_add_user_token/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 3, 4, 18
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20231202210039_add_verification_token/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 3, 4, 18
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20231203183236_token_add_account_model/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 17, 0, 0, 16, 11, 44
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20231203202910_add_password_reset_request/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 1, 2, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20231204181658_add_avatar_model/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 4, 4, 16
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20231220131539_add_document_model/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 1, 2, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20231220170707_nullable_document_title/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 3
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20231222124026_connect_user_document/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 3
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20231223190402_add_index_to_documents/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 3
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20231226144057_add_block_model/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 5, 6, 25
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20240110172937_change_document_block/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 19, 9, 41
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20240110212749_update_document_model/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 10, 3, 16
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/migrations/20240117102918_documents_delete_cascade/migration.sql", "MS SQL", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 2, 6
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/package.json", "JSON", 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 1, 36
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/seed-utils.ts", "TypeScript", 0, 44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 51
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/seed.ts", "TypeScript", 0, 43, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 49
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/prisma/tsconfig.json", "JSON with Comments", 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 12
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/tsconfig/base.json", "JSON", 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 0, 1, 19
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/tsconfig/nestjs.json", "JSON", 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 0, 1, 19
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/tsconfig/nextjs.json", "JSON", 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 1, 20
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/tsconfig/package.json", "JSON", 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components.json", "JSON", 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 1, 17
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/icons.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 122, 0, 0, 0, 0, 0, 3, 125
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/inputs/fields.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 61, 0, 0, 0, 0, 2, 7, 70
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/inputs/input-field.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 55, 0, 0, 0, 0, 0, 10, 65
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 3, 13
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/ui/alert.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 0, 7, 55
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/ui/avatar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 49, 0, 0, 0, 0, 0, 8, 57
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/ui/button.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 62, 0, 0, 0, 0, 7, 9, 78
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/ui/dialog.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 132, 0, 0, 0, 0, 0, 15, 147
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/ui/dropdown-menu.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 177, 0, 0, 0, 0, 0, 20, 197
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/ui/form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 202, 0, 0, 0, 0, 2, 33, 237
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/ui/input.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 5, 29
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/ui/label.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 6, 27
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/ui/separator.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 5, 27
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/ui/skeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 3, 13
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/components/ui/spinner.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 2, 6
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 9, 34
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/package.json", "JSON", 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 1, 33
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/postcss.config.js", "JavaScript", 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/styles/globals.css", "CSS", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 85, 0, 4, 29, 118
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/tailwind.config.js", "JavaScript", 0, 0, 0, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 84
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/packages/ui/tsconfig.json", "JSON with Comments", 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 12
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/pnpm-lock.yaml", "YAML", 10538, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1458, 11996
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/pnpm-workspace.yaml", "YAML", 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3
+"/Users/knysh/FICT/7term/economics/lab2/task1-2/turbo.json", "JSON", 0, 0, 0, 0, 0, 61, 0, 0, 0, 0, 0, 0, 0, 0, 1, 62
+"Total", "-", 10582, 3186, 22, 65, 234, 493, 64, 75, 4981, 11, 110, 85, 11, 320, 3417, 23656
