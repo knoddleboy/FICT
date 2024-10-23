@@ -233,6 +233,9 @@ typings
 *.pdf
 *.log
 
+# Firebase
+.firebase
+
 # System files
 .DS_Store
 Thumbs.db
