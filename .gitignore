@@ -234,7 +234,9 @@ typings
 *.log
 
 # Firebase
-.firebase
+firebase-debug.log*
+firebase-debug.*.log*
+.firebase/
 
 # System files
 .DS_Store
