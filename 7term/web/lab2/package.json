@@ -1,0 +1,19 @@
+{
+  "name": "lab2",
+  "version": "1.0.0",
+  "scripts": {
+    "build:server": "tsc --build server/tsconfig.json",
+    "start": "node server/dist/server.js"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
