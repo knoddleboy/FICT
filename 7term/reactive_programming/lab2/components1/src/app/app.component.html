@@ -1,0 +1,20 @@
+<label>Enter your name:</label>
+<input [(ngModel)]="name" placeholder="Your name" />
+<h1>Welcome, {{ name }}!</h1>
+<br />
+
+<h2>Hello Angular</h2>
+<p>Angular представляє модульну архітектуру додатку</p>
+<br />
+
+<!-- Option 4: child components -->
+<child-comp>
+  <!-- Option 5: ng-content slotting -->
+  <h2>ng-content: Welcome, {{ name }}!</h2>
+</child-comp>
+<p>Hello {{ name }}</p>
+<br />
+
+<!-- Option 6: passing parameters -->
+<child-comp [userName]="name2" [userAge]="age"></child-comp>
+<input type="text" [(ngModel)]="name2" />
