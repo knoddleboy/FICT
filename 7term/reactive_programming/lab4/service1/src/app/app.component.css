@@ -1,0 +1,22 @@
+.cardinput {
+  margin: 0.4rem 1rem;
+}
+
+td {
+  padding: 5px;
+  margin: 0.4rem 1.8rem;
+}
+
+table {
+  width: 100%;
+  max-width: 540px;
+  overflow: auto;
+  color: rgb(0, 0, 0);
+  border-spacing: 1px;
+}
+
+th {
+  padding: 5px;
+  margin: 0.4rem 1.8rem;
+  text-align: left;
+}
