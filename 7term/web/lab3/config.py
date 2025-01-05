@@ -1,0 +1,2 @@
+BOT_TOKEN = ""
+HF_API_KEY = ""

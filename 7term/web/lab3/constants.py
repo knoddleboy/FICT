@@ -1,0 +1,12 @@
+BUTTON_TEXT_STUDENT = "Студент"
+BUTTON_TEXT_TECH = "IT-технології"
+BUTTON_TEXT_CONTACTS = "Контакти"
+BUTTON_TEXT_CHATGPT = "ChatGPT"
+BUTTON_TEXT_DONE = "Готово"
+BUTTON_TEXT_BACK = "Назад"
+
+REPLY_TEXT_START = "Ласкаво просимо! Виберіть варіант:"
+REPLY_TEXT_START_OVER = "Виберіть варіант:"
+REPLY_TEXT_END = "До наступної зустрічі!"
+REPLY_TEXT_PROMPT = "Будь ласка, введіть свій запит до ChatGPT:"
+REPLY_TEXT_PROMPT_PROCESSING = "Обробка. Будь ласка, зачекайте."
