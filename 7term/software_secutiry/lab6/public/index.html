@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <style>
+      html {
+        height: 100%;
+      }
+
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-color: #3a3a3a;
+      }
+
+      #logout {
+        display: none;
+      }
+
+      #main-holder {
+        width: 50%;
+        height: 70%;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 7px;
+        box-shadow: 0px 0px 5px 2px black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main id="main-holder">
+      <a href="/login" id="login">Login</a>
+      <a href="/logout" id="logout">Logout</a>
+    </main>
+  </body>
+
+  <script>
+    const mainHolder = document.getElementById("main-holder");
+    const loginLink = document.getElementById("login");
+    const logoutLink = document.getElementById("logout");
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const accessTokenParam = queryParams.get("token");
+
+    if (accessTokenParam) {
+      sessionStorage.setItem("session", JSON.stringify({ accessToken: accessTokenParam }));
+      const newUrl = window.location.pathname;
+      window.history.pushState("", "Dashboard", newUrl);
+    }
+
+    const sessionData = sessionStorage.getItem("session");
+    const session = sessionData ? JSON.parse(sessionData) : null;
+    const accessToken = accessTokenParam || session?.accessToken;
+
+    if (accessToken) {
+      axios({
+        method: "get",
+        url: "/userinfo",
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      }).then((response) => {
+        loginLink.style.display = "none";
+        logoutLink.style.display = "inline";
+
+        const user = response.data.user;
+
+        mainHolder.append(`Hello, ${user?.nickname}`);
+      });
+    }
+
+    logoutLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      sessionStorage.removeItem("session");
+      location.reload();
+    });
+  </script>
+</html>
