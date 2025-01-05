@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <title>Chattr</title>
+  </head>
+  <body class="h-screen">
+    <div class="max-w-[540px] w-full mx-auto h-full py-6">
+      <div id="join-box" class="mt-10 max-w-96 mx-auto">
+        <h1 class="text-center text-2xl font-bold text-slate-900">Join a Chat Room</h1>
+        <form id="join-form" class="mt-6 space-y-4">
+          <div id="join-form-error" class="text-sm text-red-500 text-center"></div>
+          <input
+            type="text"
+            id="join-username"
+            placeholder="Username"
+            class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
+            required
+          />
+          <input
+            type="text"
+            id="join-chat-name"
+            placeholder="Chat name"
+            class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
+            required
+          />
+          <button
+            type="submit"
+            class="w-full inline-block rounded-lg bg-blue-500 py-3 text-sm font-medium text-white focus:outline-none focus:ring transition hover:shadow-lg"
+          >
+            Join Chat
+          </button>
+        </form>
+      </div>
+
+      <div id="chat-box" class="w-full h-full flex flex-col" style="display: none">
+        <div class="flex flex-col flex-grow overflow-hidden">
+          <div class="mb-2 px-2 flex justify-between items-center">
+            <h2 id="chat-name" class="text-2xl font-bold text-slate-900"></h2>
+            <button id="get-chat-info">Chat info</button>
+            <h5 id="display-username" class="text-base text-slate-900"></h5>
+          </div>
+
+          <ul id="messages" class="px-2 space-y-2 flex-grow overflow-auto"></ul>
+
+          <div class="w-full flex items-center space-x-2 p-2">
+            <input
+              type="text"
+              id="message"
+              autocomplete="off"
+              placeholder="Type a message..."
+              class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
+            />
+            <button
+              id="send-message"
+              class="flex-shrink-0 w-9 h-9 flex justify-center items-center rounded-full border border-blue-600 bg-blue-600 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+            >
+              <span class="sr-only">Send</span>
+              <svg
+                class="size-5 rtl:rotate-180"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./bundle.js"></script>
+  </body>
+</html>
