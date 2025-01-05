@@ -1,0 +1,54 @@
+type Employee {
+  id: Int!
+  name: String!
+  email: String!
+  department: Department!
+  computerSpecs: ComputerSpecs!
+}
+
+type Department {
+  id: Int!
+  name: String!
+  employees: [Employee!]!
+}
+
+type ComputerSpecs {
+  id: Int!
+  cpu: String!
+  ram: Int!
+  storage: Int!
+}
+
+type Query {
+  employees: [Employee!]!
+  employee(id: Int!): Employee
+  departments: [Department!]!
+  department(id: Int!): Department
+}
+
+type Mutation {
+  createEmployee(
+    name: String!
+    email: String!
+    departmentId: Int!
+    computerSpecs: ComputerSpecsInput!
+  ): Employee!
+  updateEmployee(
+    id: Int!
+    name: String
+    email: String
+    departmentId: Int
+    computerSpecs: ComputerSpecsInput
+  ): Employee!
+  deleteEmployee(id: Int!): Boolean!
+
+  createDepartment(name: String!): Department!
+  updateDepartment(id: Int!, name: String!): Department!
+  deleteDepartment(id: Int!): Boolean!
+}
+
+input ComputerSpecsInput {
+  cpu: String!
+  ram: Int!
+  storage: Int!
+}
