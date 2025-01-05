@@ -1,0 +1,7 @@
+<div>
+  <p style="text-align: right">Дата: {{ myDate$ | async | date : "HH:mm:ss dd:MM:yyyy" }}</p>
+
+  <input type="text" class="form-control" placeholder="Title..." [(ngModel)]="title" />
+  <input type="text" class="form-control" placeholder="Text..." [(ngModel)]="text" />
+  <button class="btn" (click)="addPost()">Додати пост</button>
+</div>
